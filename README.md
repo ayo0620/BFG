@@ -6,12 +6,12 @@ App Evaluation
 
 [Evaluation of your app across the following attributes]
 
-Category:photo & video/ Social/ gaming
-Mobile: uses camera, mobile first experience
-Story: Allow users to share post about a game they are currently playing and what makes it interesting 
-Market: Anyone that is looking for a someone to play a particular game with or looking to discover new games to try could enjoy this app.
-Habit: Users can post clips or pictures about a level they just completed, and other users finding it hard to pass that level can ask how to pass that level. Users can also explore grid of games that are arranged according to the most trending games.
-Scope: posting pictures and videos. Also, exploring different games and seeing post about that game.
+- Category:photo & video/ Social/ gaming
+- Mobile: uses camera, mobile first experience
+- Story: Allow users to share post about a game they are currently playing and what makes it interesting 
+- Market: Anyone that is looking for a someone to play a particular game with or looking to discover new games to try could enjoy this app.
+- Habit: Users can post clips or pictures about a level they just completed, and other users finding it hard to pass that level can ask how to pass that           level. Users can also explore grid of games that are arranged according to the most trending games.
+- Scope: posting pictures and videos. Also, exploring different games and seeing post about that game.
 Product Spec
 
 1. User Stories (Required and Optional)
