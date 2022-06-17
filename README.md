@@ -106,8 +106,7 @@ Flow Navigation (Screen to Screen)
    | username        | String | User's username |
    | profileImage         | File     | image for user's profile picture |
    | userDescription       | String   | Biolgraphy of the user |
-   | userFriend | Array   | The user's friend list|
-   | likesCount    | Number   | number of likes for the post |
+   | userFriendList | Array   | The user's friend list|
    | createdAt     | DateTime | date when post is created (default field) |
    | updatedAt     | DateTime | date when post is last updated (default field) |
    | status    | Boolean   | if the user is online or not |
