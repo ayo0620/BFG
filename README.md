@@ -154,7 +154,6 @@ Flow Navigation (Screen to Screen)
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
    | GameDescription | String   | A desription about the game|
-   | createdAt     | DateTime | date when post was created (default field) |
    | cardImage | file   | A picture related to the game|
    | GameName | String   | Name of the game|
    | Category| String   | Category of the game|
