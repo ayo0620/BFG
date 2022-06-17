@@ -155,7 +155,6 @@ Flow Navigation (Screen to Screen)
    | ------------- | -------- | ------------|
    | GameDescription | String   | A desription about the game|
    | createdAt     | DateTime | date when post was created (default field) |
-   | UserID    | pointer to user | Id of the user that sent the feedback |
    | cardImage | file   | A picture related to the game|
    | GameName | String   | Name of the game|
    | Category| String   | Category of the game|
