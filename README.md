@@ -95,3 +95,74 @@ Flow Navigation (Screen to Screen)
  
 <img src="https://github.com/ayo0620/Gaming-Social-Media-App/commit/0830a91d117257fa42c08a11f50e2b8404ed24c5" width=250><br>
 <img src="https://github.com/ayo0620/Gaming-Social-Media-App/commit/b7f8b0651f43556d5bbac540f187d9a56a59982c" width=250><br>
+
+## Schema 
+### Models
+#### user
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user post (default field) |
+   | username        | String | User's username |
+   | profileImage         | File     | image for user's profile picture |
+   | userDescription       | String   | Biolgraphy of the user |
+   | userFriend | Array   | The user's friend list|
+   | likesCount    | Number   | number of likes for the post |
+   | createdAt     | DateTime | date when post is created (default field) |
+   | updatedAt     | DateTime | date when post is last updated (default field) |
+   | status    | Boolean   | if the user is online or not |
+   | password     | String | User's Password |
+   | email     | String | User's email |
+   | FirstName    | String   | User's first name |
+   | LastName    | String | User's last name |
+   | userGames    | Array | A string array of the games the user plays |
+   
+#### Notifcation
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user post (default field) |
+   | notifiedFrom         | Pointer to user     | refers to the user for which a notification comes from |
+   | createdAt     | DateTime | date when post is created (default field) |
+   | updatedAt     | DateTime | date when post is last updated (default field) |
+   
+#### Post
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user post (default field) |
+   | author        | Pointer to User| image author |
+   | image         | File     | image that user posts |
+   | Description       | String   | image caption by user |
+   | comments | Array   | Comments posted under a post|
+   | likesCount    | Number   | number of likes for the post |
+   | Favorited    | Boolean  | if a user favorited a post or not |
+   | createdAt     | DateTime | date when post is created (default field) |
+   | LikedBy   | Array   | An array of all the users that liked a post |
+   | user     | pointer to User class | Refers to the user that owns a post |
+   | updatedAt     | DateTime | date when post is last updated (default field) |
+   
+#### UserFeedBack
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user post (default field) |
+   | Description         | String   | feedback from user about their experience with the app |
+   | createdAt     | DateTime | date when post is created (default field) |
+   | UserID    | pointer to user | Id of the user that sent the feedback |
+   | updatedAt     | DateTime | date when post is last updated (default field) |
+   
+   #### cardView (in explore page)
+
+   | Property      | Type     | Description |
+   | ------------- | -------- | ------------|
+   | objectId      | String   | unique id for the user post (default field) |
+   | GameDescription | String   | A desription about the game|
+   | createdAt     | DateTime | date when post is created (default field) |
+   | UserID    | pointer to user | Id of the user that sent the feedback |
+   | cardImage | file   | A picture related to the game|
+   | GameName | String   | Name of the game|
+   | Category| String   | Category of the game|
+   | posts | Pointer to Post class   | gets post related to that game|
+   | updatedAt     | DateTime | date when post is last updated (default field) |
+ 
