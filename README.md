@@ -102,13 +102,13 @@ Flow Navigation (Screen to Screen)
 
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user post (default field) |
+   | objectId      | String   | unique id for the user (default field) |
    | username        | String | User's username |
    | profileImage         | File     | image for user's profile picture |
    | userDescription       | String   | Biolgraphy of the user |
    | userFriendList | Array   | The user's friend list|
-   | createdAt     | DateTime | date when post is created (default field) |
-   | updatedAt     | DateTime | date when post is last updated (default field) |
+   | createdAt     | DateTime | date when the user created account |
+   | updatedAt     | DateTime | date when the user last updated the account |
    | status    | Boolean   | if the user is online or not |
    | password     | String | User's Password |
    | email     | String | User's email |
@@ -120,10 +120,9 @@ Flow Navigation (Screen to Screen)
 
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user post (default field) |
+   | objectId      | String   | unique id for the notification(default field) |
    | notifiedFrom         | Pointer to user     | refers to the user for which a notification comes from |
-   | createdAt     | DateTime | date when post is created (default field) |
-   | updatedAt     | DateTime | date when post is last updated (default field) |
+   | createdAt     | DateTime | date when notification was sent |
    
 #### Post
 
@@ -145,23 +144,21 @@ Flow Navigation (Screen to Screen)
 
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user post (default field) |
+   | objectId      | String   | unique id for the feedback (default field)|
    | Description         | String   | feedback from user about their experience with the app |
-   | createdAt     | DateTime | date when post is created (default field) |
+   | createdAt     | DateTime | date when feedback was created (default field) |
    | UserID    | pointer to user | Id of the user that sent the feedback |
-   | updatedAt     | DateTime | date when post is last updated (default field) |
    
    #### cardView (in explore page)
 
    | Property      | Type     | Description |
    | ------------- | -------- | ------------|
-   | objectId      | String   | unique id for the user post (default field) |
    | GameDescription | String   | A desription about the game|
-   | createdAt     | DateTime | date when post is created (default field) |
+   | createdAt     | DateTime | date when post was created (default field) |
    | UserID    | pointer to user | Id of the user that sent the feedback |
    | cardImage | file   | A picture related to the game|
    | GameName | String   | Name of the game|
    | Category| String   | Category of the game|
    | posts | Pointer to Post class   | gets post related to that game|
-   | updatedAt     | DateTime | date when post is last updated (default field) |
+   | updatedAt     | DateTime | date when post was last updated (default field) |
  
