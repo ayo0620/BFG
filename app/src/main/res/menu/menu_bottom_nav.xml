@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_home"
+        android:icon="@drawable/ic_home_icon"
+        android:title="Home"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_Search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="search"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_addPost"
+        android:icon="@drawable/ic_post_icon"
+        android:title="post"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_explore"
+        android:icon="@drawable/ic_explore_icon"
+        android:title="explore"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_profile"
+        android:icon="@drawable/ic_profile_icon"
+        android:title="profile"
+        app:showAsAction="always" />
+</menu>

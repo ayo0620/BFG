@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">BFG</string>
+    <string name="log"><font color='#0000FF'>Sign up</font></string>
+    <string name="already_have_an_account">Already have an account? </string>
+    <string name="Login"><font color='#FF6200EE'>Log In</font></string>
+</resources>
