@@ -162,8 +162,8 @@ Flow Navigation (Screen to Screen)
  
 ## Complex problems
  - Orientation of the explore page 
- * What decides the order in which games are arranged in the user's explored page.
-   solution: Based on the number of posts a game has in the app.
+   * What decides the order in which games are arranged in the user's explored page.
+     solution: Based on the number of posts a game has in the app.
  - Filtering search results
- * Giving the user control to search for a player by the game listed in their profile
-   solution: looping through users and identifying which match the search result.
+   * Giving the user control to search for a player by the game listed in their profile
+     solution: looping through users and identifying which match the search result.
