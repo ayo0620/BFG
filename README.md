@@ -160,3 +160,10 @@ Flow Navigation (Screen to Screen)
    | posts | Pointer to Post class   | gets post related to that game|
    | updatedAt     | DateTime | date when post was last updated (default field) |
  
+## Complex problems
+ - Orientation of the explore page 
+  * What decides the order in which games are arranged in the user's explored page.
+  solution: Based on the number of posts a game has in the app.
+ - Filtering search results
+  * Giving the user control to search for a player by the game listed in their profile
+  solution: looping through users and identifying which match the search result.
