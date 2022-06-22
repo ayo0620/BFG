@@ -174,4 +174,4 @@ Flow Navigation (Screen to Screen)
    * For instance, a user that is very active would have a status of "Elite".
    * Possible solution: There would be a point system for ranking what status the user gets. For example, if the user has 500 points, 
      the person's status would be set to noob till the person reaches the next milestone to change status. Depending on the activity,
-     the user would be awarded a certain amount of points. Note: The point system wouldn't be visible to the user and would be done internally.
+     the user would be awarded a certain amount of points. Note: The point system would not be visible to the user and would be done internally.
