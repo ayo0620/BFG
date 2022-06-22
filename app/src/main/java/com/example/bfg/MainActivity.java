@@ -74,11 +74,10 @@ public class MainActivity extends AppCompatActivity {
                         fragmentClass = SettingsFragment.class;
                         break;
                     case R.id.nav_logout:
-                        break;
-//                        ParseUser.logOut();
-//                        ParseUser currentUser = ParseUser.getCurrentUser();
-//                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//                        startActivity(intent);
+                        ParseUser.logOut();
+                        ParseUser currentUser = ParseUser.getCurrentUser();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivity(intent);
                     default:
                         fragmentClass = NotificationFragment.class;
 
