@@ -163,7 +163,15 @@ Flow Navigation (Screen to Screen)
 ## Complex problems
  - Orientation of the explore page 
    * What decides the order in which games are arranged in the user's explored page.
-   * solution: Based on the number of posts a game has in the app.
+   * Possible solution: Based on the ratio of number of posts in the app to the overall like count the game has.
+     i.e Order of precedence = number of posts the game has/ the total likes the game has
  - Filtering search results
-   * Giving the user control to search for a player by the game listed in their profile
-   * solution: looping through users and identifying which match the search result.
+   * Giving the user control to search for a player by the game listed in the player's profile
+   * Possible solution: looping through users and identifying which match the search result.
+-  Status Implementation
+   * User changes status based on how engaged they are and how often they launch the app.
+   * star level can also be displayed in user's reply to posts.
+   * For instance, a user that is very active would have a status of "Elite".
+   * Possible solution: There would be a point system for ranking what status the user gets. For example, if the user has 500 points, 
+     the person's status would be set to noob till the person reaches the next milestone to change status. Depending on the activity,
+     the user would be awarded a certain amount of points. Note: The point system would not be visible to the user and would be done internally.
