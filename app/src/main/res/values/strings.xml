@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">BFG</string>
     <string name="log"><font color='#0000FF'>Sign up</font></string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="already_have_an_account">Already have an account? </string>
     <string name="Login"><font color='#FF6200EE'>Log In</font></string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
