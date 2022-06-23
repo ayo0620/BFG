@@ -165,9 +165,6 @@ Flow Navigation (Screen to Screen)
    * What decides the order in which games are arranged in the user's explored page.
    * Possible solution: Based on the ratio of number of posts in the app to the overall like count the game has.
      i.e Order of precedence = number of posts the game has/ the total likes the game has
- - Filtering search results
-   * Giving the user control to search for a player by the game listed in the player's profile
-   * Possible solution: looping through users and identifying which match the search result.
 -  Status Implementation
    * User changes status based on how engaged they are and how often they launch the app.
    * star level can also be displayed in user's reply to posts.
