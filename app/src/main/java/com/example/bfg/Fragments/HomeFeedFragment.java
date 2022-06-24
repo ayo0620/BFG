@@ -1,23 +1,33 @@
 package com.example.bfg.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bfg.EndlessRecyclerViewScrollListener;
+import com.example.bfg.LoginActivity;
+import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Post;
 import com.example.bfg.PostsAdapter;
 import com.example.bfg.R;
+import com.google.android.material.navigation.NavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -34,9 +44,14 @@ public class HomeFeedFragment extends Fragment {
     protected List<Post> allPosts;
     private SwipeRefreshLayout swipeContainer;
     EndlessRecyclerViewScrollListener scrollListener;
-    ParseUser currentUser ;
+    DrawerLayout drawerLayout;
+    Toolbar toolbar;
+    NavigationView navigationView;
+    public MainActivity activity;
 
-    public HomeFeedFragment(){}
+    public HomeFeedFragment(MainActivity mainActivity){
+        activity = mainActivity;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +63,61 @@ public class HomeFeedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        drawerLayout = view.findViewById(R.id.drawer_layout);
+        navigationView = view.findViewById(R.id.nav_view);
+        toolbar = view.findViewById(R.id.toolbar);
+
+        //        Toolbar
+        activity.setSupportActionBar(toolbar);
+
+        //        Navigation Drawer menu
+        ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(activity, drawerLayout, toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toogle);
+        toogle.syncState();
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                Fragment fragment = null;
+                Class fragmentClass;
+                switch (menuItem.getItemId())
+                {
+                    case R.id.nav_notification:
+                        fragmentClass = NotificationFragment.class;
+                        break;
+                    case R.id.nav_settings:
+                        fragmentClass = SettingsFragment.class;
+                        break;
+                    case R.id.nav_logout:
+                        ParseUser.logOut();
+                        ParseUser currentUser = ParseUser.getCurrentUser();
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        startActivity(intent);
+                    default:
+                        fragmentClass = null;
+
+                }
+                try {
+                    fragment = (Fragment) fragmentClass.newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                // Insert the fragment by replacing any existing fragment
+                FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+
+                // Highlight the selected item has been done by NavigationView
+                menuItem.setChecked(true);
+                // Set action bar title
+                activity.setTitle(menuItem.getTitle());
+                // Close the navigation drawer
+                drawerLayout.closeDrawers();
+                return true;
+            }
+        });
+
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
@@ -90,14 +160,25 @@ public class HomeFeedFragment extends Fragment {
         queryPosts(0);
     }
 
-    private void queryPosts(int skip) {
-        //adapter.clear();
+//    @override
+//    public void onBackPressed() {
+//        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+//        {
+//            drawerLayout.closeDrawer(GravityCompat.START);
+//        }
+//        else{
+//            super.getActivity().onBackPressed();
+//        }
+//    }
+
+    public void queryPosts(int skip) {
+//        adapter.clear();
         // specify what type of data we want to query - Post.class
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         // include data referred by user key
         query.include(Post.KEY_USER);
         // limit query to latest 20 items
-        query.setLimit(20);
+        query.setLimit(10);
         query.setSkip(skip);
         // order posts by creation date (newest first)
         query.addDescendingOrder("createdAt");

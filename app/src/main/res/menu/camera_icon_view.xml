@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/camera_button"
+        android:background="@color/denim"
+        android:icon="@drawable/ic_camera_icon"
+        android:title="camera"
+        app:showAsAction="always" />
+</menu>

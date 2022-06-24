@@ -29,18 +29,15 @@ import com.google.android.material.navigation.NavigationView;
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
-    DrawerLayout  drawerLayout;
-    Toolbar toolbar;
-    NavigationView navigationView;
-
     public BottomNavigationView bottomNavigationView;
     FragmentManager fragmentManager = getSupportFragmentManager();
 
-    HomeFeedFragment homeFeedFragment = new HomeFeedFragment();
+    HomeFeedFragment homeFeedFragment = new HomeFeedFragment(this);
     SearchFragment searchFragment = new SearchFragment();
-    ComposeFragment composeFragment = new ComposeFragment();
+    ComposeFragment composeFragment = new ComposeFragment(this);
     ExploreFragment exploreFragment = new ExploreFragment();
     ProfileFragment profileFragment = new ProfileFragment();
+    DrawerLayout drawerLayout;
 
 
     @Override
@@ -49,59 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         drawerLayout = findViewById(R.id.drawer_layout);
-        navigationView = findViewById(R.id.nav_view);
-        toolbar = findViewById(R.id.toolbar);
 
-//        Toolbar
-        setSupportActionBar(toolbar);
-
-//        Navigation Drawer menu
-        ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toogle);
-        toogle.syncState();
-        navigationView.bringToFront();
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                Fragment fragment = null;
-                Class fragmentClass;
-                switch (menuItem.getItemId())
-                {
-                    case R.id.nav_notification:
-                        fragmentClass = NotificationFragment.class;
-                        break;
-                    case R.id.nav_settings:
-                        fragmentClass = SettingsFragment.class;
-                        break;
-                    case R.id.nav_logout:
-                        ParseUser.logOut();
-                        ParseUser currentUser = ParseUser.getCurrentUser();
-                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                    default:
-                        fragmentClass = null;
-
-                }
-                try {
-                    fragment = (Fragment) fragmentClass.newInstance();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                // Insert the fragment by replacing any existing fragment
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
-
-                // Highlight the selected item has been done by NavigationView
-                menuItem.setChecked(true);
-                // Set action bar title
-                setTitle(menuItem.getTitle());
-                // Close the navigation drawer
-                drawerLayout.closeDrawers();
-
-                return true;
-            }
-        });
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -139,16 +84,16 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_home_screen);
     }
 
-    @Override
-    public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START))
-        {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else{
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if(drawerLayout.isDrawerOpen(GravityCompat.START))
+//        {
+//            drawerLayout.closeDrawer(GravityCompat.START);
+//        }
+//        else{
+//            super.onBackPressed();
+//        }
+//    }
 
 
 }

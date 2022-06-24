@@ -83,7 +83,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             Glide.with(context).load(post.getImage().getUrl()).into(ivPostImage);
             tvDescription.setText(post.getDescription());
             ParseFile image = post.getUser().getParseFile(KEY_PROFILE_IMAGE);
-            Glide.with(context).load(image.getUrl()).into(ivProfileImage);
+            Glide.with(context).load(image.getUrl()).circleCrop().into(ivProfileImage);
         }
     }
     // Clean all elements of the recycler
