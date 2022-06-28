@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -34,7 +33,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Post;
-import com.example.bfg.PostsAdapter;
 import com.example.bfg.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;

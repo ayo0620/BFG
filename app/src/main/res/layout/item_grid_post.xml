@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
+    android:id="@+id/card_view_posts"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
     app:cardCornerRadius="4dp">
 
     <RelativeLayout
@@ -16,25 +14,12 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/ivCardViewImg"
+            android:id="@+id/ivCardViewImgPosts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="top"
             android:src="@drawable/img"/>
-
-        <TextView
-            android:id="@+id/tvGameTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ivCardViewImg"
-            android:layout_marginTop="0dp"
-            android:text="hey"
-            android:textAlignment="center"
-            android:textSize="20dp" />
-
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
-
-

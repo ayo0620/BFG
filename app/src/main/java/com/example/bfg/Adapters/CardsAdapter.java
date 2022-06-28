@@ -1,7 +1,6 @@
-package com.example.bfg;
+package com.example.bfg.Adapters;
 
 import android.content.Context;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.example.bfg.Models.Cards;
-import com.example.bfg.Models.Post;
-import com.parse.ParseFile;
+import com.example.bfg.R;
 
-import java.util.Date;
 import java.util.List;
 
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
@@ -68,8 +66,8 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
         public void bind(Cards cards) {
             tvGameTitle.setText(cards.getName());
             String img = cards.getImage();
-            img = img.replace("{width}","50");
-            img = img.replace("{height}","50");;
+            img = img.replace("{width}","496");
+            img = img.replace("{height}","600");
             Glide.with(context).load(img).into(ivCardViewImg);
         }
     }

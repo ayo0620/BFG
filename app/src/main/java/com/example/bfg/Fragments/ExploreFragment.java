@@ -1,26 +1,23 @@
 package com.example.bfg.Fragments;
 
-import android.graphics.Movie;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestHeaders;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.example.bfg.CardsAdapter;
+import com.example.bfg.Adapters.CardsAdapter;
 import com.example.bfg.Models.Cards;
 import com.example.bfg.R;
 
@@ -61,6 +58,8 @@ public class ExploreFragment extends Fragment {
 
 
         super.onViewCreated(view, savedInstanceState);
+
+
         RequestParams params = new RequestParams();
         RequestHeaders headers = new RequestHeaders();
         AsyncHttpClient client = new AsyncHttpClient();
@@ -77,10 +76,8 @@ public class ExploreFragment extends Fragment {
                     JSONArray gameItems = jsonObject.getJSONArray("data");
                     JSONObject obj = gameItems.getJSONObject(0);
                     String arr = obj.getString("box_art_url");
-                    int width = 30;
-                    int height = 30;
-                    arr = arr.replace("{width}","30");
-                    arr  = arr.replace("{height}","30");;
+                    arr = arr.replace("{width}","20");
+                    arr  = arr.replace("{height}","20");;
                     Log.i(TAG, arr);
 //                    Log.i(TAG, gameItems.toString());
                     allcards.addAll(Cards.fromJsonArray(gameItems));

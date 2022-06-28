@@ -1,4 +1,4 @@
-package com.example.bfg;
+package com.example.bfg.Adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.bfg.Models.Post;
+import com.example.bfg.R;
 import com.parse.ParseFile;
 
 import java.util.Date;
