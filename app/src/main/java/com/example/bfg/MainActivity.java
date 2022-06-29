@@ -8,14 +8,17 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 
 import android.app.Notification;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.bfg.Adapters.ViewPagerAdapter;
 import com.example.bfg.Fragments.ComposeFragment;
 import com.example.bfg.Fragments.ExploreFragment;
 import com.example.bfg.Fragments.HomeFeedFragment;
@@ -23,14 +26,18 @@ import com.example.bfg.Fragments.NotificationFragment;
 import com.example.bfg.Fragments.ProfileFragment;
 import com.example.bfg.Fragments.SearchFragment;
 import com.example.bfg.Fragments.SettingsFragment;
+import com.example.bfg.Fragments.UserFavoritedFragment;
+import com.example.bfg.Fragments.UserPostsFragment;
 import com.example.bfg.Models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.parse.ParseUser;
 
 public class MainActivity extends AppCompatActivity {
     public BottomNavigationView bottomNavigationView;
     FragmentManager fragmentManager = getSupportFragmentManager();
+
 
     HomeFeedFragment homeFeedFragment = new HomeFeedFragment(this);
     SearchFragment searchFragment = new SearchFragment();
@@ -45,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+//        Navigation_drawer
         drawerLayout = findViewById(R.id.drawer_layout);
-
-
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -73,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.action_profile_screen:
                         Toast.makeText(MainActivity.this,"profile!",Toast.LENGTH_SHORT).show();
                         fragment = profileFragment;
+                        Log.i("profile","selectTab");
                         break;
                     default:
                         break;

@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
 }
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 
 android {
     compileSdk 32
@@ -13,6 +16,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "CLIEND_ID", "\"${properties.getProperty('CLIENT_ID')}\""
+        buildConfigField "String", "TOKEN", "\"${properties.getProperty('TOKEN')}\""
+
     }
 
     buildTypes {

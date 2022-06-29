@@ -15,11 +15,11 @@
        app:srcCompat="@drawable/img" />
 
    <RelativeLayout
+       android:id="@+id/rlTop"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:layout_below="@+id/backCover"
-       android:background="@drawable/layout_bg"
-       android:backgroundTint="@color/denim">
+       android:background="@drawable/layout_bg_profile">
 
 
       <com.google.android.material.imageview.ShapeableImageView
@@ -102,25 +102,16 @@
           android:layout_below="@+id/btnEditProfile"
           app:tabBackground="@color/denim"
           app:tabGravity="fill">
-
-         <com.google.android.material.tabs.TabItem
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="Posts" />
-
-         <com.google.android.material.tabs.TabItem
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="Favorited" />
-
       </com.google.android.material.tabs.TabLayout>
 
       <androidx.viewpager.widget.ViewPager
           android:id="@+id/viewPager"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_below="@+id/tabLayout" />
-
+          android:layout_below="@+id/tabLayout"
+          android:layout_alignParentEnd="true"
+          android:layout_marginTop="2dp"
+          android:layout_marginEnd="0dp" />
 
    </RelativeLayout>
 

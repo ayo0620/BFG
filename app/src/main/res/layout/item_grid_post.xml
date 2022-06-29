@@ -11,7 +11,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/ivCardViewImgPosts"
@@ -20,6 +20,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_gravity="top"
-            android:src="@drawable/img"/>
+            android:src="@drawable/img" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

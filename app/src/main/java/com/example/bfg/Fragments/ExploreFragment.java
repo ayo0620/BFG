@@ -18,6 +18,7 @@ import com.codepath.asynchttpclient.RequestHeaders;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.bfg.Adapters.CardsAdapter;
+import com.example.bfg.BuildConfig;
 import com.example.bfg.Models.Cards;
 import com.example.bfg.R;
 
@@ -64,10 +65,11 @@ public class ExploreFragment extends Fragment {
         RequestHeaders headers = new RequestHeaders();
         AsyncHttpClient client = new AsyncHttpClient();
 
+
         String url = "https://api.twitch.tv/helix/games/top";
         params.put("first", 100);
-        headers.put("Client-Id","uebmknafmicy61tmu87azkl202hrun");
-        headers.put("Authorization","Bearer h2w8zrlxts458ligt8okgucd5pdcim");
+        headers.put("Client-Id", BuildConfig.CLIEND_ID);
+        headers.put("Authorization",BuildConfig.TOKEN);
         client.get(url, headers,params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
