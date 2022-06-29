@@ -33,9 +33,15 @@ import java.util.List;
 public class UserPostsFragment extends Fragment {
     GridView gridView;
     RecyclerView rvGridPosts;
+    public static final String TAG = UserPostsFragment.class.getSimpleName();
 
     public UserPostsFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -54,7 +60,7 @@ public class UserPostsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.i("Userposts", "hey");
+        Log.i(TAG, "onViewCreated: ");
         gridView = view.findViewById(R.id.gridView);
         setUpGridView();
         super.onViewCreated(view, savedInstanceState);

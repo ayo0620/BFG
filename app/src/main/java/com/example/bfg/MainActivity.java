@@ -62,23 +62,18 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 switch (item.getItemId()) {
                     case R.id.action_home_screen:
-                        Toast.makeText(MainActivity.this,"home!",Toast.LENGTH_SHORT).show();
                         fragment = homeFeedFragment;
                         break;
                     case R.id.action_Search:
-                        Toast.makeText(MainActivity.this,"search!",Toast.LENGTH_SHORT).show();
                         fragment = searchFragment;
                         break;
                     case R.id.action_addPost:
-                        Toast.makeText(MainActivity.this,"addPost!",Toast.LENGTH_SHORT).show();
                         fragment = composeFragment;
                         break;
                     case R.id.action_explore:
-                        Toast.makeText(MainActivity.this,"explore!",Toast.LENGTH_SHORT).show();
                         fragment = exploreFragment;
                         break;
                     case R.id.action_profile_screen:
-                        Toast.makeText(MainActivity.this,"profile!",Toast.LENGTH_SHORT).show();
                         fragment = profileFragment;
                         Log.i("profile","selectTab");
                         break;

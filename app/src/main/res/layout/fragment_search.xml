@@ -15,8 +15,8 @@
         android:fitsSystemWindows="true"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"></androidx.appcompat.widget.Toolbar>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSearch"
+    <ListView
+        android:id="@+id/lvSearch"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/searchToolbar"
