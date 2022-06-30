@@ -57,9 +57,7 @@ public class ExploreFragment extends Fragment {
         rvCards.setAdapter(adapter);
         rvCards.setHasFixedSize(true);
 
-
         super.onViewCreated(view, savedInstanceState);
-
 
         RequestParams params = new RequestParams();
         RequestHeaders headers = new RequestHeaders();
