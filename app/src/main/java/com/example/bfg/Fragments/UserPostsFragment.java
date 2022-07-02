@@ -25,6 +25,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +82,10 @@ public class UserPostsFragment extends Fragment {
                     Log.i("UserPost ","issue accessing posts",e);
                 }
                 for (Post post : posts) {
-                    allposts.add(post.getImage());
+                    ParseUser user = ParseUser.getCurrentUser();
+                    if(post.getUser().getObjectId().equals(user.getObjectId())) {
+                        allposts.add(post.getImage());
+                    }
                 }
                 int gridwidth = getResources().getDisplayMetrics().widthPixels;
                 int imageWidth = gridwidth/ 3;

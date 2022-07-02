@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <queries>
+
         <!-- Camera -->
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
@@ -14,8 +15,8 @@
     </queries>
 
     <application
-        android:allowBackup="true"
         android:name=".PareseActivation"
+        android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -25,6 +26,9 @@
         android:theme="@style/Theme.BFG"
         tools:targetApi="31">
         <activity
+            android:name=".SearchGamesActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
@@ -33,6 +37,7 @@
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.fileprovider.BFG"
@@ -42,6 +47,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/fileprovider2" />
         </provider>
+
         <activity
             android:name=".SplashScreen"
             android:exported="true">

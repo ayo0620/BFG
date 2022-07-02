@@ -34,6 +34,7 @@ import com.bumptech.glide.Glide;
 import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Post;
 import com.example.bfg.R;
+import com.example.bfg.SearchGamesActivity;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -48,6 +49,8 @@ public class ComposeFragment extends Fragment {
     private ImageView ivUserImage;
     private Button btnPost;
     private Toolbar toolbarCompose;
+    private TextView tvPickGameCategory;
+    private TextView tvSetGameCategory;
     MainActivity activity;
     protected File photoFile;
     protected String photoFileName = "photo.jpg";
@@ -74,14 +77,30 @@ public class ComposeFragment extends Fragment {
         ivUserImage = view.findViewById(R.id.ivUserImage);
         btnPost = view.findViewById(R.id.btnPost);
         toolbarCompose = (Toolbar)getActivity().findViewById(R.id.toolbarCompose);
+        tvPickGameCategory = view.findViewById(R.id.tvPickGameCategory);
+        tvSetGameCategory = view.findViewById(R.id.tvSetGameCategory);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbarCompose);
 
-
         ParseUser user = ParseUser.getCurrentUser();
         ParseFile image = user.getParseFile(KEY_PROFILE_IMAGE);
-        Glide.with(getActivity()).load(image.getUrl()).circleCrop().into(ivComposeProfileImage);
+        if (image == null)
+        {
+            ivComposeProfileImage.setVisibility(View.GONE);
+        }
+        else {
+            Glide.with(getActivity()).load(image.getUrl()).circleCrop().into(ivComposeProfileImage);
+        }
         setHasOptionsMenu(true);
+
+//        tvSetGameCategory.setVisibility(View.GONE);
+        tvPickGameCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), SearchGamesActivity.class);
+                startActivity(i);
+            }
+        });
 
         btnPost.setOnClickListener(new View.OnClickListener() {
             @Override

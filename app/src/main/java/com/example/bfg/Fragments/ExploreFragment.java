@@ -1,17 +1,27 @@
 package com.example.bfg.Fragments;
 
+import android.annotation.SuppressLint;
+import android.app.SearchManager;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.ActionMenuItem;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestHeaders;
@@ -19,6 +29,7 @@ import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.bfg.Adapters.CardsAdapter;
 import com.example.bfg.BuildConfig;
+import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Cards;
 import com.example.bfg.R;
 
@@ -36,6 +47,10 @@ public class ExploreFragment extends Fragment {
     List<Cards> allcards;
     CardsAdapter adapter;
     RecyclerView rvCards;
+    MenuItem menuItem;
+    SearchView searchView;
+    Toolbar toolbar;
+    MainActivity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,8 +59,12 @@ public class ExploreFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_explore, container, false);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        toolbar = getActivity().findViewById(R.id.exploreToolbar);
+        toolbar.setTitle("Explore");
+        toolbar.setTitleTextColor(Color.WHITE);
 
         allcards = new ArrayList<>();
         adapter = new CardsAdapter(getContext(), allcards);
@@ -59,10 +78,11 @@ public class ExploreFragment extends Fragment {
 
         super.onViewCreated(view, savedInstanceState);
 
+
+//        Api call
         RequestParams params = new RequestParams();
         RequestHeaders headers = new RequestHeaders();
         AsyncHttpClient client = new AsyncHttpClient();
-
 
         String url = "https://api.twitch.tv/helix/games/top";
         params.put("first", 100);
@@ -94,10 +114,27 @@ public class ExploreFragment extends Fragment {
                 Log.i("gg",response);
             }
         });
-
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menuItem= menu.findItem(R.id.action_Search_icon);
+        searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Type here to search");
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 }
 
 

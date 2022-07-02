@@ -1,10 +1,12 @@
 package com.example.bfg.Adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.bfg.Models.Post;
 import com.example.bfg.R;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.util.Date;
 import java.util.List;
@@ -22,6 +25,8 @@ import java.util.List;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
     private Context context;
     private List<Post> posts;
+    public String likeCount;
+    public String likeText;
 
     public PostsAdapter(Context context, List<Post>posts) {
         this.context = context;
@@ -56,6 +61,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         public ImageView ivProfileImage;
         public TextView tvStatus;
         public TextView tvTimeStamp;
+        public ImageButton ibLike;
+        public TextView tvLikeCount;
         public static  final String KEY_PROFILE_IMAGE = "ProfileImage";
 
 
@@ -72,9 +79,12 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvTimeStamp = itemView.findViewById(R.id.tvTimeStamp);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+            ibLike = itemView.findViewById(R.id.ibLike);
+            tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
         }
 
         public void bind(Post post) {
+            List<String> likeBy = post.getLikedBy();
             tvUsername.setText(post.getUser().getUsername());
             tvStatus.setText("Elite");
             Date createdAt  = post.getCreatedAt();
@@ -83,7 +93,58 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             Glide.with(context).load(post.getImage().getUrl()).into(ivPostImage);
             tvDescription.setText(post.getDescription());
             ParseFile image = post.getUser().getParseFile(KEY_PROFILE_IMAGE);
-            Glide.with(context).load(image.getUrl()).circleCrop().into(ivProfileImage);
+            if(image == null)
+            {
+                Glide.with(context).load(R.drawable.default_profile_icon).circleCrop().into(ivProfileImage);
+            }
+            else {
+                Glide.with(context).load(image.getUrl()).circleCrop().into(ivProfileImage);
+            }
+            ParseUser user = ParseUser.getCurrentUser();
+            if(post.getLikedBy().contains(user.getObjectId()))
+            {
+                Drawable newImage = context.getDrawable(R.drawable.ic_favorited_active);
+                ibLike.setImageDrawable(newImage);
+                likeText = String.valueOf(post.likeCountDisplayText());
+                likeCount = String.valueOf(likeBy.size());
+                tvLikeCount.setText(likeCount +" "+likeText);
+            }
+           else if(!post.getLikedBy().contains(user.getObjectId()))
+            {
+                Drawable newImage = context.getDrawable(R.drawable.ic_favorite_icon_24);
+                ibLike.setImageDrawable(newImage);
+                likeText = String.valueOf(post.likeCountDisplayText());
+                likeCount = String.valueOf(likeBy.size());
+                tvLikeCount.setText(likeCount +" "+likeText);
+            }
+            ibLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!likeBy.contains(ParseUser.getCurrentUser().getObjectId()))
+                    {
+                        likeBy.add(ParseUser.getCurrentUser().getObjectId());
+                        post.setLikedBy(likeBy);
+                        Drawable newImage = context.getDrawable(R.drawable.ic_favorited_active);
+                        ibLike.setImageDrawable(newImage);
+                        post.setFavoritedBool(true);
+                        likeText = String.valueOf(post.likeCountDisplayText());
+                        likeCount = String.valueOf(likeBy.size());
+                        tvLikeCount.setText(likeCount +" "+likeText);
+                    }
+                    else
+                    {
+                        likeBy.remove(ParseUser.getCurrentUser().getObjectId());
+                        post.setLikedBy(likeBy);
+                        Drawable newImage = context.getDrawable(R.drawable.ic_favorite_icon_24);
+                        ibLike.setImageDrawable(newImage);
+                        post.setFavoritedBool(false);
+                        likeText = String.valueOf(post.likeCountDisplayText());
+                        likeCount = String.valueOf(likeBy.size());
+                        tvLikeCount.setText(likeCount+ " "+likeText);
+                    }
+                    post.saveInBackground();
+                }
+            });
         }
     }
     // Clean all elements of the recycler

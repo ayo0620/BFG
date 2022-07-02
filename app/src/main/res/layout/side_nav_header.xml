@@ -12,6 +12,7 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginStart="20dp"
+        android:id="@+id/side_nav_profile_img"
         android:src="@drawable/img"/>
 
     <TextView

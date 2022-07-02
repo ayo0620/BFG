@@ -19,9 +19,9 @@
     </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
+        android:id="@+id/rlCompose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rlCompose"
         android:layout_below="@+id/toolbarCompose"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
@@ -30,9 +30,12 @@
 
         <ImageView
             android:id="@+id/ivComposeProfileImage"
-            android:layout_margin="5dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             tools:src="@tools:sample/avatars" />
 
         <EditText
@@ -67,14 +70,36 @@
         <ImageView
             android:id="@+id/ivUserImage"
             android:layout_width="match_parent"
-            android:layout_margin="5dp"
             android:layout_height="300dp"
             android:layout_below="@+id/text_count"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:scaleType="centerCrop"
             tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvPickGameCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/tvSetGameCategory"
+            android:text="Choose game category"
+            android:textColor="@color/blue" />
+
+        <TextView
+            android:id="@+id/tvSetGameCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/ivComposeProfileImage"
+            android:text="TextView" />
     </RelativeLayout>
 
     <Button
