@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/denim"
     tools:context=".Fragments.ComposeFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -26,6 +27,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
+        android:backgroundTint="@color/denim"
         android:background="@drawable/layout_bg">
 
         <ImageView
@@ -85,21 +87,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="70dp"
+            android:layout_marginStart="130dp"
             android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/tvSetGameCategory"
-            android:text="Choose game category"
+            android:layout_toEndOf="@+id/ivComposeProfileImage"
+            android:text="Choose game category>"
             android:textColor="@color/blue" />
 
         <TextView
             android:id="@+id/tvSetGameCategory"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="0dp"
             android:layout_toEndOf="@+id/ivComposeProfileImage"
-            android:text="TextView" />
+            android:text="game" />
     </RelativeLayout>
 
     <Button

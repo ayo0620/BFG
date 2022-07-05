@@ -3,14 +3,18 @@ package com.example.bfg.Models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Parcel
 public class Cards {
     public String  gameName;
     public String gameimage;
     public String gameCatergory;
+
+    public Cards(){}
 
     public Cards(JSONObject jsonObject) throws JSONException {
         gameName = jsonObject.getString("name");

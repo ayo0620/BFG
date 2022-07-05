@@ -18,6 +18,7 @@ public class Post extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_LIKED_BY = "likedby";
     public static final String KEY_FAVORITED_BOOL = "favorited";
+    public static final String KEY_POST_FOR_GAME = "PostForGame";
 
     public ParseFile getImage(){
         return (getParseFile(KEY_IMAGE));
@@ -76,6 +77,12 @@ public class Post extends ParseObject {
     public void setFavoritedBool(Boolean favoritedBool)
     {
         put(KEY_FAVORITED_BOOL, favoritedBool);
+    }
+    public String getPostForGame(){
+        return getString(KEY_POST_FOR_GAME);
+    }
+    public void setPostForGame(String gameName){
+        put(KEY_POST_FOR_GAME,gameName);
     }
 
     public String calculateTimeAgo(Date createdAt) {

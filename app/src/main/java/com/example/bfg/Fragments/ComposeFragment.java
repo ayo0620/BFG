@@ -5,6 +5,8 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Movie;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -32,6 +34,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.bfg.MainActivity;
+import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.Post;
 import com.example.bfg.R;
 import com.example.bfg.SearchGamesActivity;
@@ -40,6 +43,8 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.parceler.Parcels;
+
 import java.io.File;
 
 public class ComposeFragment extends Fragment {
@@ -47,6 +52,7 @@ public class ComposeFragment extends Fragment {
     private ImageView ivComposeProfileImage;
     private TextView etComposeDescription;
     private ImageView ivUserImage;
+    private Cards cards;
     private Button btnPost;
     private Toolbar toolbarCompose;
     private TextView tvPickGameCategory;
@@ -57,6 +63,8 @@ public class ComposeFragment extends Fragment {
     private static final String TAG = "ComposeFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
 
+    public ComposeFragment() {
+    }
     public ComposeFragment(MainActivity mainActivity){
         activity = mainActivity;
     }
@@ -79,8 +87,17 @@ public class ComposeFragment extends Fragment {
         toolbarCompose = (Toolbar)getActivity().findViewById(R.id.toolbarCompose);
         tvPickGameCategory = view.findViewById(R.id.tvPickGameCategory);
         tvSetGameCategory = view.findViewById(R.id.tvSetGameCategory);
+        tvSetGameCategory.setVisibility(View.GONE);
 
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbarCompose);
+
+//        set title choosing by user from searchGameActivity;
+        if (activity.cards!= null)
+        {
+            tvSetGameCategory.setVisibility(View.VISIBLE);
+            tvSetGameCategory.setText(activity.cards.getName());
+            tvSetGameCategory.setTextColor(Color.WHITE);
+        }
 
         ParseUser user = ParseUser.getCurrentUser();
         ParseFile image = user.getParseFile(KEY_PROFILE_IMAGE);
@@ -117,7 +134,8 @@ public class ComposeFragment extends Fragment {
                     return;
                 }
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(description, currentUser, photoFile);
+                String gameForPost = tvSetGameCategory.getText().toString();
+                savePost(description, currentUser, photoFile,gameForPost);
                 activity.bottomNavigationView.setSelectedItemId(R.id.action_home_screen);
             }
         });
@@ -192,11 +210,12 @@ public class ComposeFragment extends Fragment {
         }
     }
 
-    private void savePost(String description, ParseUser currentUser, File photoFile) {
+    private void savePost(String description, ParseUser currentUser, File photoFile, String gameName) {
         Post post = new Post();
         post.setDescription(description);
         post.setImage(new ParseFile(photoFile));
         post.setUser(currentUser);
+        post.setPostForGame(gameName);
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -207,6 +226,7 @@ public class ComposeFragment extends Fragment {
                 }
                 Log.i(TAG,"Post was saved successfully!");
                 etComposeDescription.setText("");
+                tvSetGameCategory.setText("");
                 ivUserImage.setImageResource(0);
             }
         });

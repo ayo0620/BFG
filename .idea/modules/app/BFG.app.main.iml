@@ -58,6 +58,7 @@
     <orderEntry type="library" name="Gradle: com.github.scribejava:scribejava-apis:4.1.1" level="project" />
     <orderEntry type="library" name="Gradle: com.github.scribejava:scribejava-core:4.1.1" level="project" />
     <orderEntry type="library" name="Gradle: com.github.scribejava:scribejava-httpclient-okhttp:4.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: org.parceler:parceler-api:1.1.12" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.4.2@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.core:core:1.7.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.annotation:annotation-experimental:1.1.0@aar" level="project" />

@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.app.Notification;
 import android.content.Intent;
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -28,16 +29,19 @@ import com.example.bfg.Fragments.SearchFragment;
 import com.example.bfg.Fragments.SettingsFragment;
 import com.example.bfg.Fragments.UserFavoritedFragment;
 import com.example.bfg.Fragments.UserPostsFragment;
+import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.parse.ParseUser;
 
+import org.parceler.Parcels;
+
 public class MainActivity extends AppCompatActivity {
     public BottomNavigationView bottomNavigationView;
     FragmentManager fragmentManager = getSupportFragmentManager();
-
+    public Cards cards;
 
     HomeFeedFragment homeFeedFragment = new HomeFeedFragment(this);
     SearchFragment searchFragment = new SearchFragment();
@@ -84,7 +88,16 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        bottomNavigationView.setSelectedItemId(R.id.action_home_screen);
+
+//       setting fl layout for composeFragment if intent comes from searchGameActivity
+        cards = Parcels.unwrap(getIntent().getParcelableExtra(Cards.class.getSimpleName()));
+        if (cards!= null)
+        {
+            bottomNavigationView.setSelectedItemId(R.id.action_addPost);
+        }
+        else{
+            bottomNavigationView.setSelectedItemId(R.id.action_home_screen);
+        }
     }
 
 //    @Override
