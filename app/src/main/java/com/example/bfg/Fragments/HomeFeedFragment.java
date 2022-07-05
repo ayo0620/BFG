@@ -116,9 +116,11 @@ public class HomeFeedFragment extends Fragment {
                 }
 
                 // Insert the fragment by replacing any existing fragment
-                FragmentManager fragmentManager = activity.getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                if (fragment != null) {
 
+                    FragmentManager fragmentManager = activity.getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                }
                 // Highlight the selected item has been done by NavigationView
                 menuItem.setChecked(true);
                 // Set action bar title

@@ -79,6 +79,7 @@ public class ExploreFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
+
 //        Api call
         RequestParams params = new RequestParams();
         RequestHeaders headers = new RequestHeaders();
@@ -125,6 +126,7 @@ public class ExploreFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                Log.i(TAG,"submitted!");
                 return false;
             }
 

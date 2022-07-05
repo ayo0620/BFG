@@ -111,6 +111,7 @@ public class GameSearchAdapter extends RecyclerView.Adapter<GameSearchAdapter.Vi
 //                context.startActivity(i);
             }
         }
+
     }
 
 
