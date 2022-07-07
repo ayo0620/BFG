@@ -16,6 +16,7 @@ import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.example.bfg.Models.Cards;
 import com.example.bfg.R;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {

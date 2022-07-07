@@ -67,7 +67,7 @@ public class SearchFragment extends Fragment {
         rvSearch.setAdapter(adapter);
         rvSearch.clearFocus();
         // set the layout manager on the recycler view
-        rvSearch.setLayoutManager(layoutManager);;
+        rvSearch.setLayoutManager(layoutManager);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

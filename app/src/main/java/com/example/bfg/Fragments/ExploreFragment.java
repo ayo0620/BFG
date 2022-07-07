@@ -1,14 +1,11 @@
 package com.example.bfg.Fragments;
 
 import android.annotation.SuppressLint;
-import android.app.SearchManager;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.view.menu.ActionMenuItem;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -29,28 +26,47 @@ import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.bfg.Adapters.CardsAdapter;
 import com.example.bfg.BuildConfig;
-import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Cards;
+import com.example.bfg.Models.Post;
 import com.example.bfg.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Headers;
 
 public class ExploreFragment extends Fragment {
     public static final String TAG = "ExploreFragment";
     List<Cards> allcards;
+    List<Cards> myCards;
+    public static List<Cards> allItems2;
     CardsAdapter adapter;
     RecyclerView rvCards;
     MenuItem menuItem;
     SearchView searchView;
     Toolbar toolbar;
-    MainActivity activity;
+    BigDecimal num1,num2;
+    public HashMap<String, Integer> likesTotal = new HashMap<String, Integer>();
+    public HashMap<String, Integer> postTotal = new HashMap<String, Integer>();
+    public HashMap<String, Double> likePostRatio = new HashMap<String, Double>();
+    HashMap<String, Double> sortedMap;
+
+
+    public ExploreFragment(){}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +83,7 @@ public class ExploreFragment extends Fragment {
         toolbar.setTitleTextColor(Color.WHITE);
 
         allcards = new ArrayList<>();
+        myCards = new ArrayList<>();
         adapter = new CardsAdapter(getContext(), allcards);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
@@ -76,11 +93,86 @@ public class ExploreFragment extends Fragment {
         rvCards.setAdapter(adapter);
         rvCards.setHasFixedSize(true);
 
+        //        Api call
+        sortExplorePage();
+
         super.onViewCreated(view, savedInstanceState);
+    }
 
+    private void sortExplorePage() {
+        ParseQuery<Post> myPosts = ParseQuery.getQuery(Post.class);
+        myPosts.include(Post.KEY_POST_FOR_GAME);
+        myPosts.include(Post.KEY_LIKED_BY);
+        myPosts.addDescendingOrder("createdAt");
+        myPosts.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                for (Post post : posts) {
+                    if (!postTotal.containsKey(post.getPostForGame())) {
+                        postTotal.put(post.getPostForGame(), 1);
+                        likesTotal.put(post.getPostForGame(), post.getLikedBy().size());
+                        Double calc = post.getLikedBy().size() / 1.0;
+                        likePostRatio.put(post.getPostForGame(), calc);
+                    } else {
+                        int postTotalForGame = postTotal.get(post.getPostForGame()) + 1;
+                        int likeTotalForGame = likesTotal.get(post.getPostForGame()) + post.getLikedBy().size();
+                        postTotal.put(post.getPostForGame(), postTotalForGame);
+                        likesTotal.put(post.getPostForGame(), likeTotalForGame);
+                        Double calc = Double.valueOf(likeTotalForGame) / Double.valueOf(postTotalForGame);
+                        likePostRatio.put(post.getPostForGame(), calc);
+                    }
+                }
+                Log.i("posts", postTotal.toString());
+                Log.i("posts", likesTotal.toString());
+                Log.i("posts", likePostRatio.toString());
 
+                sortedMap = sortedByValue(likePostRatio, false);
+                Log.i("sorted", sortedMap.toString());
+//                addToExploreList(sortedMap);
+                setSortedGames(sortedMap);
+            }
+        });
+    }
 
-//        Api call
+    private void addToExploreList(Map<String, Double> sortedMap) {
+        for (String keys: sortedMap.keySet())
+        {
+            RequestParams params = new RequestParams();
+            RequestHeaders headers = new RequestHeaders();
+            AsyncHttpClient client = new AsyncHttpClient();
+
+            String url = "https://api.twitch.tv/helix/games";
+            params.put("name", keys);
+            Log.i("keys", keys);
+            headers.put("Client-Id", BuildConfig.CLIEND_ID);
+            headers.put("Authorization",BuildConfig.TOKEN);
+            client.get(url, headers,params, new JsonHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Headers headers, JSON json) {
+                    JSONObject jsonObject = json.jsonObject;
+                    try {
+                        JSONArray gameItems = jsonObject.getJSONArray("data");
+                        JSONObject obj = gameItems.getJSONObject(0);
+                        allcards.add(new Cards(gameItems.getJSONObject(0)));
+//                        allcards.addAll(Cards.fromJsonArraySorted(gameItems));
+//                        Collections.reverse(allcards);
+                        adapter.notifyDataSetChanged();
+                        String arr = obj.getString("name");
+                    } catch (JSONException e) {
+                        Log.e("gg", "Hit json exception",e);
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                    Log.i("gg",response);
+                }
+            });
+        }
+    }
+
+    private void setSortedGames(HashMap<String, Double> likePostRatio) {
         RequestParams params = new RequestParams();
         RequestHeaders headers = new RequestHeaders();
         AsyncHttpClient client = new AsyncHttpClient();
@@ -94,14 +186,37 @@ public class ExploreFragment extends Fragment {
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 JSONObject jsonObject = json.jsonObject;
                 try {
+                    HashMap<String, Cards> gameList = new HashMap<String, Cards>();
                     JSONArray gameItems = jsonObject.getJSONArray("data");
                     JSONObject obj = gameItems.getJSONObject(0);
-                    String arr = obj.getString("box_art_url");
+                    Log.i(TAG, obj.toString());
+                    String arr = obj.getString("name");
+                    for (int i= 0; i<gameItems.length();i++)
+                    {
+                        String gameName = gameItems.getJSONObject(i).getString("name");
+                        gameList.put(gameName,new Cards(gameItems.getJSONObject(i)));
+                    }
+                    for (String keys: likePostRatio.keySet())
+                    {
+                        if(gameList.containsKey(keys))
+                        {
+                            allcards.add(gameList.get(keys));
+                        }
+                    }
+
+                    for (String keys: gameList.keySet())
+                    {
+                        if(!likePostRatio.containsKey(keys))
+                        {
+                            allcards.add(gameList.get(keys));
+                        }
+                    }
+
                     arr = arr.replace("{width}","20");
-                    arr  = arr.replace("{height}","20");;
+                    arr  = arr.replace("{height}","20");
                     Log.i(TAG, arr);
-//                    Log.i(TAG, gameItems.toString());
-                    allcards.addAll(Cards.fromJsonArray(gameItems));
+                    Log.i("myCards",Cards.fromJsonArray(gameItems).toString());
+//                    allcards.addAll(Cards.fromJsonArray(gameItems));
                     Log.i(TAG, "Items: " + allcards.size());
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
@@ -115,6 +230,34 @@ public class ExploreFragment extends Fragment {
                 Log.i("gg",response);
             }
         });
+    }
+
+
+    private HashMap<String, Double> sortedByValue(HashMap<String, Double> likePostRatio, boolean order) {
+        //convert HashMap into List
+        List<HashMap.Entry<String, Double>> list = new LinkedList<HashMap.Entry<String, Double>>(likePostRatio.entrySet());
+        //sorting the list elements
+        Collections.sort(list, new Comparator<HashMap.Entry<String, Double>>()
+        {
+            public int compare(HashMap.Entry<String, Double> o1, HashMap.Entry<String, Double> o2)
+            {
+                if (order)
+                {
+                //compare two object and return an integer
+                    return o1.getValue().compareTo(o2.getValue());}
+                else
+                {
+                    return o2.getValue().compareTo(o1.getValue());
+                }
+            }
+        });
+        //prints the sorted HashMap
+        HashMap<String, Double> sortedMap = new LinkedHashMap<String, Double>();
+        for (HashMap.Entry<String, Double> entry : list)
+        {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+        return sortedMap;
     }
 
     @Override

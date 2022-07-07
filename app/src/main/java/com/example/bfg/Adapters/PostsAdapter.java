@@ -14,8 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.bfg.Models.Post;
 import com.example.bfg.R;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -58,7 +60,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         public TextView tvUsername;
         public ImageView ivPostImage;
         public TextView tvDescription;
-        public ImageView ivProfileImage;
+        public ShapeableImageView ivProfileImage;
         public TextView tvStatus;
         public TextView tvTimeStamp;
         public ImageButton ibLike;
@@ -95,10 +97,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ParseFile image = post.getUser().getParseFile(KEY_PROFILE_IMAGE);
             if(image == null)
             {
-                Glide.with(context).load(R.drawable.default_profile_icon).circleCrop().into(ivProfileImage);
+                Glide.with(context).load(R.drawable.default_profile_icon).centerCrop().into(ivProfileImage);
             }
             else {
-                Glide.with(context).load(image.getUrl()).circleCrop().into(ivProfileImage);
+                Glide.with(context).load(image.getUrl()).centerCrop().into(ivProfileImage);
             }
             ParseUser user = ParseUser.getCurrentUser();
             if(post.getLikedBy().contains(user.getObjectId()))

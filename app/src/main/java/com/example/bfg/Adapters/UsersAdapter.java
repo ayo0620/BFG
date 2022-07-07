@@ -13,9 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.bfg.Models.Post;
 import com.example.bfg.Models.User;
 import com.example.bfg.R;
+import com.google.android.material.imageview.ShapeableImageView;
 import com.parse.ParseFile;
 
 import java.util.ArrayList;
@@ -54,7 +56,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public TextView tvSearchUsername;
-        public ImageView ivSearchImage;
+        public ShapeableImageView ivSearchImage;
         public TextView tvSearchStatus;
         public static  final String KEY_PROFILE_IMAGE = "ProfileImage";
 
@@ -80,7 +82,8 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 Glide.with(context).load(R.drawable.default_profile_icon).into(ivSearchImage);
             }
             else {
-                Glide.with(context).load(image.getUrl()).into(ivSearchImage);
+                int radius = 200;
+                Glide.with(context).load(image.getUrl()).centerCrop().into(ivSearchImage);
             }
         }
     }
