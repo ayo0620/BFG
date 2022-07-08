@@ -1,14 +1,18 @@
 package com.example.bfg.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,10 +34,11 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public String likeCount;
     public String likeText;
 
-    public PostsAdapter(Context context, List<Post>posts) {
+    public PostsAdapter(Context context, List<Post> posts) {
         this.context = context;
         this.posts = posts;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,7 +49,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post = posts.get(position);
-        Log.i("Adapter",post.toString());
+        Log.i("Adapter", post.toString());
         holder.bind(post);
     }
 
@@ -52,20 +57,23 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public int getItemCount() {
         return posts.size();
     }
+
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public TextView tvUsername;
-        public ImageView ivPostImage;
-        public TextView tvDescription;
-        public ShapeableImageView ivProfileImage;
-        public TextView tvStatus;
-        public TextView tvTimeStamp;
-        public ImageButton ibLike;
-        public TextView tvLikeCount;
-        public static  final String KEY_PROFILE_IMAGE = "ProfileImage";
+        private TextView tvUsername;
+        private ImageView ivPostImage;
+        private TextView tvDescription;
+        private ShapeableImageView ivProfileImage;
+        private TextView tvStatus;
+        private TextView tvTimeStamp;
+        private ImageButton ibLike;
+        private TextView tvLikeCount;
+        private ImageView ivDoubleTapLike;
+
+        public static final String KEY_PROFILE_IMAGE = "ProfileImage";
 
 
         // We also create a constructor that accepts the entire item row
@@ -75,7 +83,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             // to access the context from any ViewHolder instance.
             super(itemView);
 
-            tvUsername =  itemView.findViewById(R.id.tvUsername);
+            tvUsername = itemView.findViewById(R.id.tvUsername);
             ivPostImage = itemView.findViewById(R.id.ivPostImage);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvStatus = itemView.findViewById(R.id.tvStatus);
@@ -83,47 +91,43 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription = itemView.findViewById(R.id.tvDescription);
             ibLike = itemView.findViewById(R.id.ibLike);
             tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
+            ivDoubleTapLike = itemView.findViewById(R.id.ivDoubleTapLike);
         }
 
+        @SuppressLint("ClickableViewAccessibility")
         public void bind(Post post) {
             List<String> likeBy = post.getLikedBy();
             tvUsername.setText(post.getUser().getUsername());
             tvStatus.setText("Elite");
-            Date createdAt  = post.getCreatedAt();
+            Date createdAt = post.getCreatedAt();
             String timeAgo = post.calculateTimeAgo(createdAt);
             tvTimeStamp.setText(timeAgo);
-            Glide.with(context).load(post.getImage().getUrl()).into(ivPostImage);
+            Glide.with(context).load(post.getImage().getUrl()).transform(new RoundedCorners(40)).into(ivPostImage);
             tvDescription.setText(post.getDescription());
             ParseFile image = post.getUser().getParseFile(KEY_PROFILE_IMAGE);
-            if(image == null)
-            {
+            if (image == null) {
                 Glide.with(context).load(R.drawable.default_profile_icon).centerCrop().into(ivProfileImage);
-            }
-            else {
+            } else {
                 Glide.with(context).load(image.getUrl()).centerCrop().into(ivProfileImage);
             }
             ParseUser user = ParseUser.getCurrentUser();
-            if(post.getLikedBy().contains(user.getObjectId()))
-            {
+            if (post.getLikedBy().contains(user.getObjectId())) {
                 Drawable newImage = context.getDrawable(R.drawable.ic_favorited_active);
                 ibLike.setImageDrawable(newImage);
                 likeText = String.valueOf(post.likeCountDisplayText());
                 likeCount = String.valueOf(likeBy.size());
-                tvLikeCount.setText(likeCount +" "+likeText);
-            }
-           else if(!post.getLikedBy().contains(user.getObjectId()))
-            {
+                tvLikeCount.setText(likeCount + " " + likeText);
+            } else if (!post.getLikedBy().contains(user.getObjectId())) {
                 Drawable newImage = context.getDrawable(R.drawable.ic_favorite_icon_24);
                 ibLike.setImageDrawable(newImage);
                 likeText = String.valueOf(post.likeCountDisplayText());
                 likeCount = String.valueOf(likeBy.size());
-                tvLikeCount.setText(likeCount +" "+likeText);
+                tvLikeCount.setText(likeCount + " " + likeText);
             }
             ibLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!likeBy.contains(ParseUser.getCurrentUser().getObjectId()))
-                    {
+                    if (!likeBy.contains(ParseUser.getCurrentUser().getObjectId())) {
                         likeBy.add(ParseUser.getCurrentUser().getObjectId());
                         post.setLikedBy(likeBy);
                         Drawable newImage = context.getDrawable(R.drawable.ic_favorited_active);
@@ -131,10 +135,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         post.setFavoritedBool(true);
                         likeText = String.valueOf(post.likeCountDisplayText());
                         likeCount = String.valueOf(likeBy.size());
-                        tvLikeCount.setText(likeCount +" "+likeText);
-                    }
-                    else
-                    {
+                        tvLikeCount.setText(likeCount + " " + likeText);
+                    } else {
                         likeBy.remove(ParseUser.getCurrentUser().getObjectId());
                         post.setLikedBy(likeBy);
                         Drawable newImage = context.getDrawable(R.drawable.ic_favorite_icon_24);
@@ -142,23 +144,67 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         post.setFavoritedBool(false);
                         likeText = String.valueOf(post.likeCountDisplayText());
                         likeCount = String.valueOf(likeBy.size());
-                        tvLikeCount.setText(likeCount+ " "+likeText);
+                        tvLikeCount.setText(likeCount + " " + likeText);
                     }
                     post.saveInBackground();
                 }
             });
+
+
+//            Double Tab to like
+           ivPostImage.setOnTouchListener(new View.OnTouchListener() {
+               private GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener()
+               {
+                   @Override
+                   public boolean onDoubleTap(MotionEvent e) {
+                       if (!likeBy.contains(ParseUser.getCurrentUser().getObjectId())) {
+                           likeBy.add(ParseUser.getCurrentUser().getObjectId());
+                           post.setLikedBy(likeBy);
+                           Drawable newImage = context.getDrawable(R.drawable.ic_favorited_active);
+                           ibLike.setImageDrawable(newImage);
+                           ivDoubleTapLike.setImageResource(R.drawable.ic_favorited_active);
+                           post.setFavoritedBool(true);
+                           likeText = String.valueOf(post.likeCountDisplayText());
+                           likeCount = String.valueOf(likeBy.size());
+                           tvLikeCount.setText(likeCount + " " + likeText);
+                           post.saveInBackground();
+                       }
+                       else
+                       {
+                           ivDoubleTapLike.setImageResource(R.drawable.ic_favorited_active);
+                       }
+                       Handler handler = new Handler();
+                       handler.postDelayed(new Runnable() {
+                           @Override
+                           public void run() {
+                               ivDoubleTapLike.setVisibility(View.GONE);
+                           }
+                       },1000);
+                       ivDoubleTapLike.setVisibility(View.VISIBLE);
+                       return super.onDoubleTap(e);
+                   }
+               });
+
+               @Override
+               public boolean onTouch(View v, MotionEvent event) {
+                   gestureDetector.onTouchEvent(event);
+                   return true;
+               }
+           });
+
         }
-    }
-    // Clean all elements of the recycler
-    public void clear() {
-        posts.clear();
-        notifyDataSetChanged();
-    }
 
-    // Add a list of items -- change to type used
-    public void addAll(List<Post> list) {
-        posts.addAll(list);
-        notifyDataSetChanged();
-    }
+        // Clean all elements of the recycler
+        public void clear() {
+            posts.clear();
+            notifyDataSetChanged();
+        }
 
+        // Add a list of items -- change to type used
+        public void addAll(List<Post> list) {
+            posts.addAll(list);
+            notifyDataSetChanged();
+        }
+
+    }
 }

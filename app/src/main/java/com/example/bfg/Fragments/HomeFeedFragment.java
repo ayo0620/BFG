@@ -1,6 +1,5 @@
 package com.example.bfg.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -22,9 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.bfg.EndlessRecyclerViewScrollListener;
 import com.example.bfg.LoginActivity;
 import com.example.bfg.MainActivity;
@@ -34,11 +30,9 @@ import com.example.bfg.R;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +46,7 @@ public class HomeFeedFragment extends Fragment {
     EndlessRecyclerViewScrollListener scrollListener;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
+    ImageView ivPostImage;
     ImageView side_nav_profile_img;
     NavigationView navigationView;
     public MainActivity activity;
@@ -73,8 +68,10 @@ public class HomeFeedFragment extends Fragment {
 
         drawerLayout = view.findViewById(R.id.drawer_layout);
         navigationView = view.findViewById(R.id.nav_view);
+        ivPostImage = view.findViewById(R.id.ivPostImage);
         toolbar = view.findViewById(R.id.toolbar);
         side_nav_profile_img = activity.findViewById(R.id.side_nav_profile_img);
+
 
         //        Toolbar
         activity.setSupportActionBar(toolbar);
