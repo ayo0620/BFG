@@ -2,6 +2,7 @@ package com.example.bfg.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -19,14 +20,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.bfg.CommentsActivity;
+import com.example.bfg.Models.Comments;
 import com.example.bfg.Models.Post;
 import com.example.bfg.R;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
     private Context context;
@@ -72,6 +80,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageButton ibLike;
         private TextView tvLikeCount;
         private ImageView ivDoubleTapLike;
+        private ImageButton ibCommentBtn;
+        private TextView tvCommentCount;
 
         public static final String KEY_PROFILE_IMAGE = "ProfileImage";
 
@@ -92,6 +102,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ibLike = itemView.findViewById(R.id.ibLike);
             tvLikeCount = itemView.findViewById(R.id.tvLikeCount);
             ivDoubleTapLike = itemView.findViewById(R.id.ivDoubleTapLike);
+            ibCommentBtn = itemView.findViewById(R.id.ibCommentBtn);
+            tvCommentCount = itemView.findViewById(R.id.tvCommentCount);
         }
 
         @SuppressLint("ClickableViewAccessibility")
@@ -191,6 +203,17 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                    return true;
                }
            });
+
+//           Commenting
+            ibCommentBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, CommentsActivity.class);
+                    int position = getAdapterPosition();
+                    i.putExtra(Post.class.getSimpleName(),posts.get(position));
+                    context.startActivity(i);
+                }
+            });
 
         }
 

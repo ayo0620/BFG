@@ -69,8 +69,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/layout_bg_bottom_posts"
         android:layout_below="@+id/ivPostImage"
-        android:background="@color/denim">
+        android:backgroundTint="@color/denim">
         <ImageButton
             android:id="@+id/ibLike"
             android:layout_width="wrap_content"
@@ -101,15 +102,25 @@
     <!--        android:layout_toEndOf="@+id/ibLike"-->
     <!--        app:srcCompat="@android:drawable/btn_star_big_off" />-->
 
-    <!--    <ImageButton-->
-    <!--        android:id="@+id/ibCommentBtn"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="39dp"-->
-    <!--        android:layout_below="@+id/ivPostImage"-->
-    <!--        android:layout_marginStart="3dp"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        android:layout_toEndOf="@+id/ibRatingBtn"-->
-    <!--        app:srcCompat="@drawable/ic_comment_button" />-->
+        <ImageButton
+            android:id="@+id/ibCommentBtn"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="7dp"
+            android:layout_toEndOf="@+id/tvLikeCount"
+            android:backgroundTint="@color/denim"
+            app:srcCompat="@drawable/ic_comment_outline" />
+
+        <TextView
+            android:id="@+id/tvCommentCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="7dp"
+            android:layout_toEndOf="@+id/ibCommentBtn"
+            android:text="2"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tvDescription"

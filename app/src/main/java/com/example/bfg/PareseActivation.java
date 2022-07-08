@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bfg.Models.Comments;
 import com.example.bfg.Models.Post;
 import com.example.bfg.Models.User;
 import com.parse.Parse;
@@ -14,7 +15,7 @@ public class PareseActivation extends Application {
     public void onCreate() {
         super.onCreate();
 //        Register your parse model
-//        ParseObject.registerSubclass(Post.class);
+        ParseObject.registerSubclass(Comments.class);
         ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Post.class);
 

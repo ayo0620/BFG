@@ -4,15 +4,21 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable-v24/comment_multiple_outline.xml" value="0.2675" />
+        <entry key="app/src/main/res/drawable-v24/ic_comment_outline.xml" value="0.2675" />
         <entry key="app/src/main/res/drawable-v24/ic_favorite_icon_24.xml" value="0.214" />
         <entry key="app/src/main/res/drawable-v24/ic_favorited_active.xml" value="0.214" />
         <entry key="app/src/main/res/drawable-v24/ufi_heart_icon.xml" value="0.214" />
         <entry key="app/src/main/res/drawable/bg_white_rounded.xml" value="0.361" />
+        <entry key="app/src/main/res/drawable/ic_comment_button.xml" value="0.2675" />
         <entry key="app/src/main/res/drawable/ic_profile_icon.xml" value="0.226" />
         <entry key="app/src/main/res/drawable/layout_bg.xml" value="0.1075" />
+        <entry key="app/src/main/res/drawable/layout_bg_bottom_posts.xml" value="0.2675" />
         <entry key="app/src/main/res/drawable/layout_bg_posts.xml" value="0.214" />
         <entry key="app/src/main/res/drawable/layout_bg_profile.xml" value="0.2145" />
         <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.226" />
+        <entry key="app/src/main/res/drawable/rounded_corners_et.xml" value="0.3395" />
+        <entry key="app/src/main/res/layout/activity_comments.xml" value="0.3619791666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1537037037037037" />
         <entry key="app/src/main/res/layout/activity_message_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_search_games.xml" value="0.2892249527410208" />
@@ -26,8 +32,9 @@
         <entry key="app/src/main/res/layout/fragment_user_favorited.xml" value="0.32864583333333336" />
         <entry key="app/src/main/res/layout/fragment_user_posts.xml" value="0.32864583333333336" />
         <entry key="app/src/main/res/layout/item_card.xml" value="0.16723124186197919" />
+        <entry key="app/src/main/res/layout/item_comments.xml" value="0.3609375" />
         <entry key="app/src/main/res/layout/item_grid_post.xml" value="0.32760416666666664" />
-        <entry key="app/src/main/res/layout/item_post.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_post.xml" value="0.271484375" />
         <entry key="app/src/main/res/layout/item_search_games.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_search_list.xml" value="0.315625" />
         <entry key="app/src/main/res/layout/layout_bg.xml" value="0.20208333333333334" />

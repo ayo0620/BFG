@@ -38,9 +38,9 @@ public class Post extends ParseObject {
     {
         return getParseUser(KEY_USER);
     }
-    public void setUser(ParseObject parseObject)
+    public void setUser(ParseUser user)
     {
-        put(KEY_USER,parseObject);
+        put(KEY_USER,user);
     }
     public List<String> getLikedBy(){
         List<String> likeBy = getList(KEY_LIKED_BY);
