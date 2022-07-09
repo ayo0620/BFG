@@ -20,12 +20,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.bfg.EndlessRecyclerViewScrollListener;
 import com.example.bfg.LoginActivity;
 import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Post;
 import com.example.bfg.Adapters.PostsAdapter;
+import com.example.bfg.Models.User;
 import com.example.bfg.R;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.FindCallback;
@@ -43,6 +45,7 @@ public class HomeFeedFragment extends Fragment {
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
     private SwipeRefreshLayout swipeContainer;
+    private TextView tvDisplayUserName;
     EndlessRecyclerViewScrollListener scrollListener;
     DrawerLayout drawerLayout;
     Toolbar toolbar;
@@ -70,12 +73,14 @@ public class HomeFeedFragment extends Fragment {
         navigationView = view.findViewById(R.id.nav_view);
         ivPostImage = view.findViewById(R.id.ivPostImage);
         toolbar = view.findViewById(R.id.toolbar);
+        tvDisplayUserName = view.findViewById(R.id.tvDisplayUserName);
         side_nav_profile_img = activity.findViewById(R.id.side_nav_profile_img);
 
 
         //        Toolbar
         activity.setSupportActionBar(toolbar);
-
+        ParseUser user = User.getCurrentUser();
+        tvDisplayUserName.setText("Welcome,\n"+user.getUsername());
         //        Navigation Drawer menu
 //        ParseUser user = ParseUser.getCurrentUser();
 //        ParseFile image = user.getParseFile("ProfileImage");

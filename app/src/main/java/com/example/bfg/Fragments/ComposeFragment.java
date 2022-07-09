@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.Post;
+import com.example.bfg.Models.User;
 import com.example.bfg.R;
 import com.example.bfg.SearchGamesActivity;
 import com.parse.ParseException;
@@ -62,6 +63,8 @@ public class ComposeFragment extends Fragment {
     protected String photoFileName = "photo.jpg";
     private static final String TAG = "ComposeFragment";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
+    public static final String KEY_STATUS_COUNT = "statusCount";
+    public static final int INCREMENT_BY = 20;
 
     public ComposeFragment() {
     }
@@ -137,8 +140,17 @@ public class ComposeFragment extends Fragment {
                 String gameForPost = tvSetGameCategory.getText().toString();
                 savePost(description, currentUser, photoFile,gameForPost);
                 activity.bottomNavigationView.setSelectedItemId(R.id.action_home_screen);
+                statusIncrementPost();
             }
         });
+    }
+
+    private void statusIncrementPost() {
+        ParseUser user = ParseUser.getCurrentUser();
+        int val = (int) user.getNumber(KEY_STATUS_COUNT);
+        User myUser = (User) user;
+        myUser.setStatusCount(val+INCREMENT_BY);
+        myUser.saveInBackground();
     }
 
     @Override

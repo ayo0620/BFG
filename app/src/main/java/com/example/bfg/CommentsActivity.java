@@ -13,6 +13,7 @@ import android.widget.EditText;
 import com.example.bfg.Adapters.CommentsAdapter;
 import com.example.bfg.Models.Comments;
 import com.example.bfg.Models.Post;
+import com.example.bfg.Models.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -31,6 +32,8 @@ public class CommentsActivity extends AppCompatActivity {
     CommentsAdapter adapter;
     RecyclerView rvComments;
     List<Comments> allComments;
+    public static final String KEY_STATUS_COUNT = "statusCount";
+    public static final int INCREMENT_BY = 5;
 
     @Override
     protected void onRestart() {
@@ -55,6 +58,7 @@ public class CommentsActivity extends AppCompatActivity {
                 comments.setUser(ParseUser.getCurrentUser());
                 comments.setDescription(etCommentInput.getText().toString());
                 comments.setPost(post);
+                statusIncrementComment();
                 comments.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -80,6 +84,15 @@ public class CommentsActivity extends AppCompatActivity {
 
 
     }
+
+    private void statusIncrementComment() {
+        ParseUser user = ParseUser.getCurrentUser();
+        int val = (int) user.getNumber(KEY_STATUS_COUNT);
+        User myUser = (User) user;
+        myUser.setStatusCount(val+INCREMENT_BY);
+        myUser.saveInBackground();
+    }
+
     public void reFreshComment(){
         ParseQuery<Comments> query = ParseQuery.getQuery(Comments.class);
         query.whereEqualTo(Comments.KEY_POST, post);

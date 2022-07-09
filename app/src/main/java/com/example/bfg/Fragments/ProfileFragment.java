@@ -30,9 +30,11 @@ import com.example.bfg.Adapters.ViewPagerAdapter;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
 import com.parse.GetCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.io.File;
 
@@ -44,6 +46,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvUserProfileName;
     private TextView tvUserBio;
     protected File photoFile;
+    private TextView tvCurrUserStatus;
     private String photoFileName = "photo.jpg";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     public User user = (User) User.getCurrentUser();
@@ -66,6 +69,43 @@ public class ProfileFragment extends Fragment {
         viewPager = view.findViewById(R.id.viewPager);
         profileImage = view.findViewById(R.id.profileImage);
         tvUserBio = view.findViewById(R.id.tvUserBio);
+        tvCurrUserStatus = view.findViewById(R.id.tvCurrUserStatus);
+
+
+//        User's Status
+        ParseUser parseuser = ParseUser.getCurrentUser();
+        User myUser = (User) parseuser;
+        if(myUser.getStatusCount()<=5 || myUser.getStatusCount()<=50)
+        {
+            tvCurrUserStatus.setText("Noobie");
+            myUser.setStatus("Noobie");
+            myUser.saveInBackground();
+        }
+        else if(myUser.getStatusCount()<=51 || myUser.getStatusCount()<=150)
+        {
+            tvCurrUserStatus.setText("Regular");
+            myUser.setStatus("Regular");
+            myUser.saveInBackground();
+        }
+        else if(myUser.getStatusCount()<=151 || myUser.getStatusCount()<=300)
+        {
+            tvCurrUserStatus.setText("Pro");
+            myUser.setStatus("pro");
+            myUser.saveInBackground();
+        }
+        else if(myUser.getStatusCount()<=301 || myUser.getStatusCount()<=500)
+        {
+            tvCurrUserStatus.setText("Elite");
+            myUser.setStatus("Elite");
+            myUser.saveInBackground();
+        }
+        else if(myUser.getStatusCount()>500)
+        {
+            tvCurrUserStatus.setText("Legend");
+            myUser.setStatus("Legend");
+            myUser.saveInBackground();
+        }
+
 
 //        set profile picture
         profileImage.setOnClickListener(new View.OnClickListener() {

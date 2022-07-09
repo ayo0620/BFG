@@ -1,40 +1,26 @@
 package com.example.bfg;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.ViewPager;
 
-import android.app.Notification;
-import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
-import android.widget.Toast;
 
-import com.example.bfg.Adapters.ViewPagerAdapter;
 import com.example.bfg.Fragments.ComposeFragment;
 import com.example.bfg.Fragments.ExploreFragment;
 import com.example.bfg.Fragments.HomeFeedFragment;
-import com.example.bfg.Fragments.NotificationFragment;
 import com.example.bfg.Fragments.ProfileFragment;
 import com.example.bfg.Fragments.SearchFragment;
-import com.example.bfg.Fragments.SettingsFragment;
-import com.example.bfg.Fragments.UserFavoritedFragment;
-import com.example.bfg.Fragments.UserPostsFragment;
 import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
 
@@ -42,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     public BottomNavigationView bottomNavigationView;
     FragmentManager fragmentManager = getSupportFragmentManager();
     public Cards cards;
+    public static final String KEY_STATUS_COUNT = "statusCount";
+    public static final int INCREMENT_BY = 10;
 
     HomeFeedFragment homeFeedFragment = new HomeFeedFragment(this);
     SearchFragment searchFragment = new SearchFragment();
@@ -96,9 +84,20 @@ public class MainActivity extends AppCompatActivity {
             bottomNavigationView.setSelectedItemId(R.id.action_addPost);
         }
         else{
+
+            statusIncrementHome();
             bottomNavigationView.setSelectedItemId(R.id.action_home_screen);
         }
     }
+
+    private void statusIncrementHome() {
+        ParseUser user = ParseUser.getCurrentUser();
+        int val = (int) user.getNumber(KEY_STATUS_COUNT);
+        User myUser = (User) user;
+        myUser.setStatusCount(val+INCREMENT_BY);
+        myUser.saveInBackground();
+    }
+
 
 //    @Override
 //    public void onBackPressed() {

@@ -23,6 +23,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.bfg.CommentsActivity;
 import com.example.bfg.Models.Comments;
 import com.example.bfg.Models.Post;
+import com.example.bfg.Models.User;
 import com.example.bfg.R;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.parse.FindCallback;
@@ -41,6 +42,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     private List<Post> posts;
     public String likeCount;
     public String likeText;
+    public static final String KEY_STATUS_COUNT = "statusCount";
+    public static final int INCREMENT_BY = 20;
 
     public PostsAdapter(Context context, List<Post> posts) {
         this.context = context;
@@ -148,6 +151,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         likeText = String.valueOf(post.likeCountDisplayText());
                         likeCount = String.valueOf(likeBy.size());
                         tvLikeCount.setText(likeCount + " " + likeText);
+                        statusIncrementLike();
                     } else {
                         likeBy.remove(ParseUser.getCurrentUser().getObjectId());
                         post.setLikedBy(likeBy);
@@ -157,6 +161,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         likeText = String.valueOf(post.likeCountDisplayText());
                         likeCount = String.valueOf(likeBy.size());
                         tvLikeCount.setText(likeCount + " " + likeText);
+                        statusDecrementLike();
                     }
                     post.saveInBackground();
                 }
@@ -229,5 +234,21 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             notifyDataSetChanged();
         }
 
+    }
+
+    private void statusDecrementLike() {
+        ParseUser user = ParseUser.getCurrentUser();
+        int val = (int) user.getNumber(KEY_STATUS_COUNT);
+        User myUser = (User) user;
+        myUser.setStatusCount(val+INCREMENT_BY);
+        myUser.saveInBackground();
+    }
+
+    private void statusIncrementLike() {
+        ParseUser user = ParseUser.getCurrentUser();
+        int val = (int) user.getNumber(KEY_STATUS_COUNT);
+        User myUser = new User();
+        myUser.setStatusCount(val+INCREMENT_BY);
+        user.saveInBackground();
     }
 }

@@ -55,6 +55,8 @@ public class SignUpActivity extends AppCompatActivity {
                 user.setEmail(String.valueOf(email.getText()));
                 user.setUsername(String.valueOf(etUserNameSignUp.getText()));
                 user.setPassword(String.valueOf(etPasswordSignUp.getText()));
+                user.setStatusCount(0);
+                user.setStatus("Noobie");
                 user.signUpInBackground(new SignUpCallback() {
                     @Override
                     public void done(ParseException e) {
