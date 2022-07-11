@@ -10,6 +10,10 @@
             android:icon="@drawable/ic_settings_icon"
             android:title="Settings" />
         <item
+            android:id="@+id/nav_UserFeedBack"
+            android:icon="@drawable/ic_feedback"
+            android:title="Feedback" />
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout_icon"
             android:title="log out" />

@@ -102,6 +102,9 @@ public class HomeFeedFragment extends Fragment {
                     case R.id.nav_settings:
                         fragmentClass = SettingsFragment.class;
                         break;
+                    case R.id.nav_UserFeedBack:
+                        fragmentClass = UserFeedBackFragment.class;
+                        break;
                     case R.id.nav_logout:
                         ParseUser.logOut();
                         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -172,9 +175,12 @@ public class HomeFeedFragment extends Fragment {
 
         rvPosts.addOnScrollListener(scrollListener);
         queryPosts(0);
+
     }
 
-//    @override
+
+
+//    @Override
 //    public void onBackPressed() {
 //        if(drawerLayout.isDrawerOpen(GravityCompat.START))
 //        {

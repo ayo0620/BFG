@@ -7,8 +7,8 @@
     android:background="@drawable/layout_bg_posts"
     android:backgroundTint="@color/denim2"
     android:layout_marginTop="30dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp">
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="0dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivProfileImage"

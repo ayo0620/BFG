@@ -13,87 +13,129 @@
         android:id="@+id/SignUpText"
         android:layout_width="wrap_content"
         android:layout_height="107dp"
-        android:layout_marginStart="160dp"
+        android:layout_alignStart="@+id/layout_lastName"
+        android:layout_alignEnd="@+id/layout_lastName"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="80dp"
-        android:layout_marginEnd="160dp"
+        android:layout_marginEnd="80dp"
         android:fontFamily="cursive"
         android:textAllCaps="true"
         android:textFontWeight="500"
         app:srcCompat="@drawable/img" />
 
-    <EditText
-        android:id="@+id/etFirstName"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/layout_firstName"
+        style="?attr/textInputOutlinedDenseStyle"
         android:layout_below="@+id/SignUpText"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="90dp"
+        android:layout_marginStart="160dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:ems="10"
-        android:hint="First Name" />
+        android:hint="First Name">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etFirstName"
+            android:inputType="text"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etLastName"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etFirstName"
-        android:layout_marginStart="90dp"
-        android:layout_alignParentStart="true"
+        android:id="@+id/layout_lastName"
+        style="?attr/textInputOutlinedDenseStyle"
+        android:layout_below="@+id/layout_firstName"
+        android:layout_marginStart="160dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="Last Name" />
+        android:hint="Last Name">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etLastName"
+            android:inputType="text"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etEmail"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etLastName"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="90dp"
+        android:id="@+id/layout_email"
+        style="?attr/textInputOutlinedDenseStyle"
+        android:layout_below="@+id/layout_lastName"
+        android:layout_marginStart="160dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        android:hint="Email Address" />
+        android:hint="Email Address">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etEmail"
+            android:inputType="textEmailAddress"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etUserNameSignUp"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etEmail"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="90dp"
-        android:ems="10"
+        android:id="@+id/layout_signUpUsername"
+        style="?attr/textInputOutlinedDenseStyle"
+        android:layout_below="@+id/layout_email"
+        android:layout_marginStart="160dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:hint="Username" />
+        android:hint="Username">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etUserNameSignUp"
+            android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etPasswordSignUp"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etUserNameSignUp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="90dp"
+        android:id="@+id/layout_passwordSignUp"
+        style="?attr/textInputOutlinedDenseStyle"
+        android:layout_below="@+id/layout_signUpUsername"
+        android:layout_marginStart="160dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:hint="Password" />
+        app:endIconMode="password_toggle"
+        android:hint="Password">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etPasswordSignUp"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etConfirmPassword"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etPasswordSignUp"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="90dp"
+        android:id="@+id/layout_ConfirmPasswordSignUp"
+        style="?attr/textInputOutlinedDenseStyle"
+        android:layout_below="@+id/layout_passwordSignUp"
+        android:layout_marginStart="160dp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:ems="10"
-        android:hint="Confirm Password" />
+        app:endIconMode="password_toggle"
+        android:hint="Confirm Password"
+        app:errorEnabled="true">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etConfirmPassword"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etConfirmPassword"
+        android:layout_below="@+id/layout_ConfirmPasswordSignUp"
         android:layout_centerInParent="true"
         android:layout_marginStart="75dp"
         android:layout_marginTop="20dp"

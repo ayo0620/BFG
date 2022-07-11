@@ -2,8 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
+    android:background="@drawable/layout_bg"
     android:layout_width="match_parent"
+    android:backgroundTint="@color/denim"
     android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -24,7 +25,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="25dp"
         android:layout_marginTop="14dp"
-        android:layout_toEndOf="@+id/divider3"
+        android:layout_toEndOf="@+id/ivSearchImage"
         android:text="Status" />
 
     <TextView
@@ -34,7 +35,7 @@
         android:layout_below="@+id/tvSearchStatus"
         android:layout_marginStart="25dp"
         android:layout_marginTop="15dp"
-        android:layout_toEndOf="@+id/divider3"
+        android:layout_toEndOf="@+id/ivSearchImage"
         android:text="Games:....." />
 
     <TextView
@@ -44,7 +45,7 @@
         android:layout_below="@+id/tvGameList"
         android:layout_marginStart="23dp"
         android:layout_marginTop="19dp"
-        android:layout_toEndOf="@+id/divider3"
+        android:layout_toEndOf="@+id/ivSearchImage"
         android:text="View Profile>" />
 
     <TextView
@@ -69,14 +70,6 @@
         android:layout_marginTop="10dp"
         android:background="?android:attr/listDivider" />
 
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/divider"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="105dp"
-        android:background="?android:attr/listDivider" />
+
 
 </RelativeLayout>

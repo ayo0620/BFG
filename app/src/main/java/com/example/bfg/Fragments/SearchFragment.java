@@ -40,7 +40,6 @@ public class SearchFragment extends Fragment {
     private TextView tvSearchPlaceholder;
     protected UsersAdapter adapter;
     protected List<User> allUsers;
-    Toolbar toolbar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +51,6 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvSearch = view.findViewById(R.id.rvSearch);
-        toolbar = view.findViewById(R.id.searchToolbar);
         searchView = view.findViewById(R.id.searchUser);
         tvSearchPlaceholder = view.findViewById(R.id.tvSearchPlaceholder);
 
