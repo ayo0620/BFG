@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bfg.Models.Comments;
 import com.example.bfg.Models.FeedBack;
+import com.example.bfg.Models.Notifications;
 import com.example.bfg.Models.Post;
 import com.example.bfg.Models.User;
 import com.parse.Parse;
@@ -20,6 +21,7 @@ public class PareseActivation extends Application {
         ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(FeedBack.class);
+        ParseObject.registerSubclass(Notifications.class);
 
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("5DIGQo5cnYxZX4MjMgFG9I0LE5smGFoGbcV1IO33")

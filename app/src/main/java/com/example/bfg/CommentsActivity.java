@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.example.bfg.Adapters.CommentsAdapter;
 import com.example.bfg.Models.Comments;
+import com.example.bfg.Models.Notifications;
 import com.example.bfg.Models.Post;
 import com.example.bfg.Models.User;
 import com.parse.FindCallback;
@@ -59,6 +60,7 @@ public class CommentsActivity extends AppCompatActivity {
                 comments.setDescription(etCommentInput.getText().toString());
                 comments.setPost(post);
                 statusIncrementComment();
+                commentsNotification(ParseUser.getCurrentUser(),post.getUser());
                 comments.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -84,6 +86,18 @@ public class CommentsActivity extends AppCompatActivity {
 
 
     }
+
+    private void commentsNotification(ParseUser fromUser, ParseUser toUser) {
+        if (!fromUser.getObjectId().equals(toUser.getObjectId()))
+        {
+            Notifications notification = new Notifications();
+            notification.setNotifiedFrom(fromUser);
+            notification.setNotification("commented on your post");
+            notification.setNotifyThis(toUser);
+            notification.saveInBackground();
+        }
+    }
+
 
     private void statusIncrementComment() {
         ParseUser user = ParseUser.getCurrentUser();
