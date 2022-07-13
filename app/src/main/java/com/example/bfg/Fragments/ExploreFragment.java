@@ -59,7 +59,6 @@ public class ExploreFragment extends Fragment {
     MenuItem menuItem;
     SearchView searchView;
     Toolbar toolbar;
-    BigDecimal num1,num2;
     public HashMap<String, Integer> likesTotal = new HashMap<String, Integer>();
     public HashMap<String, Integer> postTotal = new HashMap<String, Integer>();
     public HashMap<String, Double> likePostRatio = new HashMap<String, Double>();
@@ -132,44 +131,6 @@ public class ExploreFragment extends Fragment {
                 setSortedGames(sortedMap);
             }
         });
-    }
-
-    private void addToExploreList(Map<String, Double> sortedMap) {
-        for (String keys: sortedMap.keySet())
-        {
-            RequestParams params = new RequestParams();
-            RequestHeaders headers = new RequestHeaders();
-            AsyncHttpClient client = new AsyncHttpClient();
-
-            String url = "https://api.twitch.tv/helix/games";
-            params.put("name", keys);
-            Log.i("keys", keys);
-            headers.put("Client-Id", BuildConfig.CLIEND_ID);
-            headers.put("Authorization",BuildConfig.TOKEN);
-            client.get(url, headers,params, new JsonHttpResponseHandler() {
-                @Override
-                public void onSuccess(int statusCode, Headers headers, JSON json) {
-                    JSONObject jsonObject = json.jsonObject;
-                    try {
-                        JSONArray gameItems = jsonObject.getJSONArray("data");
-                        JSONObject obj = gameItems.getJSONObject(0);
-                        allcards.add(new Cards(gameItems.getJSONObject(0)));
-//                        allcards.addAll(Cards.fromJsonArraySorted(gameItems));
-//                        Collections.reverse(allcards);
-                        adapter.notifyDataSetChanged();
-                        String arr = obj.getString("name");
-                    } catch (JSONException e) {
-                        Log.e("gg", "Hit json exception",e);
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                    Log.i("gg",response);
-                }
-            });
-        }
     }
 
     private void setSortedGames(HashMap<String, Double> likePostRatio) {
