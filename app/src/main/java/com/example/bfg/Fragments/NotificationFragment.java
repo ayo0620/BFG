@@ -1,5 +1,6 @@
 package com.example.bfg.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,8 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.bfg.Adapters.NotificationsAdapter;
+import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Notifications;
 import com.example.bfg.R;
 import com.parse.FindCallback;
@@ -29,6 +32,7 @@ public class NotificationFragment extends Fragment {
     protected List<Notifications> allNotifications;
     protected NotificationsAdapter adapter;
     public static final String TAG ="NotificationFragment";
+    private ImageView notificationClose;
 
     public NotificationFragment() {
         // Required empty public constructor
@@ -47,6 +51,15 @@ public class NotificationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         rvNotifications = view.findViewById(R.id.rvNotifications);
+        notificationClose = view.findViewById(R.id.notificationClose);
+
+        notificationClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), MainActivity.class);
+                startActivity(i);
+            }
+        });
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 

@@ -1,5 +1,6 @@
 package com.example.bfg.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.ListAdapter;
 
 import com.example.bfg.Adapters.GridPostsAdapter;
 import com.example.bfg.Adapters.ViewPagerAdapter;
+import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Post;
 import com.example.bfg.R;
 import com.google.android.material.tabs.TabLayout;
@@ -34,6 +36,10 @@ import java.util.List;
 public class UserPostsFragment extends Fragment {
     GridView gridView;
     RecyclerView rvGridPosts;
+    private Context mContext;
+    public String profileId;
+    public ArrayList<ParseFile> allposts;
+    public ParseUser user;
     public static final String TAG = UserPostsFragment.class.getSimpleName();
 
     public UserPostsFragment() {
@@ -42,14 +48,10 @@ public class UserPostsFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        profileId = ProfileFragment.getProfileId();
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        setUpGridView();
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,16 +63,58 @@ public class UserPostsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onViewCreated: ");
+        user = ParseUser.getCurrentUser();
         gridView = view.findViewById(R.id.gridView);
-        setUpGridView();
+
+        if(!profileId.equals(user.getObjectId())) {
+            Log.i("UserPosts",profileId);
+            setUserViewMode();
+        }
+        else{
+            Log.i("UserPosts",profileId);
+           setUpGridView();
+        }
         super.onViewCreated(view, savedInstanceState);
 
     }
 
+    private void setUserViewMode() {
+        allposts = new ArrayList<>();
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.whereContains("user",profileId);
+        query.addDescendingOrder("createdAt");
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e!= null)
+                {
+                    Log.i("UserPost ","issue accessing posts",e);
+                }
+                for (Post post : posts) {
+                    ParseUser user = ParseUser.getCurrentUser();
+                    if(post.getUser().getObjectId().equals(user.getObjectId())) {
+                        allposts.add(post.getImage());
+                    }
+                }
+                int gridwidth = getResources().getDisplayMetrics().widthPixels;
+                int imageWidth = gridwidth/ 3;
+                gridView.setColumnWidth(imageWidth);
+
+                ArrayList<String> imgUrls = new ArrayList<String>();
+                for (int i = 0; i<allposts.size();i++)
+                {
+                    imgUrls.add(allposts.get(i).getUrl());
+                }
+                GridPostsAdapter adapter = new GridPostsAdapter(getContext(),imgUrls);
+                gridView.setAdapter((adapter));
+            }
+        });
+        profileId = user.getObjectId();
+    }
+
     private void setUpGridView()
     {
-        final ArrayList<ParseFile> allposts = new ArrayList<>();
+       allposts = new ArrayList<>();
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
         query.addDescendingOrder("createdAt");

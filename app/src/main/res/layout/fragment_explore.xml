@@ -14,19 +14,6 @@
         android:layout_height="wrap_content"
         android:background="@color/purple_700"
         app:menu="@menu/search_icon_view">
-
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginStart="0dp"-->
-<!--            android:layout_margin="@dimen/cardview_default_radius">-->
-
-<!--            <com.google.android.material.textfield.TextInputEditText-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="0dp"-->
-<!--                android:hint="Search...." />-->
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView

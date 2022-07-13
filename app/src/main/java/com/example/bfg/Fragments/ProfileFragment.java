@@ -2,16 +2,22 @@ package com.example.bfg.Fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Environment;
@@ -20,23 +26,28 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.bfg.EditProfileActivity;
 import com.example.bfg.Models.User;
 import com.example.bfg.R;
 import com.example.bfg.Adapters.ViewPagerAdapter;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.io.File;
+import java.util.List;
 
 
 public class ProfileFragment extends Fragment {
@@ -45,11 +56,17 @@ public class ProfileFragment extends Fragment {
     private ShapeableImageView profileImage;
     private TextView tvUserProfileName;
     private TextView tvUserBio;
+    private Button btnEditProfile;
+    public static String profileId;
     protected File photoFile;
     private TextView tvCurrUserStatus;
     private String photoFileName = "photo.jpg";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
-    public User user = (User) User.getCurrentUser();
+    public User user ;
+    public User fromUser = new User();
+    public static final String TAG = "ProfileFragment";
+    public SharedPreferences prefs;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,69 +77,132 @@ public class ProfileFragment extends Fragment {
 
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        user = (User) ParseUser.getCurrentUser();
+        prefs = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        profileId = prefs.getString("profileId",user.getObjectId());
+        Log.i(TAG, profileId);
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        if (Build.VERSION.SDK_INT >= 26) {
+            ft.setReorderingAllowed(false);
+        }
+        ft.detach(this).attach(this).commit();
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Log.i("profile","hey profilefragment");
         tvUserProfileName = view.findViewById(R.id.tvUserProfileName);
         tabLayout = view.findViewById(R.id.tabLayout);
         viewPager = view.findViewById(R.id.viewPager);
         profileImage = view.findViewById(R.id.profileImage);
         tvUserBio = view.findViewById(R.id.tvUserBio);
+        btnEditProfile = view.findViewById(R.id.btnEditProfile);
         tvCurrUserStatus = view.findViewById(R.id.tvCurrUserStatus);
 
 
-//        User's Status
-        ParseUser parseuser = ParseUser.getCurrentUser();
-        User myUser = (User) parseuser;
-        if(myUser.getStatusCount()<=5 || myUser.getStatusCount()<=50)
+
+        if(!profileId.equals(user.getObjectId())) {
+            btnEditProfile.setText("Add Friend");
+            userViewMode();
+        }
+        else{
+            btnEditProfile.setText("Edit Profile");
+            Log.i(TAG, "here");
+            setCurrentUserStatus();
+            displayInfo();
+        }
+
+
+    }
+
+
+    public static String getProfileId()
+    {
+        return profileId;
+    }
+    private void setCurrentUserStatus() {
+        if(user.getStatusCount()<=5 || user.getStatusCount()<=50)
         {
             tvCurrUserStatus.setText("Noobie");
-            myUser.setStatus("Noobie");
-            myUser.saveInBackground();
+            user.setStatus("Noobie");
+            user.saveInBackground();
         }
-        else if(myUser.getStatusCount()<=51 || myUser.getStatusCount()<=150)
+        else if(user.getStatusCount()<=51 || user.getStatusCount()<=150)
         {
             tvCurrUserStatus.setText("Regular");
-            myUser.setStatus("Regular");
-            myUser.saveInBackground();
+            user.setStatus("Regular");
+            user.saveInBackground();
         }
-        else if(myUser.getStatusCount()<=151 || myUser.getStatusCount()<=300)
+        else if(user.getStatusCount()<=151 || user.getStatusCount()<=300)
         {
             tvCurrUserStatus.setText("Pro");
-            myUser.setStatus("pro");
-            myUser.saveInBackground();
+            user.setStatus("pro");
+            user.saveInBackground();
         }
-        else if(myUser.getStatusCount()<=301 || myUser.getStatusCount()<=500)
+        else if(user.getStatusCount()<=301 || user.getStatusCount()<=500)
         {
             tvCurrUserStatus.setText("Elite");
-            myUser.setStatus("Elite");
-            myUser.saveInBackground();
+            user.setStatus("Elite");
+            user.saveInBackground();
         }
-        else if(myUser.getStatusCount()>500)
+        else if(user.getStatusCount()>500)
         {
             tvCurrUserStatus.setText("Legend");
-            myUser.setStatus("Legend");
-            myUser.saveInBackground();
+            user.setStatus("Legend");
+            user.saveInBackground();
         }
 
 
-//        set profile picture
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchCamera();
-            }
-        });
+    }
 
-        user.fetchInBackground(new GetCallback<ParseObject>() {
+    private void userViewMode() {
+        ParseQuery<User> userQuery = ParseQuery.getQuery(User.class);
+        userQuery.whereEqualTo("objectId",profileId);
+        userQuery.findInBackground(new FindCallback<User>() {
             @Override
-            public void done(ParseObject object, ParseException e) {
-                user = (User) object;
-                displayInfo();
-            }
-        });
+            public void done(List<User> objects, ParseException e) {
+                if(objects.size()!= 0)
+                {
+                    fromUser = objects.get(0);
+                    Log.i("checking", fromUser.toString());
+                }
+                Log.i("database", fromUser.toString());
+                tvCurrUserStatus.setText(fromUser.getStatus());
+                tvUserBio.setText(fromUser.getUserDescription());
+                tvUserProfileName.setText(fromUser.getUsername());
+                if (fromUser.getProfileImage() == null)
+                {
+                    profileImage.setImageResource(R.drawable.default_profile_icon);
+                }
+                else{
+                    Glide.with(getContext()).load(fromUser.getProfileImage().getUrl()).centerCrop().into(profileImage);
+                }
+                if (fromUser.getUserDescription()== null)
+                {
+                    tvUserBio.setVisibility(View.GONE);
+                }
+                else
+                {
+                    tvUserBio.setText(fromUser.getUserDescription());
+                }
 
+            }
+
+        });
+        prefs.edit().clear().commit();
+        profileId = user.getObjectId();
+        Log.i("profile",profileId);
+
+//        TabLayout
         TabLayout.Tab myTab = tabLayout.newTab().setText("Posts");
         tabLayout.addTab(myTab);
         tabLayout.addTab(tabLayout.newTab().setText("Favorited"));
@@ -150,10 +230,26 @@ public class ProfileFragment extends Fragment {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-
     }
 
     private void displayInfo() {
+        //        set profile picture
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchCamera();
+            }
+        });
+
+//        Edit profile
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
         tvUserProfileName.setText(user.getUsername());
         ParseFile profilePhoto = user.getProfileImage();
         if(profilePhoto != null)
@@ -162,8 +258,47 @@ public class ProfileFragment extends Fragment {
         }
         else
         {
-            Toast.makeText(getContext(), "profile photo does not exist for"+ user.getUsername(),Toast.LENGTH_SHORT).show();
+            profileImage.setImageResource(R.drawable.default_profile_icon);
         }
+
+//        ParseUser user = ParseUser.getCurrentUser();
+//        User currUser = (User) user;
+        if(user.getUserDescription()== null)
+        {
+            tvUserBio.setVisibility(View.GONE);
+        }
+        else{
+            tvUserBio.setText(user.getUserDescription());
+        }
+
+//        TabLayout
+        TabLayout.Tab myTab = tabLayout.newTab().setText("Posts");
+        tabLayout.addTab(myTab);
+        tabLayout.addTab(tabLayout.newTab().setText("Favorited"));
+        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        final ViewPagerAdapter vpAdapter = new ViewPagerAdapter(getContext(),getChildFragmentManager(),tabLayout.getTabCount());
+        viewPager.setAdapter(vpAdapter);
+
+        Log.i("tag", String.valueOf(myTab.getPosition()));
+        viewPager.setCurrentItem(0);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.i("profile","onTabSelected");
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                Log.i("profile","onTabUnselected");
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     private void launchCamera() {

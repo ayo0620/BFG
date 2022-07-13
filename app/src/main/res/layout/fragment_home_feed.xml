@@ -22,6 +22,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/home_gradient"
         tools:context=".Fragments.HomeFeedFragment">
 
         <androidx.appcompat.widget.Toolbar
@@ -41,18 +42,17 @@
             android:text="Welcome"
             android:textSize="25dp"
             android:textColor="@color/white"
-            android:paddingLeft="20dp"
-            android:background="@color/royal_blue"/>
-        <View
-            android:id="@+id/divider4"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:outlineSpotShadowColor="@color/black"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_below="@+id/tvDisplayUserName"
-            android:background="?android:attr/listDivider" />
+            android:paddingLeft="20dp" />
+<!--        <View-->
+<!--            android:id="@+id/divider4"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:outlineSpotShadowColor="@color/black"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginTop="0dp"-->
+<!--            android:layout_marginEnd="0dp"-->
+<!--            android:layout_below="@+id/tvDisplayUserName"-->
+<!--            android:background="?android:attr/listDivider" />-->
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -67,7 +67,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:background="@color/royal_blue"
                 android:padding="8dp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

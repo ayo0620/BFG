@@ -85,17 +85,35 @@ public class MainActivity extends AppCompatActivity {
         }
         else{
 
-            statusIncrementHome();
+            statusIncrementation(INCREMENT_BY);
             bottomNavigationView.setSelectedItemId(R.id.action_home_screen);
         }
     }
 
-    private void statusIncrementHome() {
+    public static void statusIncrementation(int incrementBy) {
         ParseUser user = ParseUser.getCurrentUser();
-        int val = (int) user.getNumber(KEY_STATUS_COUNT);
-        User myUser = (User) user;
-        myUser.setStatusCount(val+INCREMENT_BY);
-        myUser.saveInBackground();
+        try{
+            int val = (int) user.getNumber(KEY_STATUS_COUNT);
+            User myUser = (User) user;
+            myUser.setStatusCount(val+incrementBy);
+            myUser.saveInBackground();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void statusDecrementation(int decrementBy) {
+        ParseUser user = ParseUser.getCurrentUser();
+        try{
+            int val = (int) user.getNumber(KEY_STATUS_COUNT);
+            User myUser = (User) user;
+            myUser.setStatusCount(val-decrementBy);
+            myUser.saveInBackground();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/layout_bg"
     android:layout_width="match_parent"
-    android:backgroundTint="@color/denim"
+    android:layout_margin="10dp"
+    android:backgroundTint="@color/white"
     android:layout_height="wrap_content">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -24,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="35dp"
         android:layout_toEndOf="@+id/ivSearchImage"
         android:text="Status" />
 
@@ -37,16 +38,6 @@
         android:layout_marginTop="15dp"
         android:layout_toEndOf="@+id/ivSearchImage"
         android:text="Games:....." />
-
-    <TextView
-        android:id="@+id/tvViewProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvGameList"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="19dp"
-        android:layout_toEndOf="@+id/ivSearchImage"
-        android:text="View Profile>" />
 
     <TextView
         android:id="@+id/tvSearchUsername"

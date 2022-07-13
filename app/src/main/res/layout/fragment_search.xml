@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/denim"
+    android:background="@drawable/home_gradient"
     tools:context=".Fragments.SearchFragment">
 
     <androidx.appcompat.widget.SearchView
@@ -13,7 +13,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_button"
-        android:backgroundTint="@color/denim_shade"
+        android:backgroundTint="@color/transparent"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="30dp"
         android:iconifiedByDefault="false"
@@ -25,7 +25,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/dividerSearch"
         android:layout_marginTop="3dp"
-        android:background="@color/denim" />
+        android:background="@drawable/home_gradient" />
 
     <TextView
         android:id="@+id/tvSearchPlaceholder"

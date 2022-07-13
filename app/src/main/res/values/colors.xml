@@ -12,4 +12,5 @@
     <color name="royal_blue">#64888D</color>
     <color name="denim2">#8D9FAE</color>
     <color name="denim_shade">#728AA3</color>
+    <color name="transparent">#00000000</color>
 </resources>

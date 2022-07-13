@@ -1,9 +1,12 @@
 package com.example.bfg.Adapters;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -17,10 +20,12 @@ import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.bfg.CommentsActivity;
+import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Comments;
 import com.example.bfg.Models.Notifications;
 import com.example.bfg.Models.Post;
@@ -86,6 +91,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageView ivDoubleTapLike;
         private ImageButton ibCommentBtn;
         private TextView tvCommentCount;
+        private AnimatedVectorDrawableCompat avd;
+        private AnimatedVectorDrawable avd2;
 
         public static final String KEY_PROFILE_IMAGE = "ProfileImage";
 
@@ -152,7 +159,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         likeText = String.valueOf(post.likeCountDisplayText());
                         likeCount = String.valueOf(likeBy.size());
                         tvLikeCount.setText(likeCount + " " + likeText);
-                        statusIncrementLike();
+                        MainActivity.statusIncrementation(INCREMENT_BY);
                         likeNotification(ParseUser.getCurrentUser(),post.getUser());
                     } else {
                         likeBy.remove(ParseUser.getCurrentUser().getObjectId());
@@ -163,14 +170,24 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         likeText = String.valueOf(post.likeCountDisplayText());
                         likeCount = String.valueOf(likeBy.size());
                         tvLikeCount.setText(likeCount + " " + likeText);
-                        statusDecrementLike();
+                        MainActivity.statusDecrementation(INCREMENT_BY);
                     }
                     post.saveInBackground();
                 }
             });
 
+///           comment count
+            ParseQuery<Comments> myComments = ParseQuery.getQuery(Comments.class);
+            myComments.whereContains("post",post.getObjectId());
+            myComments.findInBackground(new FindCallback<Comments>() {
+                @Override
+                public void done(List<Comments> objects, ParseException e) {
+                    tvCommentCount.setText(String.valueOf(objects.size()));
+                }
+            });
 
 //            Double Tab to like
+            final Drawable drawable = ivDoubleTapLike.getDrawable();
            ivPostImage.setOnTouchListener(new View.OnTouchListener() {
                private GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener()
                {
@@ -181,6 +198,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                            post.setLikedBy(likeBy);
                            Drawable newImage = context.getDrawable(R.drawable.ic_favorited_active);
                            ibLike.setImageDrawable(newImage);
+//                           ivDoubleTapLike.setAlpha(0.75f);
+//                           if(drawable instanceof AnimatedVectorDrawableCompat)
+//                           {
+//                               avd = (AnimatedVectorDrawableCompat) drawable;
+//                               avd.start();
+//                           }else if(drawable instanceof AnimatedVectorDrawable){
+//                               avd2 = (AnimatedVectorDrawable) drawable;
+//                               avd2.start();
+//                           }
                            ivDoubleTapLike.setImageResource(R.drawable.ic_favorited_active);
                            post.setFavoritedBool(true);
                            likeText = String.valueOf(post.likeCountDisplayText());
@@ -190,6 +216,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                        }
                        else
                        {
+//                           ivDoubleTapLike.setAlpha(0.75f);
+//                           if(drawable instanceof AnimatedVectorDrawableCompat)
+//                           {
+//                               avd = (AnimatedVectorDrawableCompat) drawable;
+//                               avd.start();
+//                           }else if(drawable instanceof AnimatedVectorDrawable) {
+//                               avd2 = (AnimatedVectorDrawable) drawable;
+//                               avd2.start();
+//                           }
                            ivDoubleTapLike.setImageResource(R.drawable.ic_favorited_active);
                        }
                        Handler handler = new Handler();
@@ -239,8 +274,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     }
 
     private void likeNotification(ParseUser fromUser, ParseUser toUser) {
-        Log.i("like",fromUser.getObjectId());
-        Log.i("like",toUser.getObjectId());
         if (!fromUser.getObjectId().equals(toUser.getObjectId()))
         {
             Notifications notifications = new Notifications();
@@ -252,19 +285,4 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     }
 
 
-    private void statusDecrementLike() {
-        ParseUser user = ParseUser.getCurrentUser();
-        int val = (int) user.getNumber(KEY_STATUS_COUNT);
-        User myUser = (User) user;
-        myUser.setStatusCount(val+INCREMENT_BY);
-        myUser.saveInBackground();
-    }
-
-    private void statusIncrementLike() {
-        ParseUser user = ParseUser.getCurrentUser();
-        int val = (int) user.getNumber(KEY_STATUS_COUNT);
-        User myUser = new User();
-        myUser.setStatusCount(val+INCREMENT_BY);
-        user.saveInBackground();
-    }
 }

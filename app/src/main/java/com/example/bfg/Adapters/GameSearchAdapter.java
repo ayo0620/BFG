@@ -100,9 +100,6 @@ public class GameSearchAdapter extends RecyclerView.Adapter<GameSearchAdapter.Vi
             {
                 Cards cards = allcards.get(position);
                 Intent intent = new Intent(context, MainActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("name", "hey");
-                new ComposeFragment().setArguments(bundle);
                 intent.putExtra(Cards.class.getSimpleName(), Parcels.wrap(cards));
                 context.startActivity(intent);
 

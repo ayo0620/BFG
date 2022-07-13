@@ -59,7 +59,7 @@ public class CommentsActivity extends AppCompatActivity {
                 comments.setUser(ParseUser.getCurrentUser());
                 comments.setDescription(etCommentInput.getText().toString());
                 comments.setPost(post);
-                statusIncrementComment();
+                MainActivity.statusIncrementation(INCREMENT_BY);
                 commentsNotification(ParseUser.getCurrentUser(),post.getUser());
                 comments.saveInBackground(new SaveCallback() {
                     @Override
@@ -96,15 +96,6 @@ public class CommentsActivity extends AppCompatActivity {
             notification.setNotifyThis(toUser);
             notification.saveInBackground();
         }
-    }
-
-
-    private void statusIncrementComment() {
-        ParseUser user = ParseUser.getCurrentUser();
-        int val = (int) user.getNumber(KEY_STATUS_COUNT);
-        User myUser = (User) user;
-        myUser.setStatusCount(val+INCREMENT_BY);
-        myUser.saveInBackground();
     }
 
     public void reFreshComment(){

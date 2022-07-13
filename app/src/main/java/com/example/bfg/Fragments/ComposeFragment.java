@@ -140,17 +140,10 @@ public class ComposeFragment extends Fragment {
                 String gameForPost = tvSetGameCategory.getText().toString();
                 savePost(description, currentUser, photoFile,gameForPost);
                 activity.bottomNavigationView.setSelectedItemId(R.id.action_home_screen);
-                statusIncrementPost();
+//                increment status
+                MainActivity.statusIncrementation(INCREMENT_BY);
             }
         });
-    }
-
-    private void statusIncrementPost() {
-        ParseUser user = ParseUser.getCurrentUser();
-        int val = (int) user.getNumber(KEY_STATUS_COUNT);
-        User myUser = (User) user;
-        myUser.setStatusCount(val+INCREMENT_BY);
-        myUser.saveInBackground();
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.example.bfg.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.example.bfg.Fragments.ProfileFragment;
 import com.example.bfg.Models.Post;
 import com.example.bfg.Models.User;
 import com.example.bfg.R;
@@ -85,7 +90,18 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 int radius = 200;
                 Glide.with(context).load(image.getUrl()).centerCrop().into(ivSearchImage);
             }
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences.Editor editor = context.getSharedPreferences("PREFS",Context.MODE_PRIVATE).edit();
+                    editor.putString("profileId",user.getObjectId());
+                    editor.apply();
+                    ((FragmentActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.flContainer, new ProfileFragment()).commit();
+                }
+            });
         }
+
     }
     // Clean all elements of the recycler
     public void clear() {
