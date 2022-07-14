@@ -80,7 +80,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
         public void bind(User user) {
             tvSearchUsername.setText(user.getUsername());
-            tvSearchStatus.setText("Elite");
+            tvSearchStatus.setText(user.getStatus());
             ParseFile image = user.getParseFile(KEY_PROFILE_IMAGE);
             if (image == null)
             {

@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.ScrollingTabContainerView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -18,7 +20,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.SearchView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestHeaders;
@@ -31,7 +38,9 @@ import com.example.bfg.Models.Post;
 import com.example.bfg.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,16 +62,16 @@ public class ExploreFragment extends Fragment {
     public static final String TAG = "ExploreFragment";
     List<Cards> allcards;
     List<Cards> myCards;
-    public static List<Cards> allItems2;
     CardsAdapter adapter;
     RecyclerView rvCards;
-    MenuItem menuItem;
-    SearchView searchView;
     Toolbar toolbar;
+    Spinner spinner;
+    TextView sortedByText;
     public HashMap<String, Integer> likesTotal = new HashMap<String, Integer>();
     public HashMap<String, Integer> postTotal = new HashMap<String, Integer>();
     public HashMap<String, Double> likePostRatio = new HashMap<String, Double>();
     HashMap<String, Double> sortedMap;
+    ParseUser user;
 
 
     public ExploreFragment(){}
@@ -74,10 +83,25 @@ public class ExploreFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_explore, container, false);
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
     @SuppressLint("ResourceAsColor")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        toolbar = getActivity().findViewById(R.id.exploreToolbar);
+        user = ParseUser.getCurrentUser();
+
+        toolbar = view.findViewById(R.id.exploreToolbar);
+        spinner = view.findViewById(R.id.exploreSpinner);
+        sortedByText = view.findViewById(R.id.sortedByText);
+
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.names) );
+        myAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        spinner.setAdapter(myAdapter);
+
         toolbar.setTitle("Explore");
         toolbar.setTitleTextColor(Color.WHITE);
 
@@ -92,13 +116,109 @@ public class ExploreFragment extends Fragment {
         rvCards.setAdapter(adapter);
         rvCards.setHasFixedSize(true);
 
-        //        Api call
-        sortExplorePage();
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(spinner.getSelectedItem().equals("popular"))
+                {
+                    sortedByText.setText("Popular in the app");
+                    Toast.makeText(getContext(),"popular",Toast.LENGTH_SHORT).show();
+                    sortByPopularity();
+                }
+                if (view != null) {
+                    //do things here
+                    if(spinner.getSelectedItem().equals("For you"))
+                    {
+                        sortedByText.setText("Just for you");
+                        allcards.clear();
+                        sortByPersonalization();
+                        Toast.makeText(getContext(),"for yoy",Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         super.onViewCreated(view, savedInstanceState);
     }
 
-    private void sortExplorePage() {
+    private void sortByPersonalization() {
+        RequestParams params = new RequestParams();
+        RequestHeaders headers = new RequestHeaders();
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        String url = "https://api.twitch.tv/helix/games/top";
+        params.put("first", 100);
+        headers.put("Client-Id", BuildConfig.CLIEND_ID);
+        headers.put("Authorization",BuildConfig.TOKEN);
+        client.get(url, headers,params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    HashMap<String, Cards> gameList = new HashMap<String, Cards>();
+                    JSONArray gameItems = jsonObject.getJSONArray("data");
+                    JSONObject obj = gameItems.getJSONObject(0);
+                    Log.i(TAG, obj.toString());
+                    String arr = obj.getString("name");
+                    for (int i= 0; i<gameItems.length();i++)
+                    {
+                        String gameName = gameItems.getJSONObject(i).getString("name");
+                        gameList.put(gameName,new Cards(gameItems.getJSONObject(i)));
+                    }
+
+                    ParseQuery<Post> queryPosts = ParseQuery.getQuery(Post.class);
+                    queryPosts.whereContains("user",user.getObjectId());
+                    ParseQuery<Post> queryLikedBy = ParseQuery.getQuery(Post.class);
+                    queryLikedBy.whereContains("likedby",user.getObjectId());
+
+                    List<ParseQuery<Post>> queries = new ArrayList<ParseQuery<Post>>();
+                    queries.add(queryPosts);
+                    queries.add(queryLikedBy);
+                    ParseQuery<Post> mainQuery = ParseQuery.or(queries);
+
+                    Log.i("eachTime",mainQuery.toString());
+                    mainQuery.findInBackground(new FindCallback<Post>() {
+                        @Override
+                        public void done(List<Post> objects, ParseException e) {
+                            Cards card;
+                            for(Post post:objects)
+                            {
+                                card  = new Cards();
+                                card = gameList.get(post.getPostForGame());
+                                if(gameList.containsKey(post.getPostForGame()) && !allcards.contains(card))
+                                {
+                                    allcards.add(gameList.get(post.getPostForGame()));
+                                }
+                            }
+
+                            adapter.notifyDataSetChanged();
+                            Log.i("eachTime2",allcards.toString());
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    Log.e("gg", "Hit json exception",e);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.i("gg",response);
+            }
+        });
+
+    }
+
+    private void sortByPopularity() {
+        allcards.clear();
         ParseQuery<Post> myPosts = ParseQuery.getQuery(Post.class);
         myPosts.include(Post.KEY_POST_FOR_GAME);
         myPosts.include(Post.KEY_LIKED_BY);
@@ -221,26 +341,26 @@ public class ExploreFragment extends Fragment {
         return sortedMap;
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        menuItem= menu.findItem(R.id.action_Search_icon);
-        searchView = (SearchView) menuItem.getActionView();
-        searchView.setQueryHint("Type here to search");
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.i(TAG,"submitted!");
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        super.onCreateOptionsMenu(menu, inflater);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+//        inflater.inflate(R.menu.overflow_menu,menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        int id = item.getItemId();
+//        if(id == R.id.item_Popular)
+//        {
+//            Toast.makeText(getActivity(),"popular",Toast.LENGTH_SHORT).show();
+//
+//        }
+//        if (id == R.id.item_forYou)
+//        {
+//            Toast.makeText(getActivity(),"for you",Toast.LENGTH_SHORT).show();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }
 
 

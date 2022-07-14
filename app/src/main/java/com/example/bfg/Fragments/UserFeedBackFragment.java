@@ -1,5 +1,6 @@
 package com.example.bfg.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,8 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.bfg.MainActivity;
 import com.example.bfg.Models.FeedBack;
 import com.example.bfg.R;
 import com.parse.ParseUser;
@@ -22,6 +25,7 @@ public class UserFeedBackFragment extends Fragment {
     Toolbar toolbar;
     private EditText userFeedBackText;
     private Button feedbackSubmit;
+    ImageView feedbackClose;
 
 
     public UserFeedBackFragment() {
@@ -42,12 +46,14 @@ public class UserFeedBackFragment extends Fragment {
         toolbar = view.findViewById(R.id.feedback_Toolbar);
         userFeedBackText = view.findViewById(R.id.userFeedBackText);
         feedbackSubmit = view.findViewById(R.id.feedbackSubmit);
+        feedbackClose = view.findViewById(R.id.feedbackClose);
 
-        toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        feedbackClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();
+                Intent i = new Intent(getContext(), MainActivity.class);
+                startActivity(i);
+                getActivity().finish();
             }
         });
 
