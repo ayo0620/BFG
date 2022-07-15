@@ -48,9 +48,11 @@ import org.parceler.Parcels;
 
 import java.io.File;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ComposeFragment extends Fragment {
 
-    private ImageView ivComposeProfileImage;
+    private  CircleImageView ivComposeProfileImage;
     private TextView etComposeDescription;
     private ImageView ivUserImage;
     private Cards cards;
@@ -110,6 +112,7 @@ public class ComposeFragment extends Fragment {
         }
         else {
             Glide.with(getActivity()).load(image.getUrl()).circleCrop().into(ivComposeProfileImage);
+            MainActivity.setBorderColorStatus((User) user,ivComposeProfileImage);
         }
         setHasOptionsMenu(true);
 

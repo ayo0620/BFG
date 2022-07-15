@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.bfg.EditProfileActivity;
+import com.example.bfg.MainActivity;
 import com.example.bfg.Models.User;
 import com.example.bfg.R;
 import com.example.bfg.Adapters.ViewPagerAdapter;
@@ -50,15 +51,18 @@ import com.parse.ParseUser;
 import java.io.File;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class ProfileFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ShapeableImageView profileImage;
+    private CircleImageView profileImage;
     private TextView tvUserProfileName;
     private TextView tvUserBio;
     private Button btnEditProfile;
     public static String profileId;
+    private TextView friendCount;
     public String dummyId;
     protected File photoFile;
     private TextView tvCurrUserStatus;
@@ -110,6 +114,7 @@ public class ProfileFragment extends Fragment {
         tvUserBio = view.findViewById(R.id.tvUserBio);
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
         tvCurrUserStatus = view.findViewById(R.id.tvCurrUserStatus);
+        friendCount = view.findViewById(R.id.friend_count);
 
 
 
@@ -214,6 +219,7 @@ public class ProfileFragment extends Fragment {
                 tvCurrUserStatus.setText(fromUser.getStatus());
                 tvUserBio.setText(fromUser.getUserDescription());
                 tvUserProfileName.setText(fromUser.getUsername());
+                friendCount.setText(String.valueOf(fromUser.getUserFriends().size()));
                 if (fromUser.getProfileImage() == null)
                 {
                     profileImage.setImageResource(R.drawable.default_profile_icon);
@@ -312,11 +318,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        friendCount.setText(String.valueOf(user.getUserFriends().size()));
         tvUserProfileName.setText(user.getUsername());
         ParseFile profilePhoto = user.getProfileImage();
         if(profilePhoto != null)
         {
-            Glide.with(getContext()).load(profilePhoto.getUrl()).centerCrop().into(profileImage);
+            Glide.with(getContext()).load(profilePhoto.getUrl()).into(profileImage);
+            MainActivity.setBorderColorStatus(user,profileImage);
         }
         else
         {

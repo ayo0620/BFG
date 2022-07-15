@@ -3,6 +3,7 @@ package com.example.bfg.Adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
@@ -24,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.bfg.Fragments.ProfileFragment;
+import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Notifications;
 import com.example.bfg.Models.Post;
 import com.example.bfg.Models.User;
@@ -119,12 +122,15 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                 }
             });
 
+
 //            if it's the user om search result do not set Add friend button
             if(currUser.getObjectId().equals(user.getObjectId()))
             {
                 btnAddFriend.setVisibility(View.GONE);
             }
 
+            MainActivity.setBorderColorStatus(user,ivSearchImage);
+//            setBorderColorStatus(user,ivSearchImage);
 //         if the user is in current user friend list set text to Added
             if(!currUserFriendList.contains(user.getObjectId()))
             {
@@ -161,6 +167,33 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         }
 
     }
+
+//    private void setBorderColorStatus(User user, CircleImageView ivSearchImage) {
+//        if (user.getStatus().equals("Noobie"))
+//        {
+//            ivSearchImage.setBorderColor(Color.YELLOW);
+//        }
+//        else if (user.getStatus().equals("Regular"))
+//        {
+//            ivSearchImage.setBorderColor(Color.GREEN);
+//        }
+//        else if (user.getStatus().equals("Pro"))
+//        {
+//            ivSearchImage.setBorderColor(Color.BLUE);
+//        }
+//        else if (user.getStatus().equals("Elite"))
+//        {
+//            ivSearchImage.setBorderColor(Color.parseColor("#8B4513"));
+//        }
+//        else if (user.getStatus().equals("Legend"))
+//        {
+//            ivSearchImage.setBorderColor(Color.RED);
+//        }
+//
+//
+//
+//    }
+
 
     private void addFriendNotification(User currUser, User toUser) {
         if (!currUser.getObjectId().equals(toUser.getObjectId()))

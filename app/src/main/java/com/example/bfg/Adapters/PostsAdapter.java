@@ -43,6 +43,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
     private Context context;
     private List<Post> posts;
@@ -83,7 +85,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvUsername;
         private ImageView ivPostImage;
         private TextView tvDescription;
-        private ShapeableImageView ivProfileImage;
+        private CircleImageView ivProfileImage;
         private TextView tvStatus;
         private TextView tvTimeStamp;
         private ImageButton ibLike;
@@ -136,6 +138,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             } else {
                 Glide.with(context).load(image.getUrl()).centerCrop().into(ivProfileImage);
             }
+            MainActivity.setBorderColorStatus((User) post.getUser(),ivProfileImage);
             ParseUser user = ParseUser.getCurrentUser();
             if (post.getLikedBy().contains(user.getObjectId())) {
                 Drawable newImage = context.getDrawable(R.drawable.ic_favorited_active);

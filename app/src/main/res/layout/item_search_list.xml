@@ -19,17 +19,7 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="25dp"
         app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"/>
-<!--    <com.google.android.material.imageview.ShapeableImageView-->
-<!--        android:id="@+id/ivSearchImage"-->
-<!--        android:layout_width="70dp"-->
-<!--        android:layout_height="70dp"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:layout_marginStart="3dp"-->
-<!--        android:layout_marginTop="25dp"-->
-<!--        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"-->
-<!--        tools:srcCompat="@tools:sample/avatars" />-->
+        app:civ_border_color="@color/teal_200"/>
 
     <TextView
         android:id="@+id/tvSearchStatus"

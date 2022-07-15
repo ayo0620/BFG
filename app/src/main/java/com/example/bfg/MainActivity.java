@@ -6,6 +6,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,6 +24,8 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.parceler.Parcels;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
     public BottomNavigationView bottomNavigationView;
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_profile_screen:
                         fragment = profileFragment;
-                        Log.i("profile","selectTab");
+                        Log.i("profile", "selectTab");
                         break;
                     default:
                         break;
@@ -79,11 +82,9 @@ public class MainActivity extends AppCompatActivity {
 
 //       setting fl layout for composeFragment if intent comes from searchGameActivity
         cards = Parcels.unwrap(getIntent().getParcelableExtra(Cards.class.getSimpleName()));
-        if (cards!= null)
-        {
+        if (cards != null) {
             bottomNavigationView.setSelectedItemId(R.id.action_addPost);
-        }
-        else{
+        } else {
 
             statusIncrementation(INCREMENT_BY);
             bottomNavigationView.setSelectedItemId(R.id.action_home_screen);
@@ -92,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static void statusIncrementation(int incrementBy) {
         ParseUser user = ParseUser.getCurrentUser();
-        try{
+        try {
             int val = (int) user.getNumber(KEY_STATUS_COUNT);
             User myUser = (User) user;
-            myUser.setStatusCount(val+incrementBy);
+            myUser.setStatusCount(val + incrementBy);
             myUser.saveInBackground();
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,10 +106,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static void statusDecrementation(int decrementBy) {
         ParseUser user = ParseUser.getCurrentUser();
-        try{
+        try {
             int val = (int) user.getNumber(KEY_STATUS_COUNT);
             User myUser = (User) user;
-            myUser.setStatusCount(val-decrementBy);
+            myUser.setStatusCount(val - decrementBy);
             myUser.saveInBackground();
         } catch (Exception e) {
             e.printStackTrace();
@@ -116,17 +117,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-//    @Override
-//    public void onBackPressed() {
-//        if(drawerLayout.isDrawerOpen(GravityCompat.START))
-//        {
-//            drawerLayout.closeDrawer(GravityCompat.START);
-//        }
-//        else{
-//            super.onBackPressed();
-//        }
-//    }
-
-
+    public static void setBorderColorStatus(User user, CircleImageView ivSearchImage) {
+        if (user.getStatus().equals("Noobie")) {
+            ivSearchImage.setBorderColor(Color.YELLOW);
+        } else if (user.getStatus().equals("Regular")) {
+            ivSearchImage.setBorderColor(Color.GREEN);
+        } else if (user.getStatus().equals("Pro")) {
+            ivSearchImage.setBorderColor(Color.BLUE);
+        } else if (user.getStatus().equals("Elite")) {
+            ivSearchImage.setBorderColor(Color.parseColor("#8B4513"));
+        } else if (user.getStatus().equals("Legend")) {
+            ivSearchImage.setBorderColor(Color.RED);
+        }
+    }
 }
+

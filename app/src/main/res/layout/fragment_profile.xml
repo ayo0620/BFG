@@ -24,6 +24,7 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:layout_below="@+id/layout_top"
+       android:backgroundTint="@color/denim3"
        android:background="@drawable/layout_bg_profile">
 
       <RelativeLayout
@@ -92,16 +93,16 @@
           android:layout_marginStart="20dp"
           android:layout_marginTop="10dp"
           android:layout_marginEnd="20dp"
-          android:textAlignment="center"
           android:background="@drawable/rounded_button"
-          android:text="Edit Profile" />
+          android:text="Edit Profile"
+          android:textAlignment="center" />
 
       <com.google.android.material.tabs.TabLayout
           android:id="@+id/tabLayout"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_below="@+id/btnEditProfile"
-          app:tabBackground="@color/denim"
+          app:tabBackground="@color/denim3"
           app:tabGravity="fill"></com.google.android.material.tabs.TabLayout>
 
       <androidx.viewpager.widget.ViewPager
@@ -115,15 +116,15 @@
 
    </RelativeLayout>
 
-   <com.google.android.material.imageview.ShapeableImageView
+   <de.hdodenhof.circleimageview.CircleImageView
        android:id="@+id/profileImage"
        android:layout_width="90dp"
        android:layout_height="90dp"
+       android:src="@drawable/default_profile_icon"
        android:layout_alignParentTop="true"
        android:layout_centerHorizontal="true"
        android:layout_marginTop="150dp"
-       android:src="@drawable/icon"
-       app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-       app:strokeWidth="1dp" />
+       app:civ_border_width="2dp" />
+
 
 </RelativeLayout>
