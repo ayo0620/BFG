@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ import com.example.bfg.Adapters.CardsAdapter;
 import com.example.bfg.BuildConfig;
 import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.Post;
+import com.example.bfg.Models.User;
 import com.example.bfg.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -72,6 +74,8 @@ public class ExploreFragment extends Fragment {
     public HashMap<String, Double> likePostRatio = new HashMap<String, Double>();
     HashMap<String, Double> sortedMap;
     ParseUser user;
+    User currUser;
+    List<ParseQuery<Post>> queries;
 
 
     public ExploreFragment(){}
@@ -93,6 +97,7 @@ public class ExploreFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         user = ParseUser.getCurrentUser();
+        currUser = (User) user;
 
         toolbar = view.findViewById(R.id.exploreToolbar);
         spinner = view.findViewById(R.id.exploreSpinner);
@@ -107,6 +112,7 @@ public class ExploreFragment extends Fragment {
 
         allcards = new ArrayList<>();
         myCards = new ArrayList<>();
+        queries = new ArrayList<ParseQuery<Post>>();
         adapter = new CardsAdapter(getContext(), allcards);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
@@ -173,14 +179,36 @@ public class ExploreFragment extends Fragment {
                         gameList.put(gameName,new Cards(gameItems.getJSONObject(i)));
                     }
 
-                    ParseQuery<Post> queryPosts = ParseQuery.getQuery(Post.class);
-                    queryPosts.whereContains("user",user.getObjectId());
+
+                    List<String> friendList = currUser.getUserFriends();
+                    for (int i = 0; i<friendList.size(); i++)
+                    {
+//                        query for posts the user friend has made
+                        ParseQuery<Post> queryPosts = ParseQuery.getQuery(Post.class);
+                        queryPosts.whereContains("user",friendList.get(i));
+
+//                        query for posts the user friend has liked
+                        ParseQuery<Post> queryLikedByFriend = ParseQuery.getQuery(Post.class);
+                        queryLikedByFriend.whereContains("likedby",friendList.get(i));
+
+                        Log.i("eachTime2",queryPosts.toString());
+                        Log.i("eachTime2",queryLikedByFriend.toString());
+                        queries.add(queryPosts);
+                        queries.add(queryLikedByFriend);
+                    }
+                    //  query for posts the user has liked
                     ParseQuery<Post> queryLikedBy = ParseQuery.getQuery(Post.class);
                     queryLikedBy.whereContains("likedby",user.getObjectId());
-
-                    List<ParseQuery<Post>> queries = new ArrayList<ParseQuery<Post>>();
-                    queries.add(queryPosts);
                     queries.add(queryLikedBy);
+//                    ParseQuery<Post> queryPosts = ParseQuery.getQuery(Post.class);
+//                    queryPosts.whereContains("user",user.getObjectId());
+//                    ParseQuery<Post> queryLikedBy = ParseQuery.getQuery(Post.class);
+//                    queryLikedBy.whereContains("likedby",user.getObjectId());
+//
+//
+//                    List<ParseQuery<Post>> queries = new ArrayList<ParseQuery<Post>>();
+//                    queries.add(queryPosts);
+//                    queries.add(queryLikedBy);
                     ParseQuery<Post> mainQuery = ParseQuery.or(queries);
 
                     Log.i("eachTime",mainQuery.toString());
@@ -199,7 +227,7 @@ public class ExploreFragment extends Fragment {
                             }
 
                             adapter.notifyDataSetChanged();
-                            Log.i("eachTime2",allcards.toString());
+//                            Log.i("eachTime2",allcards.toString());
                         }
                     });
 

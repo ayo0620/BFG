@@ -204,6 +204,19 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                         currUser.saveInBackground();
                         btnAcceptRequest.setText("Added");
                         btnAcceptRequest.setEnabled(false);
+                        ParseQuery<Notifications> query = ParseQuery.getQuery(Notifications.class);
+                        query.include("createdAt");
+                        query.whereEqualTo("createdAt",notification.getCreatedAt());
+                        query.addDescendingOrder("createdAt");
+                        query.findInBackground(new FindCallback<Notifications>() {
+                            @Override
+                            public void done(List<Notifications> objects, ParseException e) {
+                                if (e!= null) {
+                                    Log.i("NotifyAdapter", e.toString());
+                                }
+                                objects.get(0).deleteInBackground();
+                            }
+                        });
                     }
                 });
 

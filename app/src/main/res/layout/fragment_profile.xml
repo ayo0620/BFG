@@ -54,10 +54,13 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_below="@+id/rlFriendCount"
-          android:layout_alignParentStart="true"
-          android:layout_marginStart="190dp"
+          android:layout_centerHorizontal="true"
+          android:layout_marginStart="20dp"
           android:layout_marginTop="0dp"
+          android:layout_toStartOf="@+id/tvCurrUserStatus"
+          android:layout_toEndOf="@+id/rlFriendCount"
           android:text="TextView"
+          android:textAlignment="center"
           android:textSize="18dp"
           android:textStyle="bold" />
 
@@ -89,6 +92,7 @@
           android:layout_marginStart="20dp"
           android:layout_marginTop="10dp"
           android:layout_marginEnd="20dp"
+          android:textAlignment="center"
           android:background="@drawable/rounded_button"
           android:text="Edit Profile" />
 
@@ -115,9 +119,8 @@
        android:id="@+id/profileImage"
        android:layout_width="90dp"
        android:layout_height="90dp"
-       android:layout_alignParentStart="true"
        android:layout_alignParentTop="true"
-       android:layout_marginStart="157dp"
+       android:layout_centerHorizontal="true"
        android:layout_marginTop="150dp"
        android:src="@drawable/icon"
        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"

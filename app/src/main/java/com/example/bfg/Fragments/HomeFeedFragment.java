@@ -148,6 +148,7 @@ public class HomeFeedFragment extends Fragment {
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
                 queryPosts(0);
+                adapter.notifyDataSetChanged();
             }
         });
 

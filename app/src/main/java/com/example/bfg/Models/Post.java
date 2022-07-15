@@ -17,7 +17,7 @@ public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "Description";
     public static final String KEY_USER = "user";
     public static final String KEY_LIKED_BY = "likedby";
-    public static final String KEY_FAVORITED_BOOL = "favorited";
+    public static final String KEY_FAVORITED_BY = "favoritedBy";
     public static final String KEY_POST_FOR_GAME = "PostForGame";
 
     public ParseFile getImage(){
@@ -70,13 +70,18 @@ public class Post extends ParseObject {
         }
         return likesText;
     }
-    public Boolean getFavoritedBool()
+    public List<String> getFavoritedBy()
     {
-        return getBoolean(KEY_FAVORITED_BOOL);
+        List<String> favoritedBy = getList(KEY_FAVORITED_BY);
+        if(favoritedBy == null)
+        {
+            favoritedBy = new ArrayList<>();
+        }
+        return favoritedBy;
     }
-    public void setFavoritedBool(Boolean favoritedBool)
+    public void setFavoritedBy(List<String> favoritedBy)
     {
-        put(KEY_FAVORITED_BOOL, favoritedBool);
+        put(KEY_FAVORITED_BY, favoritedBy);
     }
     public String getPostForGame(){
         return getString(KEY_POST_FOR_GAME);

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.example.bfg.Adapters.NotificationsAdapter;
 import com.example.bfg.MainActivity;
@@ -49,6 +50,9 @@ public class NotificationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        final ProgressBar notificationProgressBar = (ProgressBar) view.findViewById(R.id.notificationProgressBar);
+        notificationProgressBar.setVisibility(View.VISIBLE);
 
         rvNotifications = view.findViewById(R.id.rvNotifications);
         notificationClose = view.findViewById(R.id.notificationClose);

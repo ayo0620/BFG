@@ -106,7 +106,7 @@ public class ComposeFragment extends Fragment {
         ParseFile image = user.getParseFile(KEY_PROFILE_IMAGE);
         if (image == null)
         {
-            ivComposeProfileImage.setVisibility(View.GONE);
+            ivComposeProfileImage.setImageResource(R.drawable.default_profile_icon);
         }
         else {
             Glide.with(getActivity()).load(image.getUrl()).circleCrop().into(ivComposeProfileImage);

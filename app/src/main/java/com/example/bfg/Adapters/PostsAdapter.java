@@ -91,6 +91,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageView ivDoubleTapLike;
         private ImageButton ibCommentBtn;
         private TextView tvCommentCount;
+        private ImageButton ibFavorited;
         private AnimatedVectorDrawableCompat avd;
         private AnimatedVectorDrawable avd2;
 
@@ -115,11 +116,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ivDoubleTapLike = itemView.findViewById(R.id.ivDoubleTapLike);
             ibCommentBtn = itemView.findViewById(R.id.ibCommentBtn);
             tvCommentCount = itemView.findViewById(R.id.tvCommentCount);
+            ibFavorited = itemView.findViewById(R.id.ibFavorited);
         }
 
         @SuppressLint("ClickableViewAccessibility")
         public void bind(Post post) {
             List<String> likeBy = post.getLikedBy();
+            List<String> favoritedBy = post.getFavoritedBy();
             tvUsername.setText(post.getUser().getUsername());
             tvStatus.setText("Elite");
             Date createdAt = post.getCreatedAt();
@@ -155,7 +158,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         post.setLikedBy(likeBy);
                         Drawable newImage = context.getDrawable(R.drawable.ic_favorited_active);
                         ibLike.setImageDrawable(newImage);
-                        post.setFavoritedBool(true);
                         likeText = String.valueOf(post.likeCountDisplayText());
                         likeCount = String.valueOf(likeBy.size());
                         tvLikeCount.setText(likeCount + " " + likeText);
@@ -166,7 +168,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         post.setLikedBy(likeBy);
                         Drawable newImage = context.getDrawable(R.drawable.ic_favorite_icon_24);
                         ibLike.setImageDrawable(newImage);
-                        post.setFavoritedBool(false);
                         likeText = String.valueOf(post.likeCountDisplayText());
                         likeCount = String.valueOf(likeBy.size());
                         tvLikeCount.setText(likeCount + " " + likeText);
@@ -183,6 +184,32 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 @Override
                 public void done(List<Comments> objects, ParseException e) {
                     tvCommentCount.setText(String.valueOf(objects.size()));
+                }
+            });
+
+//            Favorited
+            if (post.getFavoritedBy().contains(user.getObjectId())) {
+                Drawable newImage = context.getDrawable(R.drawable.ic_bookmark_active);
+                ibFavorited.setImageDrawable(newImage);
+            } else if (!post.getFavoritedBy().contains(user.getObjectId())) {
+                Drawable newImage = context.getDrawable(R.drawable.ic_bookmark_border);
+                ibFavorited.setImageDrawable(newImage);
+            }
+            ibFavorited.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!favoritedBy.contains(ParseUser.getCurrentUser().getObjectId())) {
+                        favoritedBy.add(ParseUser.getCurrentUser().getObjectId());
+                        post.setFavoritedBy(favoritedBy);
+                        Drawable newImage = context.getDrawable(R.drawable.ic_bookmark_active);
+                        ibFavorited.setImageDrawable(newImage);
+                    } else {
+                        favoritedBy.remove(ParseUser.getCurrentUser().getObjectId());
+                        post.setFavoritedBy(favoritedBy);
+                        Drawable newImage = context.getDrawable(R.drawable.ic_bookmark_border);
+                        ibFavorited.setImageDrawable(newImage);
+                    }
+                    post.saveInBackground();
                 }
             });
 
@@ -208,7 +235,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 //                               avd2.start();
 //                           }
                            ivDoubleTapLike.setImageResource(R.drawable.ic_favorited_active);
-                           post.setFavoritedBool(true);
                            likeText = String.valueOf(post.likeCountDisplayText());
                            likeCount = String.valueOf(likeBy.size());
                            tvLikeCount.setText(likeCount + " " + likeText);

@@ -93,6 +93,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.stetho:stetho-okhttp3:1.5.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.facebook.stetho:stetho:1.5.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.codepath.libraries:android-oauth-handler:2.4.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: de.hdodenhof:circleimageview:3.1.0@aar" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="BFG.app.main" />
 </module>

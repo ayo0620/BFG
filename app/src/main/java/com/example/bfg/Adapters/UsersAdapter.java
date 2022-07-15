@@ -1,5 +1,6 @@
 package com.example.bfg.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
@@ -28,6 +29,8 @@ import com.example.bfg.Models.Post;
 import com.example.bfg.Models.User;
 import com.example.bfg.R;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -35,6 +38,8 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> {
     private Context context;
@@ -71,7 +76,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
         User currUser = (User) queryUser;
         List<String> currUserFriendList = currUser.getUserFriends();
         public TextView tvSearchUsername;
-        public ShapeableImageView ivSearchImage;
+        public CircleImageView ivSearchImage;
         public TextView tvSearchStatus;
         private Button btnAddFriend;
         public static  final String KEY_PROFILE_IMAGE = "ProfileImage";
@@ -90,6 +95,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             btnAddFriend = itemView.findViewById(R.id.btnAddFriend);
         }
 
+        @SuppressLint("ResourceAsColor")
         public void bind(User user) {
             tvSearchUsername.setText(user.getUsername());
             tvSearchStatus.setText(user.getStatus());
@@ -100,7 +106,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             }
             else {
                 int radius = 200;
-                Glide.with(context).load(image.getUrl()).centerCrop().into(ivSearchImage);
+                Glide.with(context).load(image.getUrl()).into(ivSearchImage);
             }
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +171,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             notifications.setNotifyThis(toUser);
             notifications.saveInBackground();
         }
+
     }
 
     // Clean all elements of the recycler
