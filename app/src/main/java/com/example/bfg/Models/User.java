@@ -4,6 +4,9 @@ import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @ParseClassName("_User")
 public class User extends ParseUser {
     public static final String KEY_FIRST_NAME = "First_Name";
@@ -11,6 +14,7 @@ public class User extends ParseUser {
     public static final String KEY_PROFILE_IMAGE = "ProfileImage";
     public static final String KEY_USER_DESCRIPTION = "UserDescription";
     public static final String KEY_STATUS = "status";
+    public static final String KEY_USER_FRIENDS = "UserFriends";
     public static final String KEY_STATUS_COUNT = "statusCount";
 
     public String getFirstName(){
@@ -45,6 +49,19 @@ public class User extends ParseUser {
     public String getStatus()
     {
         return getString(KEY_STATUS);
+    }
+    public void setUserFriend(List<String> user)
+    {
+        put(KEY_USER_FRIENDS, user);
+    }
+    public List<String> getUserFriends()
+    {
+        List<String> friendList = getList(KEY_USER_FRIENDS);
+        if(friendList == null)
+        {
+            friendList = new ArrayList<>();
+        }
+        return friendList;
     }
     public void setStatusCount(int num)
     {

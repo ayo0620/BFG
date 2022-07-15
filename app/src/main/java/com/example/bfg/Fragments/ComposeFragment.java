@@ -208,7 +208,8 @@ public class ComposeFragment extends Fragment {
 
                 // RESIZE BITMAP, see section below
                 // Load the taken image into a preview
-                ivUserImage.setImageBitmap(takenImage);
+                Glide.with(getContext()).load(takenImage).into(ivUserImage);
+
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }

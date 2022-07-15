@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,6 +59,7 @@ public class ProfileFragment extends Fragment {
     private TextView tvUserBio;
     private Button btnEditProfile;
     public static String profileId;
+    public String dummyId;
     protected File photoFile;
     private TextView tvCurrUserStatus;
     private String photoFileName = "photo.jpg";
@@ -81,6 +83,7 @@ public class ProfileFragment extends Fragment {
         user = (User) ParseUser.getCurrentUser();
         prefs = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
         profileId = prefs.getString("profileId",user.getObjectId());
+        dummyId = profileId;
         Log.i(TAG, profileId);
         super.onCreate(savedInstanceState);
 
@@ -111,7 +114,7 @@ public class ProfileFragment extends Fragment {
 
 
         if(!profileId.equals(user.getObjectId())) {
-            btnEditProfile.setText("Add Friend");
+            checkIfAdded();
             userViewMode();
         }
         else{
@@ -122,6 +125,38 @@ public class ProfileFragment extends Fragment {
         }
 
 
+    }
+
+    private void checkIfAdded() {
+        List<String> friendList = user.getUserFriends();
+        if (friendList.contains(profileId))
+        {
+            btnEditProfile.setText("Added");
+            Drawable img = btnEditProfile.getContext().getResources().getDrawable(R.drawable.ic_check_friend);
+            btnEditProfile.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,img,null);
+            btnEditProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    friendList.remove(profileId);
+                    user.setUserFriend(friendList);
+                    btnEditProfile.setText("Add friend");
+                }
+            });
+        }
+        else
+        {
+            btnEditProfile.setText("Add Friend");
+            btnEditProfile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    friendList.add(profileId);
+                    user.setUserFriend(friendList);
+                    btnEditProfile.setText("Added");
+                    btnEditProfile.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,null,null);
+                }
+            });
+        }
+        user.saveInBackground();
     }
 
 
@@ -198,6 +233,33 @@ public class ProfileFragment extends Fragment {
             }
 
         });
+
+
+//      Listener
+        List<String> friendList = user.getUserFriends();
+        btnEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(friendList.contains(dummyId))
+                {
+                    friendList.remove(dummyId);
+                    user.setUserFriend(friendList);
+                    btnEditProfile.setText("Add friend");
+                    btnEditProfile.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,null,null);
+
+                }
+                else{
+                    friendList.add(dummyId);
+                    user.setUserFriend(friendList);
+                    btnEditProfile.setText("Added");
+                    Drawable img = btnEditProfile.getContext().getResources().getDrawable(R.drawable.ic_check_friend);
+                    btnEditProfile.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,img,null);
+                }
+                user.saveInBackground();
+            }
+        });
+
+
         prefs.edit().clear().commit();
         profileId = user.getObjectId();
         Log.i("profile",profileId);

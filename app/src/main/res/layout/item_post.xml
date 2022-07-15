@@ -69,9 +69,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/layout_bg_bottom_posts"
         android:layout_below="@+id/ivPostImage"
+        android:background="@drawable/layout_bg_bottom_posts"
         android:backgroundTint="@color/denim">
+
         <ImageButton
             android:id="@+id/ibLike"
             android:layout_width="wrap_content"
@@ -92,15 +93,15 @@
             android:text="likes"
             android:textColor="@color/black" />
 
-    <!--    <ImageButton-->
-    <!--        android:id="@+id/ibRatingBtn"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="40dp"-->
-    <!--        android:layout_below="@+id/ivPostImage"-->
-    <!--        android:layout_marginStart="3dp"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        android:layout_toEndOf="@+id/ibLike"-->
-    <!--        app:srcCompat="@android:drawable/btn_star_big_off" />-->
+        <!--    <ImageButton-->
+        <!--        android:id="@+id/ibRatingBtn"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="40dp"-->
+        <!--        android:layout_below="@+id/ivPostImage"-->
+        <!--        android:layout_marginStart="3dp"-->
+        <!--        android:layout_marginTop="5dp"-->
+        <!--        android:layout_toEndOf="@+id/ibLike"-->
+        <!--        app:srcCompat="@android:drawable/btn_star_big_off" />-->
 
         <ImageButton
             android:id="@+id/ibCommentBtn"
@@ -119,7 +120,6 @@
             android:layout_marginStart="3dp"
             android:layout_marginTop="7dp"
             android:layout_toEndOf="@+id/ibCommentBtn"
-            android:text="2"
             android:textColor="@color/black" />
 
         <TextView
@@ -130,6 +130,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="12dp"
             android:layout_marginTop="3dp"
+            android:layout_marginBottom="10dp"
             android:text="Description" />
 
     </RelativeLayout>

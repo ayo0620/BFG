@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/topNotification"
         android:layout_margin="0dp">
 
         <com.google.android.material.imageview.ShapeableImageView
@@ -46,8 +47,24 @@
                 android:layout_below="@+id/tvNotificationText"
                 android:text="Time"
                 android:textColor="@color/black" />
-        </RelativeLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnDeleteRequest"
+                android:layout_marginStart="0dp"
+                android:layout_below="@+id/tvNotificationTime"
+                android:text="Delete"/>
 
+            <Button
+                android:id="@+id/btnAcceptRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvNotificationTime"
+                android:layout_marginStart="40dp"
+                android:layout_marginEnd="10dp"
+                android:layout_toRightOf="@id/btnDeleteRequest"
+                android:text="Accept Request" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
