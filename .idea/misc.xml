@@ -18,22 +18,28 @@
         <entry key="app/src/main/res/drawable/ic_feedback.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_notifications_icon.xml" value="0.1195" />
         <entry key="app/src/main/res/drawable/ic_profile_icon.xml" value="0.226" />
+        <entry key="app/src/main/res/drawable/incoming_bubble.xml" value="0.375" />
         <entry key="app/src/main/res/drawable/layout_bg.xml" value="0.1075" />
         <entry key="app/src/main/res/drawable/layout_bg_bottom_posts.xml" value="0.2675" />
         <entry key="app/src/main/res/drawable/layout_bg_posts.xml" value="0.214" />
         <entry key="app/src/main/res/drawable/layout_bg_profile.xml" value="0.2145" />
+        <entry key="app/src/main/res/drawable/outgoing_bubble.xml" value="0.4545" />
         <entry key="app/src/main/res/drawable/profile_imgae_camera.xml" value="0.1675" />
         <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.226" />
         <entry key="app/src/main/res/drawable/rounded_corners_et.xml" value="0.3395" />
         <entry key="app/src/main/res/drawable/rounded_edittext.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.26119402985074625" />
         <entry key="app/src/main/res/layout/activity_comments.xml" value="0.3619791666666667" />
+        <entry key="app/src/main/res/layout/activity_compose_chat.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/layout/activity_edit_profile.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.340625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1537037037037037" />
         <entry key="app/src/main/res/layout/activity_message_fragment.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_messaging.xml" value="0.4280155642023346" />
         <entry key="app/src/main/res/layout/activity_search_games.xml" value="0.2892249527410208" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.3288421630859375" />
+        <entry key="app/src/main/res/layout/chat_adapter_layout.xml" value="0.2046783625730994" />
         <entry key="app/src/main/res/layout/fragment_compose.xml" value="0.28336755646817247" />
         <entry key="app/src/main/res/layout/fragment_detailed_user.xml" value="0.44895833333333335" />
         <entry key="app/src/main/res/layout/fragment_explore.xml" value="0.24739583333333334" />
@@ -53,9 +59,11 @@
         <entry key="app/src/main/res/layout/item_search_games.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_search_list.xml" value="0.315625" />
         <entry key="app/src/main/res/layout/layout_bg.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/layout/messages_viewholder.xml" value="0.4249512670565302" />
         <entry key="app/src/main/res/layout/side_nav_header.xml" value="0.1" />
         <entry key="app/src/main/res/menu/camera_icon_view.xml" value="0.1537037037037037" />
         <entry key="app/src/main/res/menu/drawer_view.xml" value="0.1537037037037037" />
+        <entry key="app/src/main/res/menu/floating_context_menu.xml" value="0.28802083333333334" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.581025641025641" />
         <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.1537037037037037" />
         <entry key="app/src/main/res/menu/search_icon_view.xml" value="0.5901041666666667" />

@@ -14,5 +14,12 @@
         android:horizontalSpacing="1dp"
         android:numColumns="3"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="1dp" />
+        android:verticalSpacing="1dp" >
+    </GridView>
+    <TextView
+        android:id="@+id/tvSetFavoritedInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="This user's favorited posts are private" />
 </RelativeLayout>

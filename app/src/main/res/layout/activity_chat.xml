@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_gradient"
+    tools:context=".ChatActivity">
+
+    <RelativeLayout
+        android:id="@+id/chat_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#20222222"
+        android:elevation="20dp">
+
+        <ImageView
+            android:id="@+id/chat_back_btn"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_arrow_back"
+            android:paddingStart="12dp"
+            android:paddingEnd="2dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/toUserProfilePic"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="40dp"
+            android:layout_toEndOf="@+id/chat_back_btn"
+            android:src="@drawable/default_profile_icon"
+            app:civ_border_color="@color/purple_700"
+            app:civ_border_width="2dp"
+            app:civ_circle_background_color="@color/white" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/toUserProfilePic"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvToUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="User Name"
+                android:textColor="#424242"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+<!--            <TextView-->
+<!--                android:id="@+id/online"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Nil"-->
+<!--                android:textColor="#00c853"-->
+<!--                android:textSize="13sp" />-->
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChats"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/text_section"
+        android:layout_below="@+id/chat_toolbar" />
+
+    <RelativeLayout
+        android:id="@+id/text_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <EditText
+            android:id="@+id/etInputMsgField"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/sendTextBtn"
+            android:background="@drawable/rounded_corners_et"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:hint="Message"
+            android:inputType="textCapSentences"
+            android:textColorHint="@color/white"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/sendTextBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_send_text" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

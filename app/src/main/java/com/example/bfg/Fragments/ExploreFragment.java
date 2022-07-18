@@ -38,6 +38,7 @@ import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.Post;
 import com.example.bfg.Models.User;
 import com.example.bfg.R;
+import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -200,15 +201,7 @@ public class ExploreFragment extends Fragment {
                     ParseQuery<Post> queryLikedBy = ParseQuery.getQuery(Post.class);
                     queryLikedBy.whereContains("likedby",user.getObjectId());
                     queries.add(queryLikedBy);
-//                    ParseQuery<Post> queryPosts = ParseQuery.getQuery(Post.class);
-//                    queryPosts.whereContains("user",user.getObjectId());
-//                    ParseQuery<Post> queryLikedBy = ParseQuery.getQuery(Post.class);
-//                    queryLikedBy.whereContains("likedby",user.getObjectId());
-//
-//
-//                    List<ParseQuery<Post>> queries = new ArrayList<ParseQuery<Post>>();
-//                    queries.add(queryPosts);
-//                    queries.add(queryLikedBy);
+
                     ParseQuery<Post> mainQuery = ParseQuery.or(queries);
 
                     Log.i("eachTime",mainQuery.toString());
@@ -369,26 +362,20 @@ public class ExploreFragment extends Fragment {
         return sortedMap;
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-//        inflater.inflate(R.menu.overflow_menu,menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        int id = item.getItemId();
-//        if(id == R.id.item_Popular)
-//        {
-//            Toast.makeText(getActivity(),"popular",Toast.LENGTH_SHORT).show();
-//
-//        }
-//        if (id == R.id.item_forYou)
-//        {
-//            Toast.makeText(getActivity(),"for you",Toast.LENGTH_SHORT).show();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.action_addToLibrary:
+                adapter.addToLibrary(item.getGroupId());
+                Snackbar.make(getActivity().findViewById(R.id.rlExplore),"Added to library",Snackbar.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
 }
 
 

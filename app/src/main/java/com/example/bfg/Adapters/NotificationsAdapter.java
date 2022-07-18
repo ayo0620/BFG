@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.Notifications;
 import com.example.bfg.Models.User;
@@ -30,6 +31,8 @@ import com.parse.ParseUser;
 
 import java.util.Date;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdapter.ViewHolder> {
     private Context context;
@@ -62,7 +65,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
     public class ViewHolder extends RecyclerView.ViewHolder{
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        private ShapeableImageView ivUserAvatar;
+        private CircleImageView ivUserAvatar;
         private TextView tvUserNameNotify;
         private TextView tvNotificationText;
         private TextView tvNotificationTime;
@@ -100,7 +103,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
                 Log.v("notificationAdapter", e.toString());
                 e.printStackTrace();
             }
-
+            MainActivity.setBorderColorStatus((User) notification.getNotifiedFrom(),ivUserAvatar);
 //            remove decline and accept button if a friend request
             if (!notification.getNotification().equals("added you as a friend"))
             {

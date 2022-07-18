@@ -6,62 +6,116 @@
     tools:context=".Fragments.SettingsFragment">
 
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/settingToolbar"
+        android:background="?android:attr/windowBackground">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back"
+                android:id="@+id/settingClose"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Settings"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="100dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/black" />
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
     <TextView
         android:id="@+id/tvSwitchNotification"
+        android:layout_below="@+id/settingToolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
+        android:textColorHighlight="@color/teal_200"
         android:text="Notifications"
         android:textSize="20dp" />
 
     <Switch
+        android:id="@+id/notificationSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="50dp"
-        android:layout_toEndOf="@+id/tvSwitchNotification" />
+        android:layout_alignTop="@+id/tvSwitchNotification"
+        android:layout_alignBottom="@+id/tvSwitchNotification"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp" />
+
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvChangePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSwitchNotification"
-        android:layout_alignTop="@+id/divider3"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
-        android:text="Activity"
-        android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/divider5"
         android:layout_alignParentStart="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:text="Change Password"
         android:textSize="20dp" />
 
+    <TextView
+        android:id="@+id/tvAccessiblity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvChangePassword"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:text="Accessiblity"
+        android:textSize="20dp" />
+
+    <Switch
+        android:id="@+id/tvAccessiblitySwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tvAccessiblity"
+        android:layout_alignBottom="@+id/tvAccessiblity"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="-5dp"
+        />
+
+
+    <TextView
+        android:id="@+id/tvSignOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="70dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/red"
+        android:text="Sign Out"
+        android:textSize="20dp"/>
+
     <View
         android:id="@+id/divider3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/tvSwitchNotification"
+        android:layout_marginStart="10dp"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="0dp"
-        android:background="?android:attr/listDivider" />
-
-    <View
-        android:id="@+id/divider5"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="0dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="113dp"
         android:background="?android:attr/listDivider" />
 
 

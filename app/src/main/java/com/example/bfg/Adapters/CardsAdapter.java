@@ -2,6 +2,7 @@ package com.example.bfg.Adapters;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -47,11 +49,12 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
     }
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         private ImageView ivCardViewImg;
         private TextView tvGameTitle;
+        private CardView mCardView;
 
 
         // We also create a constructor that accepts the entire item row
@@ -62,6 +65,8 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             super(itemView);
             ivCardViewImg = itemView.findViewById(R.id.ivCardViewImg);
             tvGameTitle = itemView.findViewById(R.id.tvGameTitle);
+            mCardView = itemView.findViewById(R.id.card_view);
+            mCardView.setOnCreateContextMenuListener(this);
         }
 
         public void bind(Cards cards) {
@@ -71,6 +76,17 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             img = img.replace("{height}","600");
             Glide.with(context).load(img).into(ivCardViewImg);
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.add(this.getAdapterPosition(), R.id.action_addToLibrary,0,"Add to library");
+        }
+
+    }
+    public void addToLibrary(int position)
+    {
+        Cards card = allCards.get(position);
+        Log.i("Add to lib", card.getImage());
     }
 
 }

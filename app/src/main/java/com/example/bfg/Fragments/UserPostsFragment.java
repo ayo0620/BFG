@@ -38,6 +38,7 @@ public class UserPostsFragment extends Fragment {
     RecyclerView rvGridPosts;
     private Context mContext;
     public String profileId;
+    public String dummyId;
     public ArrayList<ParseFile> allposts;
     public ParseUser user;
     public static final String TAG = UserPostsFragment.class.getSimpleName();
@@ -49,6 +50,7 @@ public class UserPostsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         profileId = ProfileFragment.getProfileId();
+        dummyId = profileId;
         super.onCreate(savedInstanceState);
     }
 
@@ -67,11 +69,9 @@ public class UserPostsFragment extends Fragment {
         gridView = view.findViewById(R.id.gridView);
 
         if(!profileId.equals(user.getObjectId())) {
-            Log.i("UserPosts",profileId);
             setUserViewMode();
         }
         else{
-            Log.i("UserPosts",profileId);
            setUpGridView();
         }
         super.onViewCreated(view, savedInstanceState);
@@ -81,19 +81,20 @@ public class UserPostsFragment extends Fragment {
     private void setUserViewMode() {
         allposts = new ArrayList<>();
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.whereContains("user",profileId);
+        query.include(Post.KEY_USER);
         query.addDescendingOrder("createdAt");
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
                 if (e!= null)
                 {
-                    Log.i("UserPost ","issue accessing posts",e);
+                    Log.i("Error","issue accessing posts",e);
                 }
                 for (Post post : posts) {
-                    ParseUser user = ParseUser.getCurrentUser();
-                    if(post.getUser().getObjectId().equals(user.getObjectId())) {
+                    Log.i("profileID", dummyId);
+                    if(post.getUser().getObjectId().equals(dummyId)) {
                         allposts.add(post.getImage());
+                        Log.i("Otheradapter", allposts.toString());
                     }
                 }
                 int gridwidth = getResources().getDisplayMetrics().widthPixels;
@@ -104,6 +105,7 @@ public class UserPostsFragment extends Fragment {
                 for (int i = 0; i<allposts.size();i++)
                 {
                     imgUrls.add(allposts.get(i).getUrl());
+                    Log.i("images", imgUrls.toString());
                 }
                 GridPostsAdapter adapter = new GridPostsAdapter(getContext(),imgUrls);
                 gridView.setAdapter((adapter));

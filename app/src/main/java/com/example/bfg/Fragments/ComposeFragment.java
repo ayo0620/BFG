@@ -112,8 +112,8 @@ public class ComposeFragment extends Fragment {
         }
         else {
             Glide.with(getActivity()).load(image.getUrl()).circleCrop().into(ivComposeProfileImage);
-            MainActivity.setBorderColorStatus((User) user,ivComposeProfileImage);
         }
+        MainActivity.setBorderColorStatus((User) user,ivComposeProfileImage);
         setHasOptionsMenu(true);
 
 //        tvSetGameCategory.setVisibility(View.GONE);

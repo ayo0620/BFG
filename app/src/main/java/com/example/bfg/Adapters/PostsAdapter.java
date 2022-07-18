@@ -51,7 +51,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     public String likeCount;
     public String likeText;
     public static final String KEY_STATUS_COUNT = "statusCount";
-    public static final int INCREMENT_BY = 20;
+    public static final int INCREMENT_BY = 500;
 
     public PostsAdapter(Context context, List<Post> posts) {
         this.context = context;

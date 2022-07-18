@@ -28,15 +28,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.bfg.ChatActivity;
 import com.example.bfg.EditProfileActivity;
 import com.example.bfg.MainActivity;
+import com.example.bfg.MessagingActivity;
 import com.example.bfg.Models.User;
 import com.example.bfg.R;
 import com.example.bfg.Adapters.ViewPagerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.tabs.TabLayout;
 import com.parse.FindCallback;
@@ -63,8 +68,10 @@ public class ProfileFragment extends Fragment {
     private Button btnEditProfile;
     public static String profileId;
     private TextView friendCount;
-    public String dummyId;
+    public static String dummyId;
     protected File photoFile;
+    private ImageView ivMessageCLose;
+    private FloatingActionButton floatingMessageBtn;
     private TextView tvCurrUserStatus;
     private String photoFileName = "photo.jpg";
     public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
@@ -90,7 +97,6 @@ public class ProfileFragment extends Fragment {
         dummyId = profileId;
         Log.i(TAG, profileId);
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -115,7 +121,8 @@ public class ProfileFragment extends Fragment {
         btnEditProfile = view.findViewById(R.id.btnEditProfile);
         tvCurrUserStatus = view.findViewById(R.id.tvCurrUserStatus);
         friendCount = view.findViewById(R.id.friend_count);
-
+        floatingMessageBtn = view.findViewById(R.id.floatingMessageBtn);
+        ivMessageCLose = view.findViewById(R.id.ivMessageClose);
 
 
         if(!profileId.equals(user.getObjectId())) {
@@ -167,7 +174,7 @@ public class ProfileFragment extends Fragment {
 
     public static String getProfileId()
     {
-        return profileId;
+        return dummyId;
     }
     private void setCurrentUserStatus() {
         if(user.getStatusCount()<=5 || user.getStatusCount()<=50)
@@ -213,9 +220,7 @@ public class ProfileFragment extends Fragment {
                 if(objects.size()!= 0)
                 {
                     fromUser = objects.get(0);
-                    Log.i("checking", fromUser.toString());
                 }
-                Log.i("database", fromUser.toString());
                 tvCurrUserStatus.setText(fromUser.getStatus());
                 tvUserBio.setText(fromUser.getUserDescription());
                 tvUserProfileName.setText(fromUser.getUsername());
@@ -227,6 +232,7 @@ public class ProfileFragment extends Fragment {
                 else{
                     Glide.with(getContext()).load(fromUser.getProfileImage().getUrl()).centerCrop().into(profileImage);
                 }
+                MainActivity.setBorderColorStatus(fromUser,profileImage);
                 if (fromUser.getUserDescription()== null)
                 {
                     tvUserBio.setVisibility(View.GONE);
@@ -240,6 +246,15 @@ public class ProfileFragment extends Fragment {
 
         });
 
+//        Messsaging
+        floatingMessageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChatActivity.class);
+                intent.putExtra("otherUser",fromUser);
+                startActivity(intent);
+            }
+        });
 
 //      Listener
         List<String> friendList = user.getUserFriends();
@@ -324,12 +339,12 @@ public class ProfileFragment extends Fragment {
         if(profilePhoto != null)
         {
             Glide.with(getContext()).load(profilePhoto.getUrl()).into(profileImage);
-            MainActivity.setBorderColorStatus(user,profileImage);
         }
         else
         {
             profileImage.setImageResource(R.drawable.default_profile_icon);
         }
+        MainActivity.setBorderColorStatus(user,profileImage);
 
 //        ParseUser user = ParseUser.getCurrentUser();
 //        User currUser = (User) user;
@@ -340,6 +355,14 @@ public class ProfileFragment extends Fragment {
         else{
             tvUserBio.setText(user.getUserDescription());
         }
+
+        floatingMessageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), MessagingActivity.class);
+                startActivity(intent);
+            }
+        });
 
 //        TabLayout
         TabLayout.Tab myTab = tabLayout.newTab().setText("Posts");

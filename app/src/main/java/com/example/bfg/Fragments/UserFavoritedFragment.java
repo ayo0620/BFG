@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bfg.Adapters.GridPostsAdapter;
@@ -32,10 +33,20 @@ public class UserFavoritedFragment extends Fragment {
 
     GridView gridViewFavorited;
     public ArrayList<ParseFile> allFavorited;
+    private TextView tvSetFavoritedInfo;
     private ParseUser user;
+    public String profileId;
+    public String dummyId;
     User currUser;
     public UserFavoritedFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        profileId = ProfileFragment.getProfileId();
+        dummyId = profileId;
     }
 
     @Override
@@ -51,10 +62,19 @@ public class UserFavoritedFragment extends Fragment {
         currUser = (User) user;
 
         gridViewFavorited = view.findViewById(R.id.gridViewFavorited);
+        tvSetFavoritedInfo = view.findViewById(R.id.tvSetFavoritedInfo);
 
-        setUpGridViewFavorited();
+        if(!profileId.equals(user.getObjectId())) {
+            tvSetFavoritedInfo.setVisibility(View.VISIBLE);
+        }
+        else{
+            setUpGridViewFavorited();
+            tvSetFavoritedInfo.setVisibility(View.GONE);
+        }
+
         super.onViewCreated(view, savedInstanceState);
     }
+
 
     private void setUpGridViewFavorited() {
         allFavorited = new ArrayList<>();
