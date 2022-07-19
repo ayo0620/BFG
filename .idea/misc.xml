@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/drawable/circle.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/home_gradient.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_arrow_back.xml" value="0.4225" />
+        <entry key="app/src/main/res/drawable/ic_baseline_library.xml" value="0.215" />
         <entry key="app/src/main/res/drawable/ic_comment_button.xml" value="0.2675" />
         <entry key="app/src/main/res/drawable/ic_feedback.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_notifications_icon.xml" value="0.1195" />
@@ -44,6 +45,7 @@
         <entry key="app/src/main/res/layout/fragment_detailed_user.xml" value="0.44895833333333335" />
         <entry key="app/src/main/res/layout/fragment_explore.xml" value="0.24739583333333334" />
         <entry key="app/src/main/res/layout/fragment_home_feed.xml" value="0.2811594202898551" />
+        <entry key="app/src/main/res/layout/fragment_library.xml" value="0.2890625" />
         <entry key="app/src/main/res/layout/fragment_notification.xml" value="0.2339622641509434" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.32864583333333336" />
         <entry key="app/src/main/res/layout/fragment_search.xml" value="0.25" />
@@ -51,6 +53,7 @@
         <entry key="app/src/main/res/layout/fragment_user_favorited.xml" value="0.32864583333333336" />
         <entry key="app/src/main/res/layout/fragment_user_feed_back.xml" value="0.23055555555555557" />
         <entry key="app/src/main/res/layout/fragment_user_posts.xml" value="0.32864583333333336" />
+        <entry key="app/src/main/res/layout/item_added_list.xml" value="0.2835897435897436" />
         <entry key="app/src/main/res/layout/item_card.xml" value="0.16723124186197919" />
         <entry key="app/src/main/res/layout/item_comments.xml" value="0.3609375" />
         <entry key="app/src/main/res/layout/item_grid_post.xml" value="0.32760416666666664" />
@@ -60,12 +63,13 @@
         <entry key="app/src/main/res/layout/item_search_list.xml" value="0.315625" />
         <entry key="app/src/main/res/layout/layout_bg.xml" value="0.20208333333333334" />
         <entry key="app/src/main/res/layout/messages_viewholder.xml" value="0.4249512670565302" />
-        <entry key="app/src/main/res/layout/side_nav_header.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/side_nav_header.xml" value="0.25" />
         <entry key="app/src/main/res/menu/camera_icon_view.xml" value="0.1537037037037037" />
         <entry key="app/src/main/res/menu/drawer_view.xml" value="0.1537037037037037" />
         <entry key="app/src/main/res/menu/floating_context_menu.xml" value="0.28802083333333334" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.581025641025641" />
         <entry key="app/src/main/res/menu/menu_bottom_nav.xml" value="0.1537037037037037" />
+        <entry key="app/src/main/res/menu/overflow_menu.xml" value="0.2723076923076923" />
         <entry key="app/src/main/res/menu/search_icon_view.xml" value="0.5901041666666667" />
         <entry key="app/src/main/res/xml/fileprovider.xml" value="0.24635416666666668" />
       </map>

@@ -25,7 +25,6 @@ public class Cards {
     public String gameimage;
     public String gameCatergory;
     public static List<Cards> allItems;
-    public static List<Cards> allItems2;
 
     public Cards(){}
 
@@ -34,12 +33,6 @@ public class Cards {
         gameimage = jsonObject.getString("box_art_url");
     }
 
-    public static List<Cards> fromJsonArraySorted(JSONArray itemsJsonObject) throws JSONException {
-        allItems2 = new ArrayList<>();
-        allItems2.add(new Cards(itemsJsonObject.getJSONObject(0)));
-        Log.i("Class", allItems2.toString());
-        return allItems2;
-    }
 
     public static List<Cards> fromJsonArray(JSONArray itemsJsonArray) throws JSONException {
         allItems = new ArrayList<>();

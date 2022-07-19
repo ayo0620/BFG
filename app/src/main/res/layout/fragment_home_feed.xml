@@ -16,7 +16,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@android:color/white"
-        app:headerLayout="@layout/side_nav_header"
         app:menu="@menu/drawer_view" />
 
     <RelativeLayout
@@ -42,17 +41,7 @@
             android:text="Welcome"
             android:textSize="25dp"
             android:textColor="@color/white"
-            android:paddingLeft="20dp" />
-<!--        <View-->
-<!--            android:id="@+id/divider4"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="2dp"-->
-<!--            android:outlineSpotShadowColor="@color/black"-->
-<!--            android:layout_alignParentEnd="true"-->
-<!--            android:layout_marginTop="0dp"-->
-<!--            android:layout_marginEnd="0dp"-->
-<!--            android:layout_below="@+id/tvDisplayUserName"-->
-<!--            android:background="?android:attr/listDivider" />-->
+            android:paddingLeft="20dp"/>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -69,7 +58,6 @@
                 android:layout_centerInParent="true"
                 android:padding="8dp" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
     </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

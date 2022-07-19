@@ -32,9 +32,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textStyle="italic"
+        android:text="Search for user"
         android:textSize="25dp"
-        android:text="Search for user" />
+        android:textStyle="italic" />
 
     <View
         android:id="@+id/dividerSearch"

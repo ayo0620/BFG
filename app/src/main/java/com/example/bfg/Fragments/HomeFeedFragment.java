@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bfg.EndlessRecyclerViewScrollListener;
 import com.example.bfg.LoginActivity;
 import com.example.bfg.MainActivity;
@@ -32,11 +33,14 @@ import com.example.bfg.R;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeFeedFragment extends Fragment {
 
@@ -47,10 +51,11 @@ public class HomeFeedFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     private TextView tvDisplayUserName;
     EndlessRecyclerViewScrollListener scrollListener;
-    DrawerLayout drawerLayout;
-    Toolbar toolbar;
-    ImageView ivPostImage;
-    ImageView side_nav_profile_img;
+    private DrawerLayout drawerLayout;
+    private Toolbar toolbar;
+    private ImageView ivPostImage;
+    private CircleImageView side_nav_profile_img;
+    private TextView side_nav_user;
     NavigationView navigationView;
     public MainActivity activity;
 
@@ -61,7 +66,7 @@ public class HomeFeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment;
         return inflater.inflate(R.layout.fragment_home_feed, container, false);
     }
 
@@ -74,17 +79,27 @@ public class HomeFeedFragment extends Fragment {
         ivPostImage = view.findViewById(R.id.ivPostImage);
         toolbar = view.findViewById(R.id.toolbar);
         tvDisplayUserName = view.findViewById(R.id.tvDisplayUserName);
-        side_nav_profile_img = activity.findViewById(R.id.side_nav_profile_img);
-
+        View headerView = navigationView.inflateHeaderView(R.layout.side_nav_header);
+        side_nav_profile_img = headerView.findViewById(R.id.side_nav_profile_img);
+        side_nav_user = headerView.findViewById(R.id.side_nav_user);
 
         //        Toolbar
         activity.setSupportActionBar(toolbar);
         ParseUser user = User.getCurrentUser();
         tvDisplayUserName.setText("Welcome,\n"+user.getUsername());
         //        Navigation Drawer menu
-//        ParseUser user = ParseUser.getCurrentUser();
-//        ParseFile image = user.getParseFile("ProfileImage");
-//        Glide.with(view.getContext()).load(image.getUrl()).into(side_nav_profile_img);
+        User currUser = (User) user;
+        side_nav_user.setText(currUser.getUsername());
+        ParseFile img = currUser.getProfileImage();
+        if(img!= null)
+        {
+            Glide.with(getContext()).load(img.getUrl()).into(side_nav_profile_img);
+        }
+        else
+        {
+            side_nav_profile_img.setImageResource(R.drawable.default_profile_icon);
+        }
+        MainActivity.setBorderColorStatus(currUser,side_nav_profile_img);
         ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(activity, drawerLayout, toolbar,R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toogle);
         toogle.syncState();
@@ -98,6 +113,9 @@ public class HomeFeedFragment extends Fragment {
                 {
                     case R.id.nav_notification:
                         fragmentClass = NotificationFragment.class;
+                        break;
+                    case R.id.nav_library:
+                        fragmentClass = LibraryFragment.class;
                         break;
                     case R.id.nav_settings:
                         fragmentClass = SettingsFragment.class;
@@ -179,18 +197,6 @@ public class HomeFeedFragment extends Fragment {
 
     }
 
-
-
-//    @Override
-//    public void onBackPressed() {
-//        if(drawerLayout.isDrawerOpen(GravityCompat.START))
-//        {
-//            drawerLayout.closeDrawer(GravityCompat.START);
-//        }
-//        else{
-//            super.getActivity().onBackPressed();
-//        }
-//    }
 
     public void queryPosts(int skip) {
 //        adapter.clear();

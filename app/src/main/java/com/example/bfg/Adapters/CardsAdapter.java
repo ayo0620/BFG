@@ -16,7 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.example.bfg.Models.Cards;
+import com.example.bfg.Models.Library;
+import com.example.bfg.PareseActivation;
 import com.example.bfg.R;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.Collections;
 import java.util.List;
@@ -86,7 +91,19 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
     public void addToLibrary(int position)
     {
         Cards card = allCards.get(position);
-        Log.i("Add to lib", card.getImage());
+        Library library = new Library();
+        library.setGameName(card.getName());
+        library.setGameImage(card.getImage());
+        library.setForUser(ParseUser.getCurrentUser());
+        library.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e!= null)
+                {
+                    Log.i("Library", "issue with saving library object",e);
+                }
+            }
+        });
     }
 
 }

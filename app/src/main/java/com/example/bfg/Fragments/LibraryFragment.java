@@ -1,0 +1,98 @@
+package com.example.bfg.Fragments;
+
+import android.content.Intent;
+import android.icu.text.TimeZoneFormat;
+import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.bfg.Adapters.CardsAdapter;
+import com.example.bfg.Adapters.LibraryAdapter;
+import com.example.bfg.MainActivity;
+import com.example.bfg.Models.Cards;
+import com.example.bfg.Models.Library;
+import com.example.bfg.Models.Post;
+import com.example.bfg.R;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class LibraryFragment extends Fragment {
+
+    private RecyclerView rvLibrary;
+    private ImageView libraryClose;
+    LibraryAdapter adapter;
+    List<Library> allItems;
+    private TextView tvLibraryView;
+
+    public LibraryFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_library, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        rvLibrary = view.findViewById(R.id.rvLibrary);
+        libraryClose = view.findViewById(R.id.libraryClose);
+        tvLibraryView = view.findViewById(R.id.tvLibraryView);
+
+        libraryClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), MainActivity.class);
+                startActivity(i);
+                getActivity().finish();
+            }
+        });
+
+        allItems = new ArrayList<>();
+        adapter = new LibraryAdapter(getContext(),allItems);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvLibrary.setLayoutManager(layoutManager);
+        rvLibrary.setAdapter(adapter);
+        queryLibraryItems();
+
+    }
+
+    private void queryLibraryItems() {
+        ParseQuery<Library> libraryParseQuery = ParseQuery.getQuery(Library.class);
+        libraryParseQuery.whereContains("forUser", ParseUser.getCurrentUser().getObjectId());
+        libraryParseQuery.addDescendingOrder("createdAt");
+        libraryParseQuery.findInBackground(new FindCallback<Library>() {
+            @Override
+            public void done(List<Library> objects, ParseException e) {
+                if(e!= null)
+                {
+                    Log.i("LibraryFragment", "issue with getting library objects",e);
+                }
+                allItems.addAll(objects);
+                adapter.notifyDataSetChanged();
+                Log.i("queryLib", allItems.toString());;
+            }
+        });
+    }
+}
