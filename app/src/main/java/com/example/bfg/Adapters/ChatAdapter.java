@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,12 +31,14 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHolder> {
     private Context context;
     private List<Message> messages;
     private User otherUser;
-    private Boolean isCurrentUser;
     private ParseUser currUser;
+    public static final int MESSAGE_OUTGOING = 1;
+    public static final int MESSAGE_INCOMING = 2;
+
 
     public ChatAdapter(Context context, User otherUser,List<Message>messages) {
         this.context = context;
@@ -43,74 +46,119 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         this.otherUser = otherUser;
     }
 
-    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_chat, parent, false);
-        return new ViewHolder(view);
+    public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+//        if it's incoming inflate the message_incoming view
+        if (viewType == MESSAGE_INCOMING) {
+            View contactView = inflater.inflate(R.layout.message_incoming, parent, false);
+            return new IncomingMessageViewHolder(contactView);
+            //        if it's outgoing inflate the message_outgoing view
+        } else if (viewType == MESSAGE_OUTGOING) {
+            View contactView = inflater.inflate(R.layout.message_outgoing, parent, false);
+            return new OutgoingMessageViewHolder(contactView);
+        } else {
+            throw new IllegalArgumentException("Unknown view type");
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(MessageViewHolder holder, int position) {
         Message message = messages.get(position);
-        currUser = ParseUser.getCurrentUser();
-        if(message.getSender().getObjectId().equals(currUser.getObjectId()))
-        {
-//          populate right
-            Log.i("Side", "hey");
-            holder.bindRight(message);
-        }
-        else if(message.getSender().getObjectId().equals(otherUser.getObjectId()))
-        {
-//          populate left
-            Log.i("Side", "hey2");
-            holder.bindLeft(message);
-        }
-        Log.i("AdapterMessage",messages.toString());
-
+        holder.bindMessage(message);
     }
+
 
     @Override
     public int getItemCount() {
         return messages.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if(isMe(position))
+        {
+            return MESSAGE_OUTGOING;
+        }
+        else{
+            return MESSAGE_INCOMING;
+        }
+    }
+
+//    helper function
+    private boolean isMe(int position) {
+        Boolean isMe =  null;
+        currUser = ParseUser.getCurrentUser();
+        Message message = messages.get(position);
+        if(message.getSender().getObjectId().equals(currUser.getObjectId()))
+        {
+            isMe = true;
+        }
+        else if(message.getSender().getObjectId().equals(otherUser.getObjectId()))
+        {
+            isMe = false;
+        }
+        return  isMe;
+    }
+
     // Provide a direct reference to each of the views within a data item
     // Used to cache the views within the item layout for fast access
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public abstract class MessageViewHolder extends RecyclerView.ViewHolder {
+
+        public MessageViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        abstract void bindMessage(Message message);
+        }
+
+    public class IncomingMessageViewHolder extends MessageViewHolder{
         private TextView otherUserMsg;
         private TextView otherUserTimeStamp;
-        private TextView currUserMsg;
-        private TextView currUserTimeStamp;
-        private LinearLayout currUserLayout;
-        private LinearLayout otherUserLayout;
+        private RelativeLayout rlIncoming;
 
-        public ViewHolder(View itemView) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
+        public IncomingMessageViewHolder(View itemView)
+        {
             super(itemView);
             otherUserMsg = itemView.findViewById(R.id.otherUserMsg);
             otherUserTimeStamp = itemView.findViewById(R.id.otherUserTimeStamp);
-            currUserMsg = itemView.findViewById(R.id.currUserMsg);
-            currUserTimeStamp = itemView.findViewById(R.id.currUserTimeStamp);
-            currUserLayout = itemView.findViewById(R.id.currUserLayout);
-            otherUserLayout = itemView.findViewById(R.id.otherUserLayout);
-
+            rlIncoming = itemView.findViewById(R.id.rlIncoming);
         }
 
-        public void bindLeft(Message message) {
+        @Override
+        public void bindMessage(Message message) {
+
             otherUserMsg.setText(message.getMessageText());
             otherUserTimeStamp.setText(message.getCreatedAt().toString());
-            otherUserLayout.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-            currUserLayout.setVisibility(View.GONE);
+            rlIncoming.setGravity(Gravity.LEFT);;
         }
 
-        public void bindRight(Message message) {
+    }
+
+
+    public class OutgoingMessageViewHolder extends MessageViewHolder{
+        private TextView currUserMsg;
+        private TextView currUserTimeStamp;
+        private RelativeLayout rlOutgoing;
+
+        public OutgoingMessageViewHolder(View itemView)
+        {
+            super(itemView);
+            currUserMsg = itemView.findViewById(R.id.currUserMsg);
+            currUserTimeStamp = itemView.findViewById(R.id.currUserTimeStamp);
+            rlOutgoing = itemView.findViewById(R.id.rlOutgoing);
+        }
+
+        @Override
+        public void bindMessage(Message message) {
             currUserMsg.setText(message.getMessageText());
             currUserTimeStamp.setText(message.getCreatedAt().toString());
-            currUserLayout.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-            otherUserLayout.setVisibility(View.GONE);
+            rlOutgoing.setGravity(Gravity.RIGHT);
         }
+
+
     }
 
 

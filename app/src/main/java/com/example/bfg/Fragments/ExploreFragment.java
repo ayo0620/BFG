@@ -368,7 +368,7 @@ public class ExploreFragment extends Fragment {
         switch (item.getItemId())
         {
             case R.id.action_addToLibrary:
-                adapter.addToLibrary(item.getGroupId());
+                adapter.addToLibrary(item.getGroupId(),getActivity());
                 Snackbar.make(getActivity().findViewById(R.id.rlExplore),"Added to library",Snackbar.LENGTH_SHORT).show();
                 return true;
             default:

@@ -29,6 +29,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="7dp"
+        android:textStyle="bold"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:text="TextView" />
 
@@ -141,5 +142,16 @@
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/tvPostForGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/white"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:text="TextView" />
 
 </RelativeLayout>

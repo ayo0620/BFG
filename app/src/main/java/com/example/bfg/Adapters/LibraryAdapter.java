@@ -75,5 +75,11 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
 
     }
 
+    public void removeItem(int position)
+    {
+        allitems.remove(position);
+        notifyItemRemoved(position  );
+    }
+
 }
 

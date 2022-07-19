@@ -60,14 +60,5 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/tvRecentlyAdded" />
 
-    <TextView
-        android:id="@+id/tvLibraryView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="25sp"
-        android:textStyle="italic"
-        android:text="Add games to your library here" />
-
 
 </RelativeLayout>

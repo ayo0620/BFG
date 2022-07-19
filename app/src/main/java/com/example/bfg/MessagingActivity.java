@@ -76,30 +76,6 @@ public class MessagingActivity extends AppCompatActivity {
                 if (e==null) {
                     allMessageThreads.addAll(messageThreads);
                     Log.i(TAG, messageThreads.toString());
-//                    Set<String> container = new HashSet<>();
-//                    for (MessageThread m: messageThreads) {
-//                        String senderandreceiver = "";
-//                        try{
-//                            String sender = ((User) (m.getMessageFromUser().fetchIfNeeded())).getObjectId();
-//                            String receiver = ((User) (m.getMessageToUser().fetchIfNeeded())).getObjectId();
-//                            if (sender.equals(ParseUser.getCurrentUser().getObjectId())) {
-//                                senderandreceiver += sender + " " + receiver;
-//
-//                            } else {
-//                                senderandreceiver += receiver + " " + sender;
-//                            }
-//                            if (container.contains(senderandreceiver)) {
-//                                continue;
-//                            }  else {
-//                                allMessageThreads.add(m);
-//                                container.add(senderandreceiver);
-//                            }
-//
-//
-//                        } catch(ParseException err) {
-//
-//                        }
-//                    }
                     adapter.notifyDataSetChanged();
                 } else {
                     Log.e("done", "done: ",  e);

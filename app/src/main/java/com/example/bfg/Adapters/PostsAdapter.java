@@ -94,9 +94,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageButton ibCommentBtn;
         private TextView tvCommentCount;
         private ImageButton ibFavorited;
-        private AnimatedVectorDrawableCompat avd;
-        private AnimatedVectorDrawable avd2;
-
+        private TextView tvPostForGame;
         public static final String KEY_PROFILE_IMAGE = "ProfileImage";
 
 
@@ -119,6 +117,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ibCommentBtn = itemView.findViewById(R.id.ibCommentBtn);
             tvCommentCount = itemView.findViewById(R.id.tvCommentCount);
             ibFavorited = itemView.findViewById(R.id.ibFavorited);
+            tvPostForGame = itemView.findViewById(R.id.tvPostForGame);
         }
 
         @SuppressLint("ClickableViewAccessibility")
@@ -130,6 +129,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             Date createdAt = post.getCreatedAt();
             String timeAgo = post.calculateTimeAgo(createdAt);
             tvTimeStamp.setText(timeAgo);
+            tvPostForGame.setText(post.getPostForGame());
             Glide.with(context).load(post.getImage().getUrl()).transform(new RoundedCorners(40)).into(ivPostImage);
             tvDescription.setText(post.getDescription());
             ParseFile image = post.getUser().getParseFile(KEY_PROFILE_IMAGE);
@@ -228,15 +228,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                            post.setLikedBy(likeBy);
                            Drawable newImage = context.getDrawable(R.drawable.ic_favorited_active);
                            ibLike.setImageDrawable(newImage);
-//                           ivDoubleTapLike.setAlpha(0.75f);
-//                           if(drawable instanceof AnimatedVectorDrawableCompat)
-//                           {
-//                               avd = (AnimatedVectorDrawableCompat) drawable;
-//                               avd.start();
-//                           }else if(drawable instanceof AnimatedVectorDrawable){
-//                               avd2 = (AnimatedVectorDrawable) drawable;
-//                               avd2.start();
-//                           }
                            ivDoubleTapLike.setImageResource(R.drawable.ic_favorited_active);
                            likeText = String.valueOf(post.likeCountDisplayText());
                            likeCount = String.valueOf(likeBy.size());
@@ -245,15 +236,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                        }
                        else
                        {
-//                           ivDoubleTapLike.setAlpha(0.75f);
-//                           if(drawable instanceof AnimatedVectorDrawableCompat)
-//                           {
-//                               avd = (AnimatedVectorDrawableCompat) drawable;
-//                               avd.start();
-//                           }else if(drawable instanceof AnimatedVectorDrawable) {
-//                               avd2 = (AnimatedVectorDrawable) drawable;
-//                               avd2.start();
-//                           }
                            ivDoubleTapLike.setImageResource(R.drawable.ic_favorited_active);
                        }
                        Handler handler = new Handler();

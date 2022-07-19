@@ -24,6 +24,7 @@ import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.Library;
 import com.example.bfg.Models.Post;
 import com.example.bfg.R;
+import com.example.bfg.databinding.ActivityMainBinding;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -34,12 +35,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LibraryFragment extends Fragment {
-
+    private ActivityMainBinding binding;
     private RecyclerView rvLibrary;
     private ImageView libraryClose;
     LibraryAdapter adapter;
     List<Library> allItems;
-    private TextView tvLibraryView;
 
     public LibraryFragment() {
         // Required empty public constructor
@@ -56,9 +56,9 @@ public class LibraryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         rvLibrary = view.findViewById(R.id.rvLibrary);
         libraryClose = view.findViewById(R.id.libraryClose);
-        tvLibraryView = view.findViewById(R.id.tvLibraryView);
 
         libraryClose.setOnClickListener(new View.OnClickListener() {
             @Override

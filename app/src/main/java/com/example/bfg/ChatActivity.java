@@ -54,69 +54,26 @@ public class ChatActivity extends AppCompatActivity {
     private List<Message> allMessages;
     User fromUser;
     List<ParseQuery<Message>> allMessageQuery;
+    Boolean mFirstLoad;
     List<ParseQuery<MessageThread>> allMessageThreadQuery;
-    public static final int MAX_CHAT_MESSAGES = 20;
-//    static final long POLL_INTERVAL = TimeUnit.SECONDS.toMillis(3);
-//    Handler myHandler = new android.os.Handler();
-//    Runnable mRefreshMessagesRunnable = new Runnable() {
-//        @Override
-//        public void run() {
-//            refreshMessages(); // where the query first happens
-//            myHandler.postDelayed(this, POLL_INTERVAL);
-//        }
-//    };
+    public static final int MAX_CHAT_MESSAGES = 30;
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // Only start checking for new messages when the app becomes active in foreground
-//        myHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
-    }
-
-
-    @Override
-    protected void onPause() {
-        // Stop background task from refreshing messages, to avoid unnecessary traffic & battery drain
-//        myHandler.removeCallbacksAndMessages(null);
-        super.onPause();
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        rvChats = findViewById(R.id.rvChats);
-        etInputMsgField = findViewById(R.id.etInputMsgField);
-        sendTextBtn = findViewById(R.id.sendTextBtn);
-        toUserProfilePic = findViewById(R.id.toUserProfilePic);
-        tvToUserName = findViewById(R.id.tvToUserName);
-        chat_back_btn = findViewById(R.id.chat_back_btn);
-
-
         fromUser = getIntent().getParcelableExtra("otherUser");
-
-        tvToUserName.setText(fromUser.getUsername());
-        if(fromUser.getProfileImage()!= null)
+        if(ParseUser.getCurrentUser()!= null)
         {
-            ParseFile img = fromUser.getProfileImage();
-            Glide.with(this).load(img.getUrl()).into(toUserProfilePic);
+            startWithCurrentUser();
         }
-        else {
-            toUserProfilePic.setImageResource(R.drawable.default_profile_icon);
-        }
-        MainActivity.setBorderColorStatus(fromUser,toUserProfilePic);
 
-        allMessages = new ArrayList<>();
-        adapter = new ChatAdapter(this,fromUser, allMessages);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvChats.setLayoutManager(linearLayoutManager);
-        rvChats.setAdapter(adapter);
 
         refreshMessages();
 
-        String websocketUrl = "https://finalprojectdraft.b4a.io";
+        String websocketUrl = "wss://finalprojectdraft.b4a.io/";
         ParseLiveQueryClient parseLiveQueryClient = null;
         try {
             parseLiveQueryClient = ParseLiveQueryClient.Factory.getClient(new URI(websocketUrl));
@@ -125,9 +82,11 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         ParseQuery<Message> parseQuery = ParseQuery.getQuery(Message.class);
+//        when the sender is not the current user
+        parseQuery.whereNotEqualTo(Message.KEY_SENDER,ParseUser.getCurrentUser().getObjectId());
         SubscriptionHandling<Message> subscriptionHandling = parseLiveQueryClient.subscribe(parseQuery);
         subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, (query, object) -> {
-            allMessages.add(allMessages.size()-1,object);
+            allMessages.add(0,object);
             // RecyclerView updates need to be run on the UI thread
             runOnUiThread(new Runnable() {
                 @Override
@@ -146,6 +105,39 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void startWithCurrentUser() {
+        setupMessagePosting();
+    }
+
+    private void setupMessagePosting() {
+
+        etInputMsgField = findViewById(R.id.etInputMsgField);
+        sendTextBtn = findViewById(R.id.sendTextBtn);
+        rvChats = findViewById(R.id.rvChats);
+        toUserProfilePic = findViewById(R.id.toUserProfilePic);
+        tvToUserName = findViewById(R.id.tvToUserName);
+        chat_back_btn = findViewById(R.id.chat_back_btn);
+
+        tvToUserName.setText(fromUser.getUsername());
+        if(fromUser.getProfileImage()!= null)
+        {
+            ParseFile img = fromUser.getProfileImage();
+            Glide.with(this).load(img.getUrl()).into(toUserProfilePic);
+        }
+        else {
+            toUserProfilePic.setImageResource(R.drawable.default_profile_icon);
+        }
+        MainActivity.setBorderColorStatus(fromUser,toUserProfilePic);
+
+        allMessages = new ArrayList<>();
+        mFirstLoad = true;
+        adapter = new ChatAdapter(this,fromUser, allMessages);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
+        linearLayoutManager.setReverseLayout(true);
+        rvChats.setLayoutManager(linearLayoutManager);
+        rvChats.setAdapter(adapter);
 
         sendTextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,16 +150,14 @@ public class ChatActivity extends AppCompatActivity {
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        refreshMessages();
-                        adapter.notifyDataSetChanged();
                         Toast.makeText(ChatActivity.this,"Successfully save message",Toast.LENGTH_SHORT).show();
+                        refreshMessages();
                     }
                 });
                 checkIfFirstTimeChatting(messageToSend);
                 etInputMsgField.setText("");
             }
         });
-
     }
 
     private void refreshMessages() {
@@ -186,10 +176,10 @@ public class ChatActivity extends AppCompatActivity {
 
         ParseQuery<Message> query3 = ParseQuery.or(allMessageQuery);
 
-//        query3.setLimit(MAX_CHAT_MESSAGES);
+        query3.setLimit(MAX_CHAT_MESSAGES);
         query3.include(Message.KEY_SENDER);
         query3.include(Message.KEY_RECEIVER);
-        query3.addAscendingOrder(Message.KEY_CREATED_AT);
+        query3.orderByDescending(Message.KEY_CREATED_AT);
 
         query3.findInBackground(new FindCallback<Message>() {
             @Override
@@ -200,6 +190,15 @@ public class ChatActivity extends AppCompatActivity {
                     allMessages.addAll(objects);
                     Log.i("Messages", allMessages.toString());
                     adapter.notifyDataSetChanged(); // update adapter
+
+                    if(mFirstLoad)
+                    {
+                        rvChats.scrollToPosition(0);
+                        mFirstLoad = false;
+                    }
+                    else{
+                        Log.e("message","Error Loading messages"+e);
+                    }
                 }
             }
         });

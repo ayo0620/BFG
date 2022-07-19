@@ -55,6 +55,7 @@
         <entry key="app/src/main/res/layout/fragment_user_posts.xml" value="0.32864583333333336" />
         <entry key="app/src/main/res/layout/item_added_list.xml" value="0.2835897435897436" />
         <entry key="app/src/main/res/layout/item_card.xml" value="0.16723124186197919" />
+        <entry key="app/src/main/res/layout/item_chat.xml" value="0.3385416666666667" />
         <entry key="app/src/main/res/layout/item_comments.xml" value="0.3609375" />
         <entry key="app/src/main/res/layout/item_grid_post.xml" value="0.32760416666666664" />
         <entry key="app/src/main/res/layout/item_notifications.xml" value="0.23055555555555557" />
@@ -62,6 +63,8 @@
         <entry key="app/src/main/res/layout/item_search_games.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_search_list.xml" value="0.315625" />
         <entry key="app/src/main/res/layout/layout_bg.xml" value="0.20208333333333334" />
+        <entry key="app/src/main/res/layout/mesage_incoming.xml" value="0.5328125" />
+        <entry key="app/src/main/res/layout/message_outgoing.xml" value="0.5328125" />
         <entry key="app/src/main/res/layout/messages_viewholder.xml" value="0.4249512670565302" />
         <entry key="app/src/main/res/layout/side_nav_header.xml" value="0.25" />
         <entry key="app/src/main/res/menu/camera_icon_view.xml" value="0.1537037037037037" />

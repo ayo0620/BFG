@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -19,7 +20,10 @@ import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.Library;
 import com.example.bfg.PareseActivation;
 import com.example.bfg.R;
+import com.google.android.material.snackbar.Snackbar;
+import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -29,6 +33,7 @@ import java.util.List;
 public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> {
     private Context context;
     private  List<Cards> allCards;
+    private Boolean isAddToLib;
 
     public CardsAdapter(Context context, List<Cards>cards) {
         this.context = context;
@@ -88,22 +93,44 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
         }
 
     }
-    public void addToLibrary(int position)
+    public void addToLibrary(int position, FragmentActivity view)
     {
+        isAddToLib = true;
         Cards card = allCards.get(position);
-        Library library = new Library();
-        library.setGameName(card.getName());
-        library.setGameImage(card.getImage());
-        library.setForUser(ParseUser.getCurrentUser());
-        library.saveInBackground(new SaveCallback() {
+        ParseQuery<Library>libraryParseQuery = ParseQuery.getQuery(Library.class);
+        libraryParseQuery.whereContains("forUser",ParseUser.getCurrentUser().getObjectId());
+        libraryParseQuery.findInBackground(new FindCallback<Library>() {
             @Override
-            public void done(ParseException e) {
-                if(e!= null)
+            public void done(List<Library> objects, ParseException e) {
+                for (Library lib: objects)
                 {
-                    Log.i("Library", "issue with saving library object",e);
+                    if (lib.getGameName().equals(card.getName()))
+                    {
+                        isAddToLib = false;
+                        Snackbar.make(view.findViewById(R.id.rlExplore),"Already added",Snackbar.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+                if(isAddToLib.equals(true))
+                {
+                    Library library = new Library();
+                    library.setGameName(card.getName());
+                    library.setGameImage(card.getImage());
+                    library.setForUser(ParseUser.getCurrentUser());
+                    library.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if(e!= null)
+                            {
+                                Log.i("Library", "issue with saving library object",e);
+                            }
+                        }
+                    });
                 }
             }
         });
+
+
     }
 
 }

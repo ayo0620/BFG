@@ -91,7 +91,7 @@ public class UserFavoritedFragment extends Fragment {
                 for (Post post : posts) {
                     allFavorited.add(post.getImage());
                 }
-                int gridwidth = getResources().getDisplayMetrics().widthPixels;
+                int gridwidth =getResources().getDisplayMetrics().widthPixels;
                 int imageWidth = gridwidth/ 3;
                 gridViewFavorited.setColumnWidth(imageWidth);
 
