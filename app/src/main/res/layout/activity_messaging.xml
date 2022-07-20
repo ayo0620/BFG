@@ -36,11 +36,6 @@
                 android:textColor="@color/black"
                 android:layout_toEndOf="@+id/ivMessageClose" />
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:src="@drawable/ic_compose_btn_24"/>
         </RelativeLayout>
     </androidx.appcompat.widget.Toolbar>
     

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,12 +20,14 @@ import android.widget.TextView;
 
 import com.example.bfg.Adapters.CardsAdapter;
 import com.example.bfg.Adapters.LibraryAdapter;
+import com.example.bfg.Adapters.UsersAdapter;
 import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.Library;
 import com.example.bfg.Models.Post;
 import com.example.bfg.R;
 import com.example.bfg.databinding.ActivityMainBinding;
+import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -40,7 +43,6 @@ public class LibraryFragment extends Fragment {
     private ImageView libraryClose;
     LibraryAdapter adapter;
     List<Library> allItems;
-
     public LibraryFragment() {
         // Required empty public constructor
     }
@@ -75,6 +77,31 @@ public class LibraryFragment extends Fragment {
         rvLibrary.setLayoutManager(layoutManager);
         rvLibrary.setAdapter(adapter);
         queryLibraryItems();
+
+
+//        swipe to delete
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Library deletedCourse = allItems.get(viewHolder.getAdapterPosition());
+
+                int position = viewHolder.getAdapterPosition();
+
+                adapter.removeItem(position);
+
+                Snackbar.make(rvLibrary,deletedCourse.getGameName(),Snackbar.LENGTH_SHORT).setAction("undo", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        adapter.addItem(position, deletedCourse);
+                    }
+                }).show();
+            }
+        }).attachToRecyclerView(rvLibrary);
 
     }
 

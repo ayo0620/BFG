@@ -192,7 +192,7 @@ public class ProfileFragment extends Fragment {
         else if(user.getStatusCount()<=151 || user.getStatusCount()<=300)
         {
             tvCurrUserStatus.setText("Pro");
-            user.setStatus("pro");
+            user.setStatus("Pro");
             user.saveInBackground();
         }
         else if(user.getStatusCount()<=301 || user.getStatusCount()<=500)

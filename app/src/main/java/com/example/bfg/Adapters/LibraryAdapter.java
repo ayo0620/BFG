@@ -78,7 +78,12 @@ public class LibraryAdapter extends RecyclerView.Adapter<LibraryAdapter.ViewHold
     public void removeItem(int position)
     {
         allitems.remove(position);
-        notifyItemRemoved(position  );
+        notifyItemRemoved(position);
+    }
+    public void addItem(int position, Library lib)
+    {
+        allitems.add(lib);
+        notifyItemInserted(position);
     }
 
 }

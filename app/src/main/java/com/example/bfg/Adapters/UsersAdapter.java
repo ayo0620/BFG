@@ -128,6 +128,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
             {
                 btnAddFriend.setVisibility(View.GONE);
             }
+            else{
+                btnAddFriend.setVisibility(View.VISIBLE);
+            }
 
             MainActivity.setBorderColorStatus(user,ivSearchImage);
 //            setBorderColorStatus(user,ivSearchImage);
@@ -168,31 +171,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
     }
 
-//    private void setBorderColorStatus(User user, CircleImageView ivSearchImage) {
-//        if (user.getStatus().equals("Noobie"))
-//        {
-//            ivSearchImage.setBorderColor(Color.YELLOW);
-//        }
-//        else if (user.getStatus().equals("Regular"))
-//        {
-//            ivSearchImage.setBorderColor(Color.GREEN);
-//        }
-//        else if (user.getStatus().equals("Pro"))
-//        {
-//            ivSearchImage.setBorderColor(Color.BLUE);
-//        }
-//        else if (user.getStatus().equals("Elite"))
-//        {
-//            ivSearchImage.setBorderColor(Color.parseColor("#8B4513"));
-//        }
-//        else if (user.getStatus().equals("Legend"))
-//        {
-//            ivSearchImage.setBorderColor(Color.RED);
-//        }
-//
-//
-//
-//    }
 
 
     private void addFriendNotification(User currUser, User toUser) {

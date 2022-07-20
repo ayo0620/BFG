@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/layout_bg" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bsText"
+        android:text="Sort by status"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_marginStart="20dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+    <View
+        android:id="@+id/dividerChips"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/bsText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:outlineAmbientShadowColor="@color/black"
+        android:background="@color/black" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dividerChips">
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cgOption"
+            android:layout_marginStart="20dp"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipNoobie"
+                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_height="45dp"
+                android:text="Noobie"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/design_default_color_primary"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipRegular"
+                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_height="45dp"
+                android:text="Regular"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/design_default_color_primary"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipPro"
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:text="Pro"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/design_default_color_primary"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipElite"
+                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_height="45dp"
+                android:text="Elite"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/design_default_color_primary"/>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLegend"
+                android:layout_width="wrap_content"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_height="45dp"
+                android:text="Legend"
+                app:chipStrokeWidth="1dp"
+                app:chipStrokeColor="@color/design_default_color_primary"/>
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+</RelativeLayout>
