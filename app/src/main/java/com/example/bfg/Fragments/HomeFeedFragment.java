@@ -199,7 +199,6 @@ public class HomeFeedFragment extends Fragment {
 
 
     public void queryPosts(int skip) {
-//        adapter.clear();
         // specify what type of data we want to query - Post.class
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         // include data referred by user key

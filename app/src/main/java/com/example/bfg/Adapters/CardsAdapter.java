@@ -1,6 +1,7 @@
 package com.example.bfg.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SizeReadyCallback;
+import com.example.bfg.DetailCardActivity;
 import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.Library;
 import com.example.bfg.PareseActivation;
@@ -27,6 +29,9 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.parceler.Parcels;
+
+import java.net.InetSocketAddress;
 import java.util.Collections;
 import java.util.List;
 
@@ -85,6 +90,16 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.ViewHolder> 
             img = img.replace("{width}","496");
             img = img.replace("{height}","600");
             Glide.with(context).load(img).into(ivCardViewImg);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Cards clickCard = allCards.get(getAdapterPosition());
+                    Intent i  = new Intent(context, DetailCardActivity.class);
+                    i.putExtra(Cards.class.getSimpleName(), Parcels.wrap(clickCard));
+                    context.startActivity(i);
+                }
+            });
         }
 
         @Override
