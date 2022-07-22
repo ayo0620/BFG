@@ -15,5 +15,12 @@
     <color name="transparent">#00000000</color>
     <color name="brown">#8B4513</color>
     <color name="denim3">#64888D</color>
+    <color name="denim4">#82B9C1</color>
     <color name="red">#ff0000</color>
+    <color name="black_grey">#383736</color>
+    <color name="lower_red">#E13A3A</color>
+    <color name="upper_red">#E52424</color>
+    <color name="top">#632943</color>
+    <color name="lower">#4C1F22</color>
+    <color name="bottom_nav">#782048</color>
 </resources>

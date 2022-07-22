@@ -9,7 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.example.bfg.Adapters.CommentsAdapter;
 import com.example.bfg.Models.Comments;
 import com.example.bfg.Models.Notifications;
@@ -17,6 +20,7 @@ import com.example.bfg.Models.Post;
 import com.example.bfg.Models.User;
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -26,11 +30,15 @@ import org.w3c.dom.Comment;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class CommentsActivity extends AppCompatActivity {
     Post post;
     EditText etCommentInput;
-    Button commentBtn;
+    ImageButton commentBtn;
     CommentsAdapter adapter;
+    CircleImageView ivCommentingUserPic;
+    ImageView commentClose;
     RecyclerView rvComments;
     List<Comments> allComments;
     public static final String KEY_STATUS_COUNT = "statusCount";
@@ -49,9 +57,29 @@ public class CommentsActivity extends AppCompatActivity {
         etCommentInput = findViewById(R.id.etCommentInput);
         commentBtn = findViewById(R.id.commentBtn);
         rvComments = findViewById(R.id.rvComments);
+        commentClose = findViewById(R.id.commentClose);
+        ivCommentingUserPic = findViewById(R.id.ivCommentingUserPic);
 
         post = getIntent().getParcelableExtra(Post.class.getSimpleName());
 
+        ParseUser user = ParseUser.getCurrentUser();
+        User user1 = (User) user;
+        ParseFile img = user1.getProfileImage();
+        if(img!= null)
+        {
+            Glide.with(this).load(img.getUrl()).into(ivCommentingUserPic);
+        }
+        else {
+            ivCommentingUserPic.setImageResource(R.drawable.default_profile_icon);
+        }
+        MainActivity.setBorderColorStatus(user1,ivCommentingUserPic);
+        etCommentInput.setHint("Replying to @ " +post.getUser().getUsername());
+        commentClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

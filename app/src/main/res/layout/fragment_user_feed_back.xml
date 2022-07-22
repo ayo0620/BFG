@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/home_gradient"
     tools:context=".Fragments.UserFeedBackFragment">
 
 
@@ -12,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/feedback_Toolbar"
-        android:background="?android:attr/windowBackground">
+        android:background="@color/bottom_nav">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -32,7 +33,7 @@
                 android:layout_marginStart="100dp"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_toEndOf="@+id/feedbackClose" />
         </RelativeLayout>
 
@@ -46,6 +47,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="50dp"
         android:layout_marginRight="15dp"
+        android:textColor="@color/white"
         android:hint="Type your feedback here"
         android:minLines="7" />
 
@@ -56,6 +58,7 @@
         android:layout_below="@+id/userFeedBackText"
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
+        android:backgroundTint="@color/bottom_nav"
         android:theme="@style/Theme.Material3.DynamicColors.DayNight"
         android:layout_alignParentRight="true"
         android:text="send" />

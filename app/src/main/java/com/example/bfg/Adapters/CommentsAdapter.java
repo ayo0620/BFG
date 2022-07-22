@@ -19,14 +19,18 @@ import com.example.bfg.Fragments.ComposeFragment;
 import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Cards;
 import com.example.bfg.Models.Comments;
+import com.example.bfg.Models.User;
 import com.example.bfg.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.ParseFile;
 
 import org.parceler.Parcels;
 import org.w3c.dom.Comment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
     private Context context;
@@ -62,17 +66,29 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvAuthor;
         private TextView tvBody;
+        private CircleImageView ivCommentedUserPic;
         public ViewHolder(View itemView) {
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
             tvAuthor = itemView.findViewById(R.id.tvAuthor);
             tvBody = itemView.findViewById(R.id.tvBody);
+            ivCommentedUserPic = itemView.findViewById(R.id.ivCommentedUserPic);
         }
 
         public void bind(Comments comment) {
             tvBody.setText(comment.getDescription());
             tvAuthor.setText(comment.getUser().getUsername());
+            User user = (User) comment.getUser();
+            ParseFile img = user.getProfileImage();
+            if(img != null)
+            {
+                Glide.with(context).load(img.getUrl()).into(ivCommentedUserPic);
+            }
+            else{
+                ivCommentedUserPic.setImageResource(R.drawable.default_profile_icon);
+            }
+            MainActivity.setBorderColorStatus(user,ivCommentedUserPic);
             Log.i("Size", String.valueOf(comments.size()));
         }
 

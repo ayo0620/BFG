@@ -13,8 +13,11 @@ import com.example.bfg.Models.Notifications;
 import com.example.bfg.Models.Post;
 import com.example.bfg.Models.User;
 import com.parse.Parse;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import java.util.ArrayList;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -23,6 +26,8 @@ public class PareseActivation extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+
 //        Register your parse model
         ParseObject.registerSubclass(Comments.class);
         ParseObject.registerSubclass(User.class);
@@ -40,12 +45,12 @@ public class PareseActivation extends Application {
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         // any network interceptors must be added with the Configuration Builder given this syntax
         builder.networkInterceptors().add(httpLoggingInterceptor);
-
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId("5DIGQo5cnYxZX4MjMgFG9I0LE5smGFoGbcV1IO33")
                 .clientKey("hNPPgaLef5lmoIUUWPABzitt6ngXWUeGkprmFQ4z")
                 .server("https://parseapi.back4app.com")
                 .build()
         );
+
     }
 }

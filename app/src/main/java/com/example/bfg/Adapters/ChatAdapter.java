@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.bfg.ChatActivity;
+import com.example.bfg.MainActivity;
+import com.example.bfg.MessagingActivity;
 import com.example.bfg.Models.Message;
 import com.example.bfg.Models.MessageThread;
 import com.example.bfg.Models.User;
@@ -118,6 +120,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
         private TextView otherUserMsg;
         private TextView otherUserTimeStamp;
         private RelativeLayout rlIncoming;
+        private CircleImageView ivChatProfileImage;
 
         public IncomingMessageViewHolder(View itemView)
         {
@@ -125,6 +128,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
             otherUserMsg = itemView.findViewById(R.id.otherUserMsg);
             otherUserTimeStamp = itemView.findViewById(R.id.otherUserTimeStamp);
             rlIncoming = itemView.findViewById(R.id.rlIncoming);
+            ivChatProfileImage = itemView.findViewById(R.id.ivChatProfileImage);
         }
 
         @Override
@@ -133,6 +137,15 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MessageViewHol
             otherUserMsg.setText(message.getMessageText());
             otherUserTimeStamp.setText(message.getCreatedAt().toString());
             rlIncoming.setGravity(Gravity.LEFT);;
+            ParseFile img = otherUser.getProfileImage();
+            if(img != null)
+            {
+                Glide.with(context).load(img.getUrl()).into(ivChatProfileImage);
+            }
+            else{
+                ivChatProfileImage.setImageResource(R.drawable.default_profile_icon);
+            }
+            MainActivity.setBorderColorStatus(otherUser,ivChatProfileImage);
         }
 
     }

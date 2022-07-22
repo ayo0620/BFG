@@ -10,6 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/bottom_nav"
         android:id="@+id/libraryToolbar">
 
         <RelativeLayout
@@ -27,10 +28,10 @@
                 android:layout_height="wrap_content"
                 android:text="Library"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="100dp"
+                android:layout_marginStart="120dp"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_toEndOf="@+id/libraryClose" />
         </RelativeLayout>
 
@@ -42,23 +43,32 @@
         android:background="@color/black"
         android:minHeight="2dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="10dp"
-        android:layout_below="@+id/libraryToolbar"/>
+        android:layout_margin="10dp"
+        android:layout_below="@+id/tvRecentlyAdded"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvRecentlyAdded"
-        android:layout_below="@+id/rlDummyLine"
+        android:layout_below="@+id/libraryToolbar"
         android:text="Recently Added"
+        android:textColor="@color/white"
         android:textSize="25dp"
+        android:layout_marginStart="5dp"
         android:textStyle="bold"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvLibrary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tvRecentlyAdded" />
+        android:layout_below="@+id/rlDummyLine" />
+
+    <ProgressBar
+        android:id="@+id/libraryProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"/>
 
 
 </RelativeLayout>

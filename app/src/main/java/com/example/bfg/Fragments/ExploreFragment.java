@@ -6,8 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.ScrollingTabContainerView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -15,15 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +36,6 @@ import com.example.bfg.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
@@ -49,7 +43,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -57,7 +50,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.Headers;
 
@@ -73,11 +65,11 @@ public class ExploreFragment extends Fragment {
     public HashMap<String, Integer> likesTotal = new HashMap<String, Integer>();
     public HashMap<String, Integer> postTotal = new HashMap<String, Integer>();
     public HashMap<String, Double> likePostRatio = new HashMap<String, Double>();
-    HashMap<String, Double> sortedMap;
+    public static HashMap<String, Double> sortedMap;
     ParseUser user;
     User currUser;
+    ProgressBar exploreProgressBar;
     List<ParseQuery<Post>> queries;
-
 
     public ExploreFragment(){}
 
@@ -103,6 +95,9 @@ public class ExploreFragment extends Fragment {
         toolbar = view.findViewById(R.id.exploreToolbar);
         spinner = view.findViewById(R.id.exploreSpinner);
         sortedByText = view.findViewById(R.id.sortedByText);
+        exploreProgressBar = view.findViewById(R.id.exploreProgressBar);
+
+        exploreProgressBar.setVisibility(View.VISIBLE);
 
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.names) );
         myAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
@@ -111,6 +106,7 @@ public class ExploreFragment extends Fragment {
         toolbar.setTitle("Explore");
         toolbar.setTitleTextColor(Color.WHITE);
 
+//        recyclerview
         allcards = new ArrayList<>();
         myCards = new ArrayList<>();
         queries = new ArrayList<ParseQuery<Post>>();
@@ -136,7 +132,7 @@ public class ExploreFragment extends Fragment {
                     //do things here
                     if(spinner.getSelectedItem().equals("For you"))
                     {
-                        sortedByText.setText("Just for you");
+                        sortedByText.setText("You might like");
                         allcards.clear();
                         sortByPersonalization();
                         Toast.makeText(getContext(),"for yoy",Toast.LENGTH_SHORT).show();
@@ -151,11 +147,11 @@ public class ExploreFragment extends Fragment {
             }
         });
 
-
         super.onViewCreated(view, savedInstanceState);
     }
 
     private void sortByPersonalization() {
+        exploreProgressBar.setVisibility(View.VISIBLE);
         RequestParams params = new RequestParams();
         RequestHeaders headers = new RequestHeaders();
         AsyncHttpClient client = new AsyncHttpClient();
@@ -221,6 +217,7 @@ public class ExploreFragment extends Fragment {
 
                             adapter.notifyDataSetChanged();
 //                            Log.i("eachTime2",allcards.toString());
+                            exploreProgressBar.setVisibility(View.GONE);
                         }
                     });
 
@@ -321,6 +318,7 @@ public class ExploreFragment extends Fragment {
 //                    allcards.addAll(Cards.fromJsonArray(gameItems));
                     Log.i(TAG, "Items: " + allcards.size());
                     adapter.notifyDataSetChanged();
+                    exploreProgressBar.setVisibility(View.GONE);
                 } catch (JSONException e) {
                     Log.e("gg", "Hit json exception",e);
                     e.printStackTrace();

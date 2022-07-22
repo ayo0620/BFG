@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.asynchttpclient.AsyncHttpClient;
@@ -37,7 +39,8 @@ public class SearchGamesActivity extends AppCompatActivity {
     RecyclerView rvSearchGames;
     List<Cards> gameResults;
     GameSearchAdapter adapter;
-
+    private ImageView searchGameClose;
+    private TextView placeholderSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,14 +51,26 @@ public class SearchGamesActivity extends AppCompatActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvSearchGames = findViewById(R.id.rvSearchGames);
+        searchGameClose = findViewById(R.id.searchGameClose);
+        placeholderSearch = findViewById(R.id.placeholderSearch);
+
+        placeholderSearch.setVisibility(View.VISIBLE);
+        searchGameClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         rvSearchGames.setLayoutManager(layoutManager);
         rvSearchGames.setAdapter(adapter);
         rvSearchGames.setHasFixedSize(true);
+
         searchView = findViewById(R.id.searchGameInput);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                placeholderSearch.setVisibility(View.GONE);
                 fetchGame(query);
                 Log.i("diff",gameResults.toString());
                 return false;

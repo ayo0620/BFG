@@ -24,7 +24,7 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:layout_below="@+id/layout_top"
-       android:backgroundTint="@color/denim3"
+       android:backgroundTint="@color/bottom_nav"
        android:background="@drawable/layout_bg_profile">
 
       <RelativeLayout
@@ -39,6 +39,7 @@
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_marginStart="12dp"
+             android:textColor="@color/white"
              android:text="10" />
 
          <TextView
@@ -47,6 +48,7 @@
              android:layout_height="wrap_content"
              android:layout_below="@id/friend_count"
              android:layout_marginTop="0dp"
+             android:textColor="@color/white"
              android:text="friends" />
       </RelativeLayout>
 
@@ -61,6 +63,7 @@
           android:layout_toStartOf="@+id/tvCurrUserStatus"
           android:layout_toEndOf="@+id/rlFriendCount"
           android:text="TextView"
+          android:textColor="@color/white"
           android:textAlignment="center"
           android:textSize="18dp"
           android:textStyle="bold" />
@@ -72,6 +75,7 @@
           android:layout_alignParentTop="true"
           android:layout_alignParentEnd="true"
           android:layout_marginTop="38dp"
+          android:textColor="@color/white"
           android:layout_marginEnd="78dp"
           android:text="TextView" />
 
@@ -83,17 +87,19 @@
           android:layout_alignParentStart="true"
           android:layout_marginStart="21dp"
           android:layout_marginTop="21dp"
+          android:textColor="@color/white"
           android:text="My Life my vibe" />
 
       <Button
           android:id="@+id/btnEditProfile"
           android:layout_width="match_parent"
-          android:layout_height="40dp"
+          android:layout_height="wrap_content"
           android:layout_below="@+id/tvUserBio"
           android:layout_marginStart="20dp"
           android:layout_marginTop="10dp"
           android:layout_marginEnd="20dp"
-          android:background="@drawable/rounded_button"
+          android:backgroundTint="@color/lower"
+          android:theme="@style/Theme.Material3.DynamicColors.DayNight"
           android:text="Edit Profile"
           android:textAlignment="center" />
 
@@ -102,7 +108,8 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_below="@+id/btnEditProfile"
-          app:tabBackground="@color/denim3"
+          app:tabBackground="@color/bottom_nav"
+          app:tabTextColor="@color/white"
           app:tabGravity="fill"></com.google.android.material.tabs.TabLayout>
 
       <androidx.viewpager.widget.ViewPager
@@ -132,6 +139,7 @@
        android:id="@+id/floatingMessageBtn"
        android:layout_alignParentEnd="true"
        android:layout_marginEnd="10dp"
+       android:backgroundTint="@color/bottom_nav"
        android:src="@drawable/ic_baseline_message_24"
        android:layout_marginTop="10dp"/>
 

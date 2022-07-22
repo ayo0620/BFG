@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/rounded_corners_et"
+    android:backgroundTint="@color/bottom_nav"
+    android:layout_height="wrap_content">
+
+
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp"-->
+<!--        android:id="@+id/ivExplorePagerImage"-->
+<!--        android:scaleType="centerCrop"/>-->
+
+    <ImageButton
+        android:id="@+id/ibViewForStream"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_view_image" />
+
+    <TextView
+        android:id="@+id/tvViewStreamCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
+        android:layout_toStartOf="@+id/ibViewForStream"
+        android:text="TextView" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivGameImage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/default_profile_icon" />
+
+    <TextView
+        android:id="@+id/tvStreamerName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvViewStreamCount"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="14dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="50dp"
+        android:text="name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvGameStreamName"
+        android:layout_below="@+id/tvStreamerName"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="14dp"
+        android:textColor="@color/white"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:text="game name" />
+
+</RelativeLayout>

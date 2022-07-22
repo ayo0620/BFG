@@ -101,7 +101,6 @@ public class ComposeFragment extends Fragment {
         {
             tvSetGameCategory.setVisibility(View.VISIBLE);
             tvSetGameCategory.setText(activity.cards.getName());
-            tvSetGameCategory.setTextColor(Color.WHITE);
         }
 
         ParseUser user = ParseUser.getCurrentUser();

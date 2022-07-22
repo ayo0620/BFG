@@ -150,7 +150,6 @@ public class ChatActivity extends AppCompatActivity {
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        Toast.makeText(ChatActivity.this,"Successfully save message",Toast.LENGTH_SHORT).show();
                         refreshMessages();
                     }
                 });

@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.parse-community.Parse-SDK-Android:fcm:1.26.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b9e5f95dba9e0015e887563d0d75d597/transformed/fcm-1.26.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b9e5f95dba9e0015e887563d0d75d597/transformed/fcm-1.26.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b9e5f95dba9e0015e887563d0d75d597/transformed/fcm-1.26.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.parse-community.Parse-SDK-Android/fcm/1.26.0/8b40038b9cc0c84214cb803aeb18635c15ae054c/fcm-1.26.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.parse-community.Parse-SDK-Android/fcm/1.26.0/a7b66874431cdad7491c370b221ab13cf84c21df/fcm-1.26.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

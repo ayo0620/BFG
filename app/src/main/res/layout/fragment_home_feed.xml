@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -20,44 +19,110 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/home_gradient"
-        tools:context=".Fragments.HomeFeedFragment">
-
+        android:layout_height="wrap_content"
+        android:id="@+id/rlToolbar">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/denim"
+            android:background="@color/bottom_nav"
             android:fitsSystemWindows="true"
             android:minHeight="?attr/actionBarSize"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"></androidx.appcompat.widget.Toolbar>
-
-        <TextView
-            android:id="@+id/tvDisplayUserName"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginTop="30dp">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
-            android:text="Welcome"
-            android:textSize="25dp"
-            android:textColor="@color/white"
-            android:paddingLeft="20dp"/>
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/swipeContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_marginTop="0dp"
-            android:layout_below="@+id/tvDisplayUserName">
+            android:background="@drawable/home_gradient"
+            tools:context=".Fragments.HomeFeedFragment">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvPosts"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:padding="8dp" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                <TextView
+                    android:id="@+id/tvDisplayUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome"
+                    android:textSize="25dp"
+                    android:textColor="@color/white"
+                    android:paddingLeft="20dp"/>
 
+                <View
+                    android:id="@+id/homeDivider2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/tvDisplayUserName"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/white" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tvLiveChannel"
+                    android:text="Active Streams"
+                    android:layout_below="@id/homeDivider2"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/white"
+                    android:layout_marginStart="15dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="17dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="@color/red"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:layout_below="@id/homeDivider2"
+                    android:layout_toEndOf="@id/tvLiveChannel"
+                    android:text="LIVE" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvStream"
+                    android:layout_below="@+id/tvLiveChannel"/>
+
+                <View
+                    android:id="@+id/homeDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/rvStream"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="10dp"
+                    android:background="@color/white" />
+
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/swipeContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_below="@+id/homeDivider">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPosts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="5dp" />
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        </RelativeLayout>
+    </ScrollView>
     </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

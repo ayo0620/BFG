@@ -13,7 +13,7 @@
         android:id="@+id/exploreToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/denim3"
+        android:background="@color/bottom_nav"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -27,21 +27,45 @@
             android:layout_marginStart="190dp"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sortedByText"
-        android:layout_below="@+id/exploreToolbar"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        android:text="set here"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCards"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/sortedByText"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/exploreToolbar">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sortedByText"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:text="set here"/>
 
+        <View
+            android:id="@+id/exploreDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/sortedByText"
+            android:layout_alignParentStart="true"
+            android:layout_margin="10dp"
+            android:background="@color/black" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCards"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/exploreDivider"
+            android:scrollbars="vertical" />
+
+        <ProgressBar
+            android:id="@+id/exploreProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 </RelativeLayout>

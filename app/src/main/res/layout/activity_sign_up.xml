@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/denim"
+    android:background="@drawable/home_gradient"
     tools:context=".SignUpActivity">
 
 
@@ -140,6 +140,7 @@
         android:layout_marginStart="75dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="85dp"
+        android:backgroundTint="@color/bottom_nav"
         android:text="Sign Up" />
 
     <TextView

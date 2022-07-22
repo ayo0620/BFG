@@ -12,7 +12,7 @@
         android:id="@+id/toolbarCompose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/denim"
+        android:background="@color/bottom_nav"
         android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"
         app:menu="@menu/camera_icon_view"
@@ -56,6 +56,8 @@
             android:ems="10"
             android:gravity="start|top"
             android:hint="say something"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
             android:inputType="textMultiLine"
             android:minLines="5" />
 
@@ -93,7 +95,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/ivComposeProfileImage"
             android:text="Choose game category>"
-            android:textColor="@color/blue" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/tvSetGameCategory"
@@ -102,6 +104,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="10dp"
             android:layout_marginTop="0dp"
+            android:textColor="@color/black"
             android:layout_toEndOf="@+id/ivComposeProfileImage"
             android:text="game" />
     </RelativeLayout>
@@ -112,6 +115,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rlCompose"
         android:layout_marginStart="280dp"
+        android:backgroundTint="@color/bottom_nav"
+        android:theme="@style/Theme.Material3.DynamicColors.DayNight"
         android:layout_marginTop="10dp"
         android:text="Post" />
 

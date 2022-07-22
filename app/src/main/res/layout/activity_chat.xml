@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:text="User Name"
-                android:textColor="#424242"
+                android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

@@ -34,6 +34,7 @@ public class NotificationFragment extends Fragment {
     protected NotificationsAdapter adapter;
     public static final String TAG ="NotificationFragment";
     private ImageView notificationClose;
+    ProgressBar notificationProgressBar;
 
     public NotificationFragment() {
         // Required empty public constructor
@@ -50,9 +51,8 @@ public class NotificationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        final ProgressBar notificationProgressBar = (ProgressBar) view.findViewById(R.id.notificationProgressBar);
-        notificationProgressBar.setVisibility(View.VISIBLE);
+       notificationProgressBar = view.findViewById(R.id.notificationProgressBar);
+       notificationProgressBar.setVisibility(View.VISIBLE);
 
         rvNotifications = view.findViewById(R.id.rvNotifications);
         notificationClose = view.findViewById(R.id.notificationClose);
@@ -68,12 +68,9 @@ public class NotificationFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         allNotifications = new ArrayList<>();
-//        if (allNotifications.size()!= 0)
-//        {
-//            adapter = new NotificationsAdapter(getContext(),allNotifications);
-//            rvNotifications.setAdapter(adapter);
-//        }
         rvNotifications.setLayoutManager(layoutManager);
+        adapter = new NotificationsAdapter(getContext(),allNotifications);
+        rvNotifications.setAdapter(adapter);
         queryNotifications();
     }
 
@@ -90,9 +87,8 @@ public class NotificationFragment extends Fragment {
                     Log.i(TAG, "issue with getting notification",e);
                 }
                 allNotifications.addAll(notifications);
-                adapter = new NotificationsAdapter(getContext(),allNotifications);
-                rvNotifications.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                notificationProgressBar.setVisibility(View.GONE);
             }
         });
     }

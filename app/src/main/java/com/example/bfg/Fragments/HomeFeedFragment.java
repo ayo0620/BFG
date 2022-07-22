@@ -1,11 +1,13 @@
 package com.example.bfg.Fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -21,26 +23,42 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.RequestHeaders;
+import com.codepath.asynchttpclient.RequestParams;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.bfg.Adapters.ShowActiveStreamAdapter;
+import com.example.bfg.BuildConfig;
 import com.example.bfg.EndlessRecyclerViewScrollListener;
 import com.example.bfg.LoginActivity;
 import com.example.bfg.MainActivity;
 import com.example.bfg.Models.Post;
 import com.example.bfg.Adapters.PostsAdapter;
+import com.example.bfg.Models.Stream;
 import com.example.bfg.Models.User;
 import com.example.bfg.R;
 import com.google.android.material.navigation.NavigationView;
 import com.parse.FindCallback;
+import com.parse.FunctionCallback;
+import com.parse.ParseCloud;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Headers;
 
 public class HomeFeedFragment extends Fragment {
 
@@ -58,6 +76,9 @@ public class HomeFeedFragment extends Fragment {
     private TextView side_nav_user;
     NavigationView navigationView;
     public MainActivity activity;
+    ShowActiveStreamAdapter showActiveStreamAdapter;
+    List<Stream> streamList;
+    RecyclerView rvStream;
 
     public HomeFeedFragment(MainActivity mainActivity){
         activity = mainActivity;
@@ -82,11 +103,21 @@ public class HomeFeedFragment extends Fragment {
         View headerView = navigationView.inflateHeaderView(R.layout.side_nav_header);
         side_nav_profile_img = headerView.findViewById(R.id.side_nav_profile_img);
         side_nav_user = headerView.findViewById(R.id.side_nav_user);
+        rvStream = view.findViewById(R.id.rvStream);
+
+
+        streamList = new ArrayList<>();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        rvStream.setLayoutManager(linearLayoutManager);
+        showActiveStreamAdapter = new ShowActiveStreamAdapter(getContext(),streamList);
+        rvStream.setAdapter(showActiveStreamAdapter);
+        getLiveStreamContents();
+
 
         //        Toolbar
         activity.setSupportActionBar(toolbar);
         ParseUser user = User.getCurrentUser();
-        tvDisplayUserName.setText("Welcome,\n"+user.getUsername());
+        tvDisplayUserName.setText("Welcome "+user.getUsername());
         //        Navigation Drawer menu
         User currUser = (User) user;
         side_nav_user.setText(currUser.getUsername());
@@ -162,9 +193,6 @@ public class HomeFeedFragment extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
                 queryPosts(0);
                 adapter.notifyDataSetChanged();
             }
@@ -230,4 +258,44 @@ public class HomeFeedFragment extends Fragment {
             }
         });
     }
+
+    private void getLiveStreamContents() {
+        RequestParams params = new RequestParams();
+        RequestHeaders headers = new RequestHeaders();
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        String url = "https://api.twitch.tv/helix/streams";
+        params.put("first", 100);
+        headers.put("Client-Id", BuildConfig.CLIEND_ID);
+        headers.put("Authorization",BuildConfig.TOKEN);
+        client.get(url, headers,params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Headers headers, JSON json) {
+                JSONObject jsonObject = json.jsonObject;
+                try {
+                    JSONArray gameItems = jsonObject.getJSONArray("data");
+                    for (int i=1; i<=gameItems.length();i++)
+                    {
+                        streamList.add(new Stream(gameItems.getJSONObject(i)));
+
+                        if(streamList.size()==10)
+                        {
+                            break;
+                        }
+                    }
+                    showActiveStreamAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    Log.e("gg", "Hit json exception",e);
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
+                Log.i("gg",response);
+            }
+        });
+
+    }
+
 }

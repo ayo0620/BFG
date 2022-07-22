@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/layout_bg_posts"
-    android:backgroundTint="@color/denim2"
+    android:backgroundTint="@color/top"
     android:layout_marginTop="10dp"
     android:layout_marginLeft="0dp"
     android:layout_marginRight="0dp">
@@ -31,6 +31,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="7dp"
         android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="17dp"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:text="TextView" />
 
@@ -40,6 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
+        android:textColor="@color/white"
         android:layout_marginTop="7dp"
         android:layout_toEndOf="@+id/tvUsername"
         android:text="TextView" />
@@ -52,6 +55,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="7dp"
+        android:textColor="@color/white"
         android:layout_toEndOf="@+id/tvStatus"
         android:text="TextView" />
 
@@ -61,21 +65,21 @@
         android:layout_height="200dp"
         android:layout_below="@+id/ivProfileImage"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="2dp"
         android:layout_marginTop="6dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="2dp"
         android:background="@drawable/layout_bg_posts"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars" />
 
     <RelativeLayout
+        android:id="@+id/rlPostBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rlPostBottom"
         android:layout_below="@+id/ivPostImage"
         android:background="@drawable/layout_bg_bottom_posts"
-        android:backgroundTint="@color/denim">
+        android:backgroundTint="@color/bottom_nav">
 
         <ImageButton
             android:id="@+id/ibLike"
@@ -84,7 +88,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:background="@color/denim"
+            android:background="@color/transparent"
             app:srcCompat="@drawable/ic_favorite_icon_24" />
 
         <TextView
@@ -95,7 +99,7 @@
             android:layout_marginTop="7dp"
             android:layout_toEndOf="@+id/ibLike"
             android:text="likes"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <ImageButton
             android:id="@+id/ibCommentBtn"
@@ -104,7 +108,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="7dp"
             android:layout_toEndOf="@+id/tvLikeCount"
-            android:backgroundTint="@color/denim"
+            android:backgroundTint="@color/transparent"
             app:srcCompat="@drawable/ic_comment_outline" />
 
         <ImageButton
@@ -112,10 +116,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="25dp"
             android:layout_marginTop="5dp"
-            android:background="@color/denim"
-            android:src="@drawable/ic_bookmark_border"/>
+            android:layout_marginEnd="25dp"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_bookmark_border" />
 
         <TextView
             android:id="@+id/tvCommentCount"
@@ -124,7 +128,7 @@
             android:layout_marginStart="3dp"
             android:layout_marginTop="7dp"
             android:layout_toEndOf="@+id/ibCommentBtn"
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
         <TextView
             android:id="@+id/tvDescription"
@@ -135,7 +139,8 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="3dp"
             android:layout_marginBottom="10dp"
-            android:text="Description" />
+            android:text="Description"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 
@@ -152,7 +157,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="25dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:text="TextView" />
 
