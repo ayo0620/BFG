@@ -146,7 +146,7 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.android.gms:play-services-cloud-messaging:17.0.1@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.firebase:firebase-datatransport:18.1.5@aar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.google.firebase:firebase-iid-interop:17.1.0@aar" level="project" />
-    <orderEntry type="library" scope="TEST" name="Gradle: com.github.parse-community.Parse-SDK-Android:fcm:1.26.0@aar" level="project" />
+    <orderEntry type="library" scope="TEST" name="Gradle: com.github.parse-community.Parse-SDK-Android:fcm:3.0.1@aar" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="BFG.app.main" />
 </module>

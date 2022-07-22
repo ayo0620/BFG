@@ -1,6 +1,7 @@
 package com.example.bfg;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.motion.utils.ViewOscillator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,13 +25,17 @@ import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.livequery.ParseLiveQueryClient;
 import com.parse.livequery.SubscriptionHandling;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 import org.w3c.dom.Comment;
 
@@ -155,6 +160,21 @@ public class ChatActivity extends AppCompatActivity {
                 });
                 checkIfFirstTimeChatting(messageToSend);
                 etInputMsgField.setText("");
+
+                JSONObject data = new JSONObject();
+                // Put data in the JSON object
+                try {
+                    data.put("alert", messageToSend);
+                    data.put("title", "Message from "+ParseUser.getCurrentUser().getUsername());
+                } catch ( JSONException e) {
+                    // should not happen
+                    throw new IllegalArgumentException("unexpected parsing error", e);
+                }
+
+                ParsePush push = new ParsePush();
+                push.setChannel(fromUser.getObjectId());
+                push.setData(data);
+                push.sendInBackground();
             }
         });
     }
@@ -194,9 +214,6 @@ public class ChatActivity extends AppCompatActivity {
                     {
                         rvChats.scrollToPosition(0);
                         mFirstLoad = false;
-                    }
-                    else{
-                        Log.e("message","Error Loading messages"+e);
                     }
                 }
             }

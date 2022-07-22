@@ -16,6 +16,7 @@ import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
@@ -51,6 +52,17 @@ public class PareseActivation extends Application {
                 .server("https://parseapi.back4app.com")
                 .build()
         );
+
+
+//
+        ArrayList<String> channels = new ArrayList<>();
+        channels.add(ParseUser.getCurrentUser().getObjectId());
+
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put("GCMSenderId", "520083009721");
+        installation.put("channels",channels);
+        installation.saveInBackground();
+        Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG);
 
     }
 }

@@ -2,9 +2,10 @@
   <library name="Gradle: com.codepath.libraries:android-oauth-handler:2.4.0@aar">
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e8ca350e323f1baf5fedd4e8307f4a81/transformed/android-oauth-handler-2.4.0/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/54dda77442eb581fc0c5413f68bda255/transformed/android-oauth-handler-2.4.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/54dda77442eb581fc0c5413f68bda255/transformed/android-oauth-handler-2.4.0/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/54dda77442eb581fc0c5413f68bda255/transformed/android-oauth-handler-2.4.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1fa5dc2309282b6e86e7b4ec6db7bbf1/transformed/android-oauth-handler-2.4.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/1fa5dc2309282b6e86e7b4ec6db7bbf1/transformed/android-oauth-handler-2.4.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/1fa5dc2309282b6e86e7b4ec6db7bbf1/transformed/android-oauth-handler-2.4.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

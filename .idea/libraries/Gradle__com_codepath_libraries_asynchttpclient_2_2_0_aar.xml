@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.codepath.libraries:asynchttpclient:2.2.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d3278e8bda36564d2538dfada2e3f23a/transformed/asynchttpclient-2.2.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d3278e8bda36564d2538dfada2e3f23a/transformed/asynchttpclient-2.2.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/d3278e8bda36564d2538dfada2e3f23a/transformed/asynchttpclient-2.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cbefcc1975bf64a6cc06481fc71eb5b8/transformed/asynchttpclient-2.2.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/cbefcc1975bf64a6cc06481fc71eb5b8/transformed/asynchttpclient-2.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cbefcc1975bf64a6cc06481fc71eb5b8/transformed/asynchttpclient-2.2.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

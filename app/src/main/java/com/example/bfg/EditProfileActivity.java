@@ -36,8 +36,10 @@ import org.parceler.Parcels;
 
 import java.io.File;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class EditProfileActivity extends AppCompatActivity {
-    private ShapeableImageView editProfileImage;
+    private CircleImageView editProfileImage;
     private EditText editFirstName;
     private EditText editLastName;
     private EditText editUsername;
